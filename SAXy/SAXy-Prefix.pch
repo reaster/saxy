@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'SAXy' target in the 'SAXy' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
