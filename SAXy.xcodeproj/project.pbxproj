@@ -7,15 +7,56 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79A8C9DF16DB3CE80082E8AE /* OXmlNamespaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9D516DB3CE80082E8AE /* OXmlNamespaceTests.m */; };
+		79A8C9F116DC2FEE0082E8AE /* OXiTunesRSSExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9E716DC2FED0082E8AE /* OXiTunesRSSExampleTests.m */; };
+		79A8C9F316DC2FEE0082E8AE /* OXmlNonKVCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9E916DC2FED0082E8AE /* OXmlNonKVCTests.m */; };
+		79A8C9F416DC2FEE0082E8AE /* OXmlTypeMappingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9EA16DC2FED0082E8AE /* OXmlTypeMappingTests.m */; };
+		79A8C9F616DC2FEE0082E8AE /* OXPathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9EC16DC2FED0082E8AE /* OXPathTests.m */; };
+		79A8C9F816DC2FEE0082E8AE /* OXTransformTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9EF16DC2FEE0082E8AE /* OXTransformTests.m */; };
+		79A8C9F916DC2FEE0082E8AE /* OXTwitterExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9F016DC2FEE0082E8AE /* OXTwitterExampleTests.m */; };
+		79A8C9FC16DD38A20082E8AE /* OXTutorialTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9FB16DD38A10082E8AE /* OXTutorialTests.m */; };
 		79F8A3B716C97F6500491143 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A3B616C97F6500491143 /* Foundation.framework */; };
-		79F8A3BC16C97F6500491143 /* SAXy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 79F8A3BB16C97F6500491143 /* SAXy.h */; };
-		79F8A3BE16C97F6500491143 /* SAXy.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A3BD16C97F6500491143 /* SAXy.m */; };
 		79F8A3C616C97F6500491143 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A3C516C97F6500491143 /* SenTestingKit.framework */; };
 		79F8A3C816C97F6500491143 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A3C716C97F6500491143 /* UIKit.framework */; };
 		79F8A3C916C97F6500491143 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A3B616C97F6500491143 /* Foundation.framework */; };
 		79F8A3CC16C97F6500491143 /* libSAXy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A3B316C97F6500491143 /* libSAXy.a */; };
 		79F8A3D216C97F6500491143 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 79F8A3D016C97F6500491143 /* InfoPlist.strings */; };
-		79F8A3D516C97F6500491143 /* SAXyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A3D416C97F6500491143 /* SAXyTests.m */; };
+		79F8A3ED16C9810A00491143 /* ContactsTestData.xml in Resources */ = {isa = PBXBuildFile; fileRef = 79F8A3EC16C9810A00491143 /* ContactsTestData.xml */; };
+		79F8A3FC16C9824E00491143 /* OXPathMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A3F216C9824E00491143 /* OXPathMapper.m */; };
+		79F8A3FD16C9824E00491143 /* OXPathMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A3F216C9824E00491143 /* OXPathMapper.m */; };
+		79F8A3FE16C9824E00491143 /* OXProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A3F516C9824E00491143 /* OXProperty.m */; };
+		79F8A3FF16C9824E00491143 /* OXProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A3F516C9824E00491143 /* OXProperty.m */; };
+		79F8A40016C9824E00491143 /* OXTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A3F716C9824E00491143 /* OXTransform.m */; };
+		79F8A40116C9824E00491143 /* OXTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A3F716C9824E00491143 /* OXTransform.m */; };
+		79F8A40216C9824E00491143 /* OXType.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A3F916C9824E00491143 /* OXType.m */; };
+		79F8A40316C9824E00491143 /* OXType.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A3F916C9824E00491143 /* OXType.m */; };
+		79F8A40416C9824E00491143 /* OXUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A3FB16C9824E00491143 /* OXUtil.m */; };
+		79F8A40516C9824E00491143 /* OXUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A3FB16C9824E00491143 /* OXUtil.m */; };
+		79F8A41916C9825E00491143 /* OXComplexMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A40816C9825E00491143 /* OXComplexMapper.m */; };
+		79F8A41A16C9825E00491143 /* OXComplexMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A40816C9825E00491143 /* OXComplexMapper.m */; };
+		79F8A41B16C9825E00491143 /* OXmlContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A40A16C9825E00491143 /* OXmlContext.m */; };
+		79F8A41C16C9825E00491143 /* OXmlContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A40A16C9825E00491143 /* OXmlContext.m */; };
+		79F8A41D16C9825E00491143 /* OXmlElementMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A40C16C9825E00491143 /* OXmlElementMapper.m */; };
+		79F8A41E16C9825E00491143 /* OXmlElementMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A40C16C9825E00491143 /* OXmlElementMapper.m */; };
+		79F8A41F16C9825E00491143 /* OXmlMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A40E16C9825E00491143 /* OXmlMapper.m */; };
+		79F8A42016C9825E00491143 /* OXmlMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A40E16C9825E00491143 /* OXmlMapper.m */; };
+		79F8A42116C9825E00491143 /* OXmlPrinter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A41016C9825E00491143 /* OXmlPrinter.m */; };
+		79F8A42216C9825E00491143 /* OXmlPrinter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A41016C9825E00491143 /* OXmlPrinter.m */; };
+		79F8A42316C9825E00491143 /* OXmlReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A41216C9825E00491143 /* OXmlReader.m */; };
+		79F8A42416C9825E00491143 /* OXmlReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A41216C9825E00491143 /* OXmlReader.m */; };
+		79F8A42516C9825E00491143 /* OXmlXPathMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A41416C9825E00491143 /* OXmlXPathMapper.m */; };
+		79F8A42616C9825E00491143 /* OXmlXPathMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A41416C9825E00491143 /* OXmlXPathMapper.m */; };
+		79F8A42716C9825E00491143 /* OXmlWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A41616C9825E00491143 /* OXmlWriter.m */; };
+		79F8A42816C9825E00491143 /* OXmlWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A41616C9825E00491143 /* OXmlWriter.m */; };
+		79F8A42916C9825E00491143 /* OXPathLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A41816C9825E00491143 /* OXPathLite.m */; };
+		79F8A42A16C9825E00491143 /* OXPathLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A41816C9825E00491143 /* OXPathLite.m */; };
+		79F8A42D16C983AA00491143 /* NSMutableArray+OXStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A42C16C983AA00491143 /* NSMutableArray+OXStack.m */; };
+		79F8A42E16C983AA00491143 /* NSMutableArray+OXStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A42C16C983AA00491143 /* NSMutableArray+OXStack.m */; };
+		79F8A43716CAF7EF00491143 /* BarackObamaTwitterFeed.xml in Resources */ = {isa = PBXBuildFile; fileRef = 79F8A43616CAF7EF00491143 /* BarackObamaTwitterFeed.xml */; };
+		79F8A43B16CC5DFC00491143 /* OXContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A43A16CC5DFC00491143 /* OXContext.m */; };
+		79F8A43C16CC5DFC00491143 /* OXContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F8A43A16CC5DFC00491143 /* OXContext.m */; };
+		79F8A44116CCAED200491143 /* iTunesNewReleasesRSS.xml in Resources */ = {isa = PBXBuildFile; fileRef = 79F8A44016CCAED200491143 /* iTunesNewReleasesRSS.xml */; };
+		79F8A44616D0076600491143 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A44516D0076600491143 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,25 +76,65 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
-				79F8A3BC16C97F6500491143 /* SAXy.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		79A8C9D516DB3CE80082E8AE /* OXmlNamespaceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlNamespaceTests.m; sourceTree = "<group>"; };
+		79A8C9E716DC2FED0082E8AE /* OXiTunesRSSExampleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXiTunesRSSExampleTests.m; sourceTree = "<group>"; };
+		79A8C9E916DC2FED0082E8AE /* OXmlNonKVCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlNonKVCTests.m; sourceTree = "<group>"; };
+		79A8C9EA16DC2FED0082E8AE /* OXmlTypeMappingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlTypeMappingTests.m; sourceTree = "<group>"; };
+		79A8C9EC16DC2FED0082E8AE /* OXPathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXPathTests.m; sourceTree = "<group>"; };
+		79A8C9EF16DC2FEE0082E8AE /* OXTransformTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXTransformTests.m; sourceTree = "<group>"; };
+		79A8C9F016DC2FEE0082E8AE /* OXTwitterExampleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXTwitterExampleTests.m; sourceTree = "<group>"; };
+		79A8C9FB16DD38A10082E8AE /* OXTutorialTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXTutorialTests.m; sourceTree = "<group>"; };
 		79F8A3B316C97F6500491143 /* libSAXy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSAXy.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		79F8A3B616C97F6500491143 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		79F8A3BA16C97F6500491143 /* SAXy-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SAXy-Prefix.pch"; sourceTree = "<group>"; };
-		79F8A3BB16C97F6500491143 /* SAXy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SAXy.h; sourceTree = "<group>"; };
-		79F8A3BD16C97F6500491143 /* SAXy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SAXy.m; sourceTree = "<group>"; };
 		79F8A3C416C97F6500491143 /* SAXyTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAXyTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		79F8A3C516C97F6500491143 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		79F8A3C716C97F6500491143 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		79F8A3CF16C97F6500491143 /* SAXyTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SAXyTests-Info.plist"; sourceTree = "<group>"; };
 		79F8A3D116C97F6500491143 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		79F8A3D316C97F6500491143 /* SAXyTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SAXyTests.h; sourceTree = "<group>"; };
-		79F8A3D416C97F6500491143 /* SAXyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SAXyTests.m; sourceTree = "<group>"; };
+		79F8A3EC16C9810A00491143 /* ContactsTestData.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ContactsTestData.xml; sourceTree = "<group>"; };
+		79F8A3EF16C9824E00491143 /* OXBlockDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXBlockDef.h; sourceTree = "<group>"; };
+		79F8A3F016C9824E00491143 /* OXContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXContext.h; sourceTree = "<group>"; };
+		79F8A3F116C9824E00491143 /* OXPathMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXPathMapper.h; sourceTree = "<group>"; };
+		79F8A3F216C9824E00491143 /* OXPathMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXPathMapper.m; sourceTree = "<group>"; };
+		79F8A3F416C9824E00491143 /* OXProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXProperty.h; sourceTree = "<group>"; };
+		79F8A3F516C9824E00491143 /* OXProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXProperty.m; sourceTree = "<group>"; };
+		79F8A3F616C9824E00491143 /* OXTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXTransform.h; sourceTree = "<group>"; };
+		79F8A3F716C9824E00491143 /* OXTransform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXTransform.m; sourceTree = "<group>"; };
+		79F8A3F816C9824E00491143 /* OXType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXType.h; sourceTree = "<group>"; };
+		79F8A3F916C9824E00491143 /* OXType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXType.m; sourceTree = "<group>"; };
+		79F8A3FA16C9824E00491143 /* OXUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXUtil.h; sourceTree = "<group>"; };
+		79F8A3FB16C9824E00491143 /* OXUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXUtil.m; sourceTree = "<group>"; };
+		79F8A40716C9825E00491143 /* OXComplexMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OXComplexMapper.h; path = ../SAX/OXComplexMapper.h; sourceTree = "<group>"; };
+		79F8A40816C9825E00491143 /* OXComplexMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OXComplexMapper.m; path = ../SAX/OXComplexMapper.m; sourceTree = "<group>"; };
+		79F8A40916C9825E00491143 /* OXmlContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXmlContext.h; sourceTree = "<group>"; };
+		79F8A40A16C9825E00491143 /* OXmlContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlContext.m; sourceTree = "<group>"; };
+		79F8A40B16C9825E00491143 /* OXmlElementMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXmlElementMapper.h; sourceTree = "<group>"; };
+		79F8A40C16C9825E00491143 /* OXmlElementMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlElementMapper.m; sourceTree = "<group>"; };
+		79F8A40D16C9825E00491143 /* OXmlMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXmlMapper.h; sourceTree = "<group>"; };
+		79F8A40E16C9825E00491143 /* OXmlMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlMapper.m; sourceTree = "<group>"; };
+		79F8A40F16C9825E00491143 /* OXmlPrinter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXmlPrinter.h; sourceTree = "<group>"; };
+		79F8A41016C9825E00491143 /* OXmlPrinter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlPrinter.m; sourceTree = "<group>"; };
+		79F8A41116C9825E00491143 /* OXmlReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXmlReader.h; sourceTree = "<group>"; };
+		79F8A41216C9825E00491143 /* OXmlReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlReader.m; sourceTree = "<group>"; };
+		79F8A41316C9825E00491143 /* OXmlXPathMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXmlXPathMapper.h; sourceTree = "<group>"; };
+		79F8A41416C9825E00491143 /* OXmlXPathMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlXPathMapper.m; sourceTree = "<group>"; };
+		79F8A41516C9825E00491143 /* OXmlWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXmlWriter.h; sourceTree = "<group>"; };
+		79F8A41616C9825E00491143 /* OXmlWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlWriter.m; sourceTree = "<group>"; };
+		79F8A41716C9825E00491143 /* OXPathLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXPathLite.h; sourceTree = "<group>"; };
+		79F8A41816C9825E00491143 /* OXPathLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXPathLite.m; sourceTree = "<group>"; };
+		79F8A42B16C983AA00491143 /* NSMutableArray+OXStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+OXStack.h"; sourceTree = "<group>"; };
+		79F8A42C16C983AA00491143 /* NSMutableArray+OXStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+OXStack.m"; sourceTree = "<group>"; };
+		79F8A43616CAF7EF00491143 /* BarackObamaTwitterFeed.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = BarackObamaTwitterFeed.xml; sourceTree = "<group>"; };
+		79F8A43A16CC5DFC00491143 /* OXContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXContext.m; sourceTree = "<group>"; };
+		79F8A44016CCAED200491143 /* iTunesNewReleasesRSS.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iTunesNewReleasesRSS.xml; sourceTree = "<group>"; };
+		79F8A44516D0076600491143 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79F8A44616D0076600491143 /* CoreLocation.framework in Frameworks */,
 				79F8A3C616C97F6500491143 /* SenTestingKit.framework in Frameworks */,
 				79F8A3C816C97F6500491143 /* UIKit.framework in Frameworks */,
 				79F8A3C916C97F6500491143 /* Foundation.framework in Frameworks */,
@@ -101,6 +183,7 @@
 		79F8A3B516C97F6500491143 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				79F8A44516D0076600491143 /* CoreLocation.framework */,
 				79F8A3B616C97F6500491143 /* Foundation.framework */,
 				79F8A3C516C97F6500491143 /* SenTestingKit.framework */,
 				79F8A3C716C97F6500491143 /* UIKit.framework */,
@@ -111,8 +194,8 @@
 		79F8A3B816C97F6500491143 /* SAXy */ = {
 			isa = PBXGroup;
 			children = (
-				79F8A3BB16C97F6500491143 /* SAXy.h */,
-				79F8A3BD16C97F6500491143 /* SAXy.m */,
+				79F8A3EE16C9824E00491143 /* OX */,
+				79F8A40616C9825E00491143 /* SAX */,
 				79F8A3B916C97F6500491143 /* Supporting Files */,
 			);
 			path = SAXy;
@@ -129,8 +212,15 @@
 		79F8A3CD16C97F6500491143 /* SAXyTests */ = {
 			isa = PBXGroup;
 			children = (
-				79F8A3D316C97F6500491143 /* SAXyTests.h */,
-				79F8A3D416C97F6500491143 /* SAXyTests.m */,
+				79A8C9FB16DD38A10082E8AE /* OXTutorialTests.m */,
+				79A8C9E716DC2FED0082E8AE /* OXiTunesRSSExampleTests.m */,
+				79A8C9E916DC2FED0082E8AE /* OXmlNonKVCTests.m */,
+				79A8C9EA16DC2FED0082E8AE /* OXmlTypeMappingTests.m */,
+				79A8C9EC16DC2FED0082E8AE /* OXPathTests.m */,
+				79A8C9EF16DC2FEE0082E8AE /* OXTransformTests.m */,
+				79A8C9F016DC2FEE0082E8AE /* OXTwitterExampleTests.m */,
+				79A8C9D516DB3CE80082E8AE /* OXmlNamespaceTests.m */,
+				79F8A3EB16C9810A00491143 /* res */,
 				79F8A3CE16C97F6500491143 /* Supporting Files */,
 			);
 			path = SAXyTests;
@@ -143,6 +233,63 @@
 				79F8A3D016C97F6500491143 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		79F8A3EB16C9810A00491143 /* res */ = {
+			isa = PBXGroup;
+			children = (
+				79F8A43616CAF7EF00491143 /* BarackObamaTwitterFeed.xml */,
+				79F8A3EC16C9810A00491143 /* ContactsTestData.xml */,
+				79F8A44016CCAED200491143 /* iTunesNewReleasesRSS.xml */,
+			);
+			path = res;
+			sourceTree = "<group>";
+		};
+		79F8A3EE16C9824E00491143 /* OX */ = {
+			isa = PBXGroup;
+			children = (
+				79F8A3F116C9824E00491143 /* OXPathMapper.h */,
+				79F8A3F216C9824E00491143 /* OXPathMapper.m */,
+				79F8A40716C9825E00491143 /* OXComplexMapper.h */,
+				79F8A40816C9825E00491143 /* OXComplexMapper.m */,
+				79F8A3F816C9824E00491143 /* OXType.h */,
+				79F8A3F916C9824E00491143 /* OXType.m */,
+				79F8A3F416C9824E00491143 /* OXProperty.h */,
+				79F8A3F516C9824E00491143 /* OXProperty.m */,
+				79F8A3F016C9824E00491143 /* OXContext.h */,
+				79F8A43A16CC5DFC00491143 /* OXContext.m */,
+				79F8A3F616C9824E00491143 /* OXTransform.h */,
+				79F8A3F716C9824E00491143 /* OXTransform.m */,
+				79F8A3FA16C9824E00491143 /* OXUtil.h */,
+				79F8A3FB16C9824E00491143 /* OXUtil.m */,
+				79F8A3EF16C9824E00491143 /* OXBlockDef.h */,
+				79F8A42B16C983AA00491143 /* NSMutableArray+OXStack.h */,
+				79F8A42C16C983AA00491143 /* NSMutableArray+OXStack.m */,
+			);
+			path = OX;
+			sourceTree = "<group>";
+		};
+		79F8A40616C9825E00491143 /* SAX */ = {
+			isa = PBXGroup;
+			children = (
+				79F8A41316C9825E00491143 /* OXmlXPathMapper.h */,
+				79F8A41416C9825E00491143 /* OXmlXPathMapper.m */,
+				79F8A40B16C9825E00491143 /* OXmlElementMapper.h */,
+				79F8A40C16C9825E00491143 /* OXmlElementMapper.m */,
+				79F8A40D16C9825E00491143 /* OXmlMapper.h */,
+				79F8A40E16C9825E00491143 /* OXmlMapper.m */,
+				79F8A40916C9825E00491143 /* OXmlContext.h */,
+				79F8A40A16C9825E00491143 /* OXmlContext.m */,
+				79F8A41116C9825E00491143 /* OXmlReader.h */,
+				79F8A41216C9825E00491143 /* OXmlReader.m */,
+				79F8A41516C9825E00491143 /* OXmlWriter.h */,
+				79F8A41616C9825E00491143 /* OXmlWriter.m */,
+				79F8A40F16C9825E00491143 /* OXmlPrinter.h */,
+				79F8A41016C9825E00491143 /* OXmlPrinter.m */,
+				79F8A41716C9825E00491143 /* OXPathLite.h */,
+				79F8A41816C9825E00491143 /* OXPathLite.m */,
+			);
+			path = SAX;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,6 +364,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				79F8A3D216C97F6500491143 /* InfoPlist.strings in Resources */,
+				79F8A3ED16C9810A00491143 /* ContactsTestData.xml in Resources */,
+				79F8A43716CAF7EF00491143 /* BarackObamaTwitterFeed.xml in Resources */,
+				79F8A44116CCAED200491143 /* iTunesNewReleasesRSS.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,7 +393,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79F8A3BE16C97F6500491143 /* SAXy.m in Sources */,
+				79F8A3FC16C9824E00491143 /* OXPathMapper.m in Sources */,
+				79F8A3FE16C9824E00491143 /* OXProperty.m in Sources */,
+				79F8A40016C9824E00491143 /* OXTransform.m in Sources */,
+				79F8A40216C9824E00491143 /* OXType.m in Sources */,
+				79F8A40416C9824E00491143 /* OXUtil.m in Sources */,
+				79F8A41916C9825E00491143 /* OXComplexMapper.m in Sources */,
+				79F8A41B16C9825E00491143 /* OXmlContext.m in Sources */,
+				79F8A41D16C9825E00491143 /* OXmlElementMapper.m in Sources */,
+				79F8A41F16C9825E00491143 /* OXmlMapper.m in Sources */,
+				79F8A42116C9825E00491143 /* OXmlPrinter.m in Sources */,
+				79F8A42316C9825E00491143 /* OXmlReader.m in Sources */,
+				79F8A42516C9825E00491143 /* OXmlXPathMapper.m in Sources */,
+				79F8A42716C9825E00491143 /* OXmlWriter.m in Sources */,
+				79F8A42916C9825E00491143 /* OXPathLite.m in Sources */,
+				79F8A42D16C983AA00491143 /* NSMutableArray+OXStack.m in Sources */,
+				79F8A43B16CC5DFC00491143 /* OXContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,7 +416,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79F8A3D516C97F6500491143 /* SAXyTests.m in Sources */,
+				79F8A3FD16C9824E00491143 /* OXPathMapper.m in Sources */,
+				79F8A3FF16C9824E00491143 /* OXProperty.m in Sources */,
+				79F8A40116C9824E00491143 /* OXTransform.m in Sources */,
+				79F8A40316C9824E00491143 /* OXType.m in Sources */,
+				79F8A40516C9824E00491143 /* OXUtil.m in Sources */,
+				79F8A41A16C9825E00491143 /* OXComplexMapper.m in Sources */,
+				79F8A41C16C9825E00491143 /* OXmlContext.m in Sources */,
+				79F8A41E16C9825E00491143 /* OXmlElementMapper.m in Sources */,
+				79F8A42016C9825E00491143 /* OXmlMapper.m in Sources */,
+				79F8A42216C9825E00491143 /* OXmlPrinter.m in Sources */,
+				79F8A42416C9825E00491143 /* OXmlReader.m in Sources */,
+				79F8A42616C9825E00491143 /* OXmlXPathMapper.m in Sources */,
+				79F8A42816C9825E00491143 /* OXmlWriter.m in Sources */,
+				79F8A42A16C9825E00491143 /* OXPathLite.m in Sources */,
+				79F8A42E16C983AA00491143 /* NSMutableArray+OXStack.m in Sources */,
+				79F8A43C16CC5DFC00491143 /* OXContext.m in Sources */,
+				79A8C9DF16DB3CE80082E8AE /* OXmlNamespaceTests.m in Sources */,
+				79A8C9F116DC2FEE0082E8AE /* OXiTunesRSSExampleTests.m in Sources */,
+				79A8C9F316DC2FEE0082E8AE /* OXmlNonKVCTests.m in Sources */,
+				79A8C9F416DC2FEE0082E8AE /* OXmlTypeMappingTests.m in Sources */,
+				79A8C9F616DC2FEE0082E8AE /* OXPathTests.m in Sources */,
+				79A8C9F816DC2FEE0082E8AE /* OXTransformTests.m in Sources */,
+				79A8C9F916DC2FEE0082E8AE /* OXTwitterExampleTests.m in Sources */,
+				79A8C9FC16DD38A20082E8AE /* OXTutorialTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +591,7 @@
 				79F8A3DA16C97F6500491143 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		79F8A3DB16C97F6500491143 /* Build configuration list for PBXNativeTarget "SAXyTests" */ = {
 			isa = XCConfigurationList;
@@ -411,6 +600,7 @@
 				79F8A3DD16C97F6500491143 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

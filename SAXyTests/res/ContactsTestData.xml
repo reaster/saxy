@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:contacts creator="http://OutsourceCafe.com" version="1.1" xmlns:c="http://OutsourceCafe.com/schema/contacts/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://OutsourceCafe.com/schema/contacts/1/1 ../contacts.xsd ">
+    <c:contact>
+        <c:orginization>
+            <c:name>Havasupai Tribe</c:name>
+            <c:homePage>http://home.com/index.html</c:homePage>
+            <c:lastUpdated>2013-01-22T15:45:30-0000</c:lastUpdated>
+            <c:notes>bla bla bla</c:notes>
+            <c:prospect>true</c:prospect>
+            <c:status>A</c:status>
+            <c:locations>288</c:locations>
+            <c:contactAttemps>9</c:contactAttemps>
+            <c:employees>99999999</c:employees>
+            <c:elevation>2006.84</c:elevation>
+            <c:netWorth>34567800000.33</c:netWorth>
+            <c:prospectW>yes</c:prospectW>
+            <c:statusW>A</c:statusW>
+            <c:locationsW>288</c:locationsW>
+            <c:contactAttempsW>9</c:contactAttempsW>
+            <c:employeesW>99999999</c:employeesW>
+            <c:elevationW>2006.84</c:elevationW>
+            <c:netWorthW>34567800000.33</c:netWorthW>
+            <!--
+             -->
+            <c:emails>
+                <c:email type="home" note="the man">dude@havasupai.org</c:email>
+                <c:email type="work" note="">infoe@havasupai.org</c:email>
+            </c:emails>
+            <c:address>
+                <c:orgunit>Big Division</c:orgunit>
+                <c:street1>33 Main St.</c:street1>
+                <c:street2>Suite #4</c:street2>
+                <c:boxnumber>P.O. Box 159</c:boxnumber>
+                <c:city>Supai</c:city>
+                <c:state>AZ</c:state>
+                <c:zip>86435</c:zip>
+            </c:address>
+        </c:orginization>
+    </c:contact>
+    <!--
+    <c:contact>
+        <c:orginization>
+            <c:name>Navajo Tribe</c:name>
+        </c:orginization>
+    </c:contact>
+     -->
+</c:contacts>
