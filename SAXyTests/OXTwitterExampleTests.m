@@ -8,7 +8,6 @@
 //
 //
 //  Created by Richard Easterling on 2/12/13.
-//  Copyright (c) 2013 Outsource Cafe, Inc. All rights reserved.
 //
 
 
@@ -103,6 +102,7 @@
     ]];
     
     OXmlReader *reader = [OXmlReader readerWithMapper:mapper];                          //create a reader using the mapper
+    reader.context.logReaderStack = NO;                                                 //set to 'YES' for a mapper trace
 
     NSDateFormatter *twitterDateFormatter = [[NSDateFormatter alloc] init];             //configure transform for twitter date formatting
     [twitterDateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
@@ -270,3 +270,19 @@
 }
 
 @end
+
+//
+//  Copyright (c) 2013 Outsource Cafe, Inc. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//

@@ -39,7 +39,6 @@
 //  see: http://feed2.w3.org/docs/rss2.html
 //
 //  Created by Richard Easterling on 1/25/13.
-//  Copyright (c) 2013 Outsource Cafe, Inc. All rights reserved.
 //
 
 #import "OXBlockDef.h"
@@ -83,3 +82,19 @@
 + (NSString *)keyForEncodedType:(const char *)encodedType;  //pulls type data from encoded property types or @encode() results
 
 @end
+
+//
+//  Copyright (c) 2013 Outsource Cafe, Inc. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//

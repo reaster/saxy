@@ -3,7 +3,6 @@
 //  SAXy OX - Object-to-XML mapping library
 //
 //  Created by Richard Easterling on 1/14/13.
-//  Copyright (c) 2013 Outsource Cafe, Inc. All rights reserved.
 //
 
 #import "OXmlReader.h"
@@ -237,9 +236,6 @@
     @autoreleasepool {
         OXSAXActionEnum mappingType = [_context peekMappingType];
         OXSAXActionEnum parentMappingType = [_context peekMappingTypeAtIndex:1];
-            if ([@"user" isEqualToString:tag] || [@"contact" isEqualToString:tag]) {
-                NSLog(@"end = %@", tag);
-            }
         if (mappingType == OX_SAX_SKIP_ACTION) {
             if (_logStack) NSLog(@"  end: %@ - skipping", [_context tagPath]);
         } else if (parentMappingType == OX_SAX_SKIP_ACTION && [_context.instanceStack count] < 2) {
@@ -248,7 +244,6 @@
             NSRange colon = [tag rangeOfString:@":"];
             NSString *elementName = colon.location == NSNotFound ? tag : [self removeTagPrefix:tag];
             NSString *nsPrefix = colon.location == NSNotFound ? OX_DEFAULT_NAMESPACE : [self namespacePrefix:tag];
-//            NSString *nsURI = nsPrefix ? [_mapper.nsByPrefix objectForKey:nsPrefix] : OX_DEFAULT_NAMESPACE;
             //get object off the top of stack and process according to mapping type
             NSObject *targetObj = [_context.instanceStack peek];
             OXmlElementMapper *elementMapper = [_context.mapperStack peek];
@@ -380,3 +375,19 @@
 
 
 @end
+
+//
+//  Copyright (c) 2013 Outsource Cafe, Inc. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
