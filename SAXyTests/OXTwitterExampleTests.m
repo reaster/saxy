@@ -1,5 +1,5 @@
 //
-//  OXTwitterTests.m
+//  OXTwitterExampleTests.m
 //  SAXy OX - Object-to-XML mapping library
 //
 //  This demonstrates using SAXy with twitter feeds.
@@ -76,9 +76,9 @@
 ///////////////////////////////////////////////////////////////////////////////////
 
 
-@interface OXTwitterTests : SenTestCase @end
+@interface OXTwitterExampleTests : SenTestCase @end
 
-@implementation OXTwitterTests
+@implementation OXTwitterExampleTests
 
 
 /**
