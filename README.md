@@ -6,7 +6,7 @@ SAXy OX is a full-featured XML marshalling framework for Objective-C.
 It supports
 
  * reading and writing xml from object hierarchies
- * full namespace support
+ * full XML namespace support
  * built-in type conversion
  * extensive configuration options
  * modern Objective-C: ARC and blocks
@@ -23,7 +23,7 @@ There are several well-documented  examples in the SAXyTests folder, including:
 
 Usage tips
 
- * Run the examples (Product->Test in Xcode), set break points to inspect state 
+ * run the examples (Product->Test in Xcode), set break points to inspect state 
  * watch the mapper in action by setting: reader.context.logReaderStack = YES;
  * create your own mapping by starting with a working example and making small modifications
 
