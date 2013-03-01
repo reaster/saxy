@@ -16,14 +16,13 @@
 
 @interface OXmlMapper : NSObject //<OXPathMatcher>
 
-@property(strong,nonatomic,readonly)OXmlElementMapper *rootMapper;
-@property(strong,nonatomic,readonly)NSDictionary *nsByURI;
-@property(strong,nonatomic,readonly)NSDictionary *nsByPrefix;
-@property(strong,nonatomic,readonly)NSString *nsPrefix;
-@property(strong,nonatomic,readonly)NSString *nsURI;
-@property(assign,nonatomic,readonly)BOOL namespaceAware;
-@property(strong,nonatomic,readonly)OXmlContext *context;
-@property(assign,nonatomic,readonly)BOOL isConfigured;
+@property(strong,nonatomic,readonly)OXmlElementMapper *rootMapper;  //holds root mapper instance
+@property(strong,nonatomic,readonly)NSDictionary *nsByURI;          //lookup table of current nsPrefixes key by nsURIs
+@property(strong,nonatomic,readonly)NSDictionary *nsByPrefix;       //lookup table of current nsURIs key by nsPrefixes
+@property(strong,nonatomic,readonly)NSString *nsPrefix;             //root or default namespace prefix
+@property(strong,nonatomic,readonly)NSString *nsURI;                //root or default namespace URI
+@property(assign,nonatomic,readonly)BOOL namespaceAware;            //set internally when namespace processing is active
+@property(assign,nonatomic,readonly)BOOL isConfigured;              //flag to track configuration state - triggered lazily
 
 #pragma mark - constructor
 + (id)mapper;

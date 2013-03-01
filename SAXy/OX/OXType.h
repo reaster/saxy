@@ -5,7 +5,7 @@
 //  Type metadata needed for mapping system. Types supported include:
 //
 //    atomic        - single-value types
-//    scalar        - atomic scalar values, often in a wrapper class like NSNumber
+//    scalar        - atomic scalar values, often in a wrapper class like NSValue or NSNumber
 //    containers    - with a child type
 //    complex       - multi-property classes
 //    polymorphic   - placeholder types, usually NSObject
@@ -16,6 +16,9 @@
 //  container (NSArray, NSDictionary, etc.) mapping requires child type information. Finally, complex
 //  multi-value types are defined by their properties which this class will automaticly obtain using
 //  self reflection.
+//
+//  TODO probably should be renamed OXMetaType.
+//
 //
 //  Created by Richard Easterling on 1/26/13.
 //

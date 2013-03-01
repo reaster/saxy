@@ -4,6 +4,8 @@
 //
 //  Object-to-XML writer/marshalling class.
 //
+//  TODO reduce memory footprint by supporting streams
+//
 //  Created by Richard Easterling on 1/20/13.
 //
 

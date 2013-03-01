@@ -21,7 +21,7 @@
     if ((self = [super init])) {
         _mappingTypeStack = [[NSMutableArray alloc] init];
         _currentStringValue = [[NSMutableString alloc] initWithCapacity:250];
-        _namespaces = [[NSMutableDictionary alloc] init];
+        //_namespaces = [[NSMutableDictionary alloc] init];
         _attributeFilterBlock = ^(NSString *attrName, NSString *attrValue) {
             NSString *value = [attrValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             return (value && [value length] > 0 && ![attrName hasPrefix:@"xmlns"]) ? value : nil; //ignore nil, empty and xml-namespace attributes
@@ -36,26 +36,38 @@
 }
 
 #pragma mark - OXSAXActionEnum stack
-- (void)pushMappingType:(OXSAXActionEnum)mappingType { [_mappingTypeStack addObject:[NSNumber numberWithInt:mappingType]]; }
-- (OXSAXActionEnum)popMappingType                    { OXSAXActionEnum t = [self peekMappingType]; [_mappingTypeStack removeLastObject]; return t; }
-- (OXSAXActionEnum)peekMappingType                   { return (OXSAXActionEnum)[[_mappingTypeStack lastObject] intValue]; }
+
+- (void)pushMappingType:(OXSAXActionEnum)mappingType
+{
+    [_mappingTypeStack addObject:[NSNumber numberWithInt:mappingType]];
+}
+- (OXSAXActionEnum)popMappingType
+{
+    OXSAXActionEnum t = [self peekMappingType]; [_mappingTypeStack removeLastObject]; return t;
+}
+- (OXSAXActionEnum)peekMappingType
+{
+    return (OXSAXActionEnum)[[_mappingTypeStack lastObject] intValue];
+}
 - (OXSAXActionEnum)peekMappingTypeAtIndex:(NSInteger)index
 {
     NSInteger reverseIndex = [_mappingTypeStack count] - (index + 1);
     return reverseIndex < 0 ? OX_SAX_SKIP_ACTION: [[_mappingTypeStack objectAtIndex:reverseIndex] integerValue];
 }
-//- (void)pushElement:(NSString *)elementName         { [_elementStack addObject:elementName]; }
-//- (NSString *)popElement                            { NSString *e = [self peekElement]; [_elementStack removeLastObject]; return e; }
-//- (NSString *)peekElement                           { return [_elementStack lastObject]; }
-//- (NSString *)parentElement                         { int count = [_elementStack count]; return count > 1 ? [_elementStack objectAtIndex:count-2] : @"/"; }
-//- (void)pushObject:(NSObject *)object               { [_instanceStack addObject:object]; }
-//- (NSObject *)popObject                             { NSObject *o = [self peekObject]; [_instanceStack removeLastObject]; return o; }
-//- (NSObject *)peekObject                            { return [_instanceStack lastObject]; }
 
 #pragma mark - element body text
-- (NSString *)text                                  { return [_currentStringValue copy]; }
-- (void)clearText                                   { [_currentStringValue setString:@""]; }
-- (void)appendText:(NSString *)text                 { [_currentStringValue appendString:text]; }
+- (NSString *)text
+{
+    return [_currentStringValue copy];
+}
+- (void)clearText
+{
+    [_currentStringValue setString:@""];
+}
+- (void)appendText:(NSString *)text
+{
+    [_currentStringValue appendString:text];
+}
 
 #pragma mark - debug
 - (NSString *)tagPath

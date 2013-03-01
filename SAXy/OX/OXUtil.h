@@ -2,7 +2,7 @@
 //  OXUtil.h
 //  SAXy OX - Object-to-XML mapping library
 //
-//  Misceleanious static support methods, mostly concerned with string handling and self reflection.
+//  Miscellaneous static support methods, mostly concerned with string handling or self reflection.
 //
 //  Created by Richard Easterling on 2/10/13.
 //

@@ -2,6 +2,8 @@
 //  OXComplexMapper.m
 //  SAXy OX - Object-to-XML mapping library
 //
+//  TODO inheritting from OXPathMapper seams to be overkill because we only use the factory block and fromType properties in practice.
+//
 //  Created by Richard Easterling on 2/10/13.
 //
 

@@ -2,7 +2,9 @@
 //  OXmlReader.h
 //  SAXy OX - Object-to-XML mapping library
 //
-//  XML-to-Object unmarshalling class based on NSXMLParser.
+//  XML-to-Object unmarshalling class based on NSXMLParser and NSXMLParserDelegate callbacks.
+//
+//  TODO reduce memory footprint by supporting a true SAX-basd parser (NSXMLParser reads in the whole XML document)
 //
 //  Created by Richard Easterling on 1/14/13.
 //
@@ -15,7 +17,6 @@
 @interface OXmlReader : NSObject <NSXMLParserDelegate>
 
 #pragma mark - properties
-//@property(weak,nonatomic,readwrite) NSArray *mappers;           //array of OXmlMapper's (optionally mapped to namespaces)
 @property(weak,nonatomic,readonly) OXmlMapper *mapper;
 @property(strong,nonatomic,readwrite) NSURL *url;
 @property(strong,nonatomic,readwrite) NSString *error;
@@ -23,8 +24,6 @@
 @property(strong,nonatomic,readonly) OXmlContext *context;
 
 #pragma mark - constructor
-//- (id)initWithContext:(OXmlContext *)context mapper:OXmlMapper *mapper;
-//+ (id)readerWithContext:(OXmlContext *)context mapper:OXmlMapper *mapper;
 + (id)readerWithContext:(OXmlContext *)context mapper:(OXmlMapper *)xmlMapper;
 + (id)readerWithMapper:(OXmlMapper *)xmlMapper;
 
@@ -46,14 +45,7 @@
 // read XML from a resource file
 - (id)readXmlFile:(NSString *)fileName;
 
-//// used when elements with the same name map to different classes.
-//- (void)overrideMapping:(OCTagMapping *)mapping forElement:(NSString *)elementName;
-
 - (id)readXml:(NSXMLParser *)parser;
-
-//#pragma mark - lookup
-//- (OXmlMapper *)mapperForNamespace:(NSString *)nsURI;
-//- (OXmlMapper *)mapperForNamespacePrefix:(NSString *)nsPrefix;
 
 @end
 

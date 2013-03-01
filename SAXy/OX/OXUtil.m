@@ -304,17 +304,13 @@
         for (typeof(outCount) i = 0; i < outCount; i++) {
             objc_property_t *prop = propList + i;
             const char *propName = property_getName(*prop);
-            if (strcmp(propName, "_mapkit_hasPanoramaID") != 0) {
-                const char *attr = property_getAttributes(*prop);
-                if (attr) {
-                    Class propertyClass = [[self class] kvcClassForScalar:attr];
-                    if (propertyClass) {
-                        NSString *propNameString = [[NSString alloc] initWithCString:propName encoding:NSUTF8StringEncoding];
-                        //NSString *attributes = attr ? [[NSString alloc] initWithCString:attr encoding:NSUTF8StringEncoding] : nil;
-                        //NSArray *propAttributes = attributes ? [attributes componentsSeparatedByString:@","] : [NSArray array];
-                        if (propNameString) {
-                            block(propNameString, propertyClass, attr);
-                        }
+            const char *attr = property_getAttributes(*prop);
+            if (attr) {
+                Class propertyClass = [[self class] kvcClassForScalar:attr];
+                if (propertyClass) {
+                    NSString *propNameString = [[NSString alloc] initWithCString:propName encoding:NSUTF8StringEncoding];
+                    if (propNameString) {
+                        block(propNameString, propertyClass, attr);
                     }
                 }
             }

@@ -2,7 +2,7 @@
 //  OXBlockDef.h
 //  SAXy OX - Object-to-XML mapping library
 //
-//  Common OX block funciton typedefs.
+//  Common OX block funciton typedefs.  Most of these are used in the OXPathMapper class.
 //
 //  Created by Richard Easterling on 1/28/13.
 //

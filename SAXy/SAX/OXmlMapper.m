@@ -16,13 +16,8 @@
     NSMutableDictionary *_elementMappersByNSURI;
     NSMutableDictionary *_nsByURI;
     NSMutableDictionary *_nsByPrefix;
+    OXmlContext *_context;
 }
-
-@synthesize isConfigured = _isConfigured;
-@synthesize nsPrefix = _nsPrefix;
-@synthesize nsURI = _nsURI;
-@synthesize nsByURI = _nsByURI;
-@synthesize nsByPrefix = _nsByPrefix;
 
 
 #pragma mark - constructor

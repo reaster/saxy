@@ -68,7 +68,7 @@
 @property(strong,readwrite,nonatomic) NSDate *lastUpdated;
 @property(strong,readwrite,nonatomic) NSMutableString *notes;
 //scalar types:
-@property(assign,readwrite,nonatomic) BOOL prospect;
+@property(readwrite,nonatomic) BOOL prospect;
 @property(assign,readwrite,nonatomic) char status;
 @property(assign,readwrite,nonatomic) short locations;
 @property(assign,readwrite,nonatomic) int contactAttemps;

@@ -2,7 +2,16 @@
 //  OXmlXPathMapper.h
 //  SAXy OX - Object-to-XML mapping library
 //
-//  Extends OXPathMapper with XML-ish properties (xpath, namespace and xmlType) and constructors. 
+//  OXmlXPathMapper extends OXPathMapper with XML-ish properties (xpath, namespace and xmlType) and constructors.
+//
+//  In the object-to-XML context the toPath (target) is a KVC property, for example: contact.address.city.
+//  Likewise, the fromPath (source) is an xpath expression, for example: /root/element/@attribute.
+//
+//  Builder methods are provided to set properties making this class (mostly) immutable.
+//
+//  OXmlXPathMapper instances live in OXmlElementMapper objects, accessed through the parent property.
+//
+//  Optionaly a XML namespace can be set. If not set, the namespace returned will be the parent's namespace.
 //
 //  Created by Richard Easterling on 1/29/13.
 //
@@ -17,17 +26,15 @@ typedef enum {
     OX_XML_BODY
 } OXmlTypeEnum;
 
-#define OX_TEXT_NODE @"text()"
-#define OX_ATTRIBUTE_PREFIX @"@"
 
 @interface OXmlXPathMapper : OXPathMapper
 
 #pragma mark - properties
-@property(strong,nonatomic,readonly)OXPathLite *xpath;                 //only created if for complex element paths
-@property(strong,nonatomic,readonly)OXType *proxyType;                //used instead of declared class, must be a toTransfrom
-@property(strong,nonatomic,readonly)NSString *nsURI;                  //if not specified, defaults to parent nsURI
-@property(assign,nonatomic,readonly)OXmlTypeEnum xmlType;
-@property(strong,nonatomic,readonly)OXmlXPathMapper *next;            //can be multiple mappers matching rootPath
+@property(strong,nonatomic,readonly)OXPathLite *xpath;      //parsed version of fromPath expression - only created for complex element paths
+@property(strong,nonatomic,readonly)OXType *proxyType;      //if present, will be instantiated instead of declared toType class
+@property(strong,nonatomic,readonly)NSString *nsURI;        //namespace of tag. If not specified, defaults to parent nsURI
+@property(assign,nonatomic,readonly)OXmlTypeEnum xmlType;   //what type of XML node this maps to
+@property(strong,nonatomic,readonly)OXmlXPathMapper *next;  //allows chaining of mappers with the same lookup key (i.e. the same leafPath)
 
 
 #pragma mark - constructors
@@ -48,7 +55,6 @@ typedef enum {
 - (OXmlXPathMapper *)proxyClass:(Class)proxyClass;
 - (OXmlXPathMapper *)isVirtualProperty;
 - (OXmlXPathMapper *)formatter:(NSString *)formatterName;
-
 
 #pragma mark - utility
 + (OXmlTypeEnum)xmlTypeFromPath:(NSString *)xpath;

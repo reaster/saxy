@@ -2,6 +2,20 @@
 //  OXmlContext.h
 //  SAXy OX - Object-to-XML mapping library
 //
+//  The context provides runtime state to readers and writers in form of various stacks and access
+//  to the transform instance.  Specificly, it provides:
+//
+//  1) instanceStack        - target instances created by the mapper starting with the 'root' object
+//  2) mapperStack          - OXmlElementMapper mappers used to instantiate the objects in the instance stack
+//  3) pathStack            - tag path from root ('/') to leaf element - xpath queries run against pathStack
+//  4) transform            - OXTransform with registered formatters and default block functions
+//  5) result               - holds the result ('root' object) of the mapping operation
+//  6) userData             - for custom mappers that need to pass data between operations at run time
+//  7) debug tools          - logReaderStack and logReaderInput allow tracing of mapping process
+//  8) global filtering     - attributeFilterBlock and elementFilterBlock can filter input by returning nil
+//  9) OXSAXActionEnum stack - used internally to track mapping modes
+
+//
 //  Created by Richard Easterling on 1/15/13.
 //
 
@@ -23,11 +37,11 @@ typedef NSString* (^OXmlElementFilterBlock)(NSString *elementName, NSString *ele
 
 @interface OXmlContext : OXContext
 
-@property(strong,readwrite,nonatomic) NSMutableDictionary *namespaces;     //indexed by prefix
-@property(copy,readwrite,nonatomic) OXmlAttributeFilterBlock attributeFilterBlock;
-@property(copy,readwrite,nonatomic) OXmlElementFilterBlock elementFilterBlock;
-@property(assign,readwrite,nonatomic) BOOL logReaderStack;
-@property(assign,readwrite,nonatomic) BOOL logReaderInput;
+//@property(strong,readwrite,nonatomic) NSMutableDictionary *namespaces;            //indexed by prefix
+@property(copy,readwrite,nonatomic) OXmlAttributeFilterBlock attributeFilterBlock;  //enables global filtering of attributes
+@property(copy,readwrite,nonatomic) OXmlElementFilterBlock elementFilterBlock;      //enables global filtering of elements
+@property(assign,readwrite,nonatomic) BOOL logReaderStack;                          //log tag mapping - powerfull debugging tool
+@property(assign,readwrite,nonatomic) BOOL logReaderInput;                          //log input XML - usefull for remote data debugging
 
 #pragma mark - OXSAXActionEnum stack
 - (void)pushMappingType:(OXSAXActionEnum)mappingType;

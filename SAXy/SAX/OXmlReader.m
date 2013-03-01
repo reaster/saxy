@@ -160,8 +160,6 @@
             NSString *nsURI = nsPrefix ? [_mapper.nsByPrefix objectForKey:nsPrefix] : nil;
             if (nsURI == nil)
                 nsURI = OX_DEFAULT_NAMESPACE;
-//            if ([@"coverArt" isEqualToString:elementName])
-//                NSLog(@"didStartElement: %@", tag);
             //put tag on the stack
             [_context.pathStack push:elementName];
             OXmlElementMapper *parentMapper = [_context.mapperStack peek];
@@ -294,8 +292,6 @@
                         xpathMapper.setter(xpathMapper.toPath, elementText, targetObj, _context);
                     } else {
                         NSAssert4(NO, @"ERROR: no registered OXmlXPathMapper: %@ - %@.%@ =' %@'", [_context tagPath], targetObj, elementName, elementText);
-//                        if (_logStack) NSLog(@"  end: %@ - %@.%@='%@'", [_context tagPath], targetObj, elementName, elementText);
-//                        [self setValueOn:targetObj key:elementName value:elementText];
                     }
                 }
             }

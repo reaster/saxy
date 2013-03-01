@@ -16,6 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define OX_TEXT_NODE @"text()"
+#define OX_ATTRIBUTE_PREFIX @"@"
+
 typedef enum {
     OXUnknownType,
     OXRootPathType,
