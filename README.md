@@ -15,10 +15,10 @@ It supports
 
 There are several well-documented  examples in the SAXyTests folder, including:
 
- * OXTutorialTests - a step-by-step introduction to SAXy's features - START HERE!
- * OXTwitterTests  - a classic twitter read and write example
- * OXiTunesTests   - an advanced mixed namespace iTunes RSS mapping example
- * OXmlNonKVCTests - simple KVC and complex non-KVC-compliant mapping examples 
+ * [OXTutorialTests](SAXyTests/OXTutorialTests.m) - a step-by-step introduction to SAXy's features - START HERE!
+ * [OXTwitterTests](SAXyTests/OXTwitterExampleTests.m)  - a classic twitter read and write example
+ * [OXiTunesTests](SAXyTests/OXiTunesRSSExampleTests.m)   - an advanced mixed namespace iTunes RSS mapping example
+ * [OXmlNonKVCTests](SAXyTests/OXmlNonKVCTests.m) - simple KVC and complex non-KVC-compliant mapping examples 
 
 
 Usage tips
