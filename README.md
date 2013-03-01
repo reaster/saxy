@@ -30,11 +30,10 @@ Usage tips
 
 As an example, given the class:
 
-  @interface CartoonCharacter : NSObject
-    @property(nonatomic)NSString *firstName;
-    @property(nonatomic)NSString *lastName;
-    @property(nonatomic)NSDate *birthDay;
-  @end
+    @interface CartoonCharacter : NSObject
+      @property(nonatomic)NSString *firstName;
+      @property(nonatomic)NSString *lastName;
+    @end
 
 A SAXy mapping looks like this:
 
