@@ -35,7 +35,7 @@ As an example, given the class:
       @property(nonatomic)NSString *lastName;
     @end
 
-A SAXy mapping looks like this:
+A SAXy mapper and reader can be defined in just a few lines of code:
 
     NSString *xml = @"<tune><first>Daffy</first><last>Duck</last></tune>";
     
@@ -49,9 +49,9 @@ A SAXy mapping looks like this:
                            ]]
                           ];
     
-    CartoonCharacter *duck = [reader readXmlText:xml];          //read xml
+    CartoonCharacter *tune = [reader readXmlText:xml];          //read xml
     
-    STAssertEqualObjects(@"Daffy", duck.firstName, @"mapped 'first' element to 'firstName' property");
-    STAssertEqualObjects(@"Duck", duck.lastName, @"mapped 'last' element to 'lastName' property");
+    STAssertEqualObjects(@"Daffy", tune.firstName, @"mapped 'first' element to 'firstName' property");
+    STAssertEqualObjects(@"Duck",  tune.lastName,  @"mapped 'last'  element to 'lastName'  property");
 
  
