@@ -1,20 +1,21 @@
-//
-//  OXTutorialTests.m
-//  SAXy OX - Object-to-XML mapping library
-//
-//  Hands-on SAXy tutorial. Topics covered:
-//
-//  1) A simple XML mapping example
-//  2) Library anatomy - OXmlReader, OXmlWriter, OXmlMapper and OXmlElementMapper
-//  3) Consise mapping declarations - the builder pattern
-//  4) Reading lists of data
-//  5) Working with attributes and body text
-//  6) OXmlXPathMapper - for fine-grained control
-//  7) Namespace support
-//
-//  Created by Richard Easterling on 2/26/13.
-//
+/**
+ 
+  OXTutorialTests.m
+  SAXy OX - Object-to-XML mapping library
 
+  Hands-on SAXy tutorial. Topics covered:
+
+  1) A simple XML mapping example
+  2) Library anatomy - OXmlReader, OXmlWriter, OXmlMapper and OXmlElementMapper
+  3) Concise mapping declarations - the builder pattern
+  4) Reading lists of data
+  5) Working with attributes and body text
+  6) OXmlXPathMapper - for fine-grained control
+  7) Namespace support
+
+  Created by Richard Easterling on 2/26/13.
+ 
+ */
 #import <SenTestingKit/SenTestingKit.h>
 
 #import "OXmlReader.h"
@@ -57,17 +58,17 @@
     //map 'tune' element to CartoonCharacter class:
     OXmlMapper *mapper = [[OXmlMapper mapper] elements:@[ [OXmlElementMapper rootXPath:@"/tune" type:[CartoonCharacter class]] ]];
     
-    OXmlReader *reader = [OXmlReader readerWithMapper:mapper];          //create a reader based on the mapper
+    OXmlReader *reader = [OXmlReader readerWithMapper:mapper];          //creates a reader based on the mapper
     
-    CartoonCharacter *duck = [reader readXmlText:xml];                  //read xml
+    CartoonCharacter *duck = [reader readXmlText:xml];                  //reads xml
     
     STAssertEqualObjects(@"Daffy", duck.firstName,  @"mapped 'firstName' element to 'firstName' property");  //test results
     STAssertEqualObjects(@"Duck",  duck.lastName,   @"mapped 'lastName' element to 'lastName' property");
     
-    OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper];          //create a writer based on mapper
-    writer.xmlHeader = nil;                                             //don't include XML header so we can campare result string
+    OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper];          //creates a writer based on mapper
+    writer.xmlHeader = nil;                                             //doesn't include XML header so we can campare result string
     
-    NSString *output = [writer writeXml:duck prettyPrint:NO];           //write xml
+    NSString *output = [writer writeXml:duck prettyPrint:NO];           //writes xml
     STAssertEqualObjects(xml, output, @"input xml equals output xml");
 }
 
@@ -81,14 +82,13 @@
  4) OXmlElementMapper   - describes how attributes and elements are converted to class properties
  
  Readers and writers are easy to use and understand, all they require to do their job is a mapper instance.
- Mappers are basicly a list of element mappings, starting with a root mapping.
+ Mappers are basically a list of element mappings, starting with a root mapping.
  
  Element mappers associate XML element and attribute names with class properties. For specifying xml, SAXy
  supports a subset of the xpath language, but most of the time you can just think element names when you see xpath.
  
- This example is exactly the same as the last one except that this time we'll explicitly map the CartoonCharacter's
- properties, something that was done automaticly by SAXy before. We'll also shorten the element names to make it more
- interesting.
+ This example modifies the last by explicitly mapping the CartoonCharacter's properties, something that was done
+ automatically by SAXy before. We'll also shorten the element names to make it more interesting.
  */
 - (void)testLibraryAnatomy
 {
@@ -102,31 +102,31 @@
     [tuneMapper xpath:@"first" property:@"firstName"];
     [tuneMapper xpath:@"last" property:@"lastName"];
     
-    OXmlMapper *mapper = [OXmlMapper mapper];                           //create the mapper
+    OXmlMapper *mapper = [OXmlMapper mapper];                           //creates the mapper
     [mapper elements:@[ rootMapper, tuneMapper ]];                      //contains two element mappers
     
-    OXmlReader *reader = [OXmlReader readerWithMapper:mapper];          //create a reader based on the mapper
+    OXmlReader *reader = [OXmlReader readerWithMapper:mapper];          //creates a reader based on the mapper
     
-    CartoonCharacter *duck = [reader readXmlText:xml];                  //read xml
+    CartoonCharacter *duck = [reader readXmlText:xml];                  //reads xml
     
     STAssertEqualObjects(@"Daffy", duck.firstName, @"mapped 'first' element to 'firstName' property");  //test results
     STAssertEqualObjects(@"Duck", duck.lastName, @"mapped 'last' element to 'lastName' property");
     
-    OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper];          //create a writer based on mapper
-    writer.xmlHeader = nil;                                             //don't include XML header so we can campare strings
+    OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper];          //creates a writer based on mapper
+    writer.xmlHeader = nil;                                             //doesn't include XML header so we can compare strings
     
-    NSString *output = [writer writeXml:duck prettyPrint:NO];           //write xml
+    NSString *output = [writer writeXml:duck prettyPrint:NO];           //writes xml
     STAssertEqualObjects(xml, output, @"input xml equals output xml");
 }
 
 /**
  SAXy makes extensive use of the builder design pattern. The builder style takes a little getting used to, but once
- mastered allows for consise, flexible mappings. Refer to the 'builder' section of the OXmlMapper and OXmlElementMapper 
- header files for avialable methods.
+ mastered allows for concise, flexible mappings. Refer to the 'builder' section of the OXmlMapper and OXmlElementMapper
+ header files for available methods.
  
  Tip: use Xcode's automatic indentation to help make the builder code more readable.
  
- In this example we'll take it to the extreme and eleminate all unacessary instance variables, notice the nested
+ In this example we'll take it to the extreme and eliminate all unnecessary instance variables, notice the nested
  'xpath' statements in elementClass mapping.
  */
 - (void)testBuilderPattern
@@ -143,7 +143,7 @@
                            ]]
                           ];
     
-    CartoonCharacter *duck = [reader readXmlText:xml];                  //read xml
+    CartoonCharacter *duck = [reader readXmlText:xml];                  //reads xml
     
     STAssertEqualObjects(@"Daffy", duck.firstName, @"mapped 'first' element to 'firstName' property");  //test results
     STAssertEqualObjects(@"Duck", duck.lastName, @"mapped 'last' element to 'lastName' property");
@@ -167,9 +167,9 @@
                            xpath:@"last" property:@"lastName"]
                           ]];
     
-    OXmlReader *reader = [OXmlReader readerWithMapper:mapper];                      //create a reader based on the mapper
+    OXmlReader *reader = [OXmlReader readerWithMapper:mapper];                      //creates a reader based on the mapper
     
-    NSMutableArray *tunes = [reader readXmlText:xml];                               //read xml
+    NSMutableArray *tunes = [reader readXmlText:xml];                               //reads xml
     
     STAssertEquals((NSUInteger)2, [tunes count],  @"both Elmer and Daffy");         //test results
     
@@ -181,17 +181,17 @@
     STAssertEqualObjects(@"Daffy", daffy.firstName,  @"mapped 'firstName' element to 'firstName' property");  //test daffy
     STAssertEqualObjects(@"Duck",  daffy.lastName,   @"mapped 'lastName' element to 'lastName' property");
     
-    OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper];          //create a writer based on mapper
-    writer.xmlHeader = nil;                                             //don't include XML header so we can campare result string
+    OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper];          //creates a writer based on mapper
+    writer.xmlHeader = nil;                                             //doesn't include XML header so we can campare result string
     
-    NSString *output = [writer writeXml:tunes prettyPrint:NO];          //write xml using the array
+    NSString *output = [writer writeXml:tunes prettyPrint:NO];          //writes xml using the array
     STAssertEqualObjects(xml, output, @"input xml equals output xml");
 }
 
 
 /**
  SAXy supports mapping XML attributes to properties. Attributes can be mapped using the 'attribute' builder methods or
- by prefixing names with the '@' character in the 'xpath' builder methods.  Again refer to the 'builder' section of the 
+ by prefixing names with the '@' character in the 'xpath' builder methods.  Again refer to the 'builder' section of the
  OXmlElementMapper header file for usage.
  
  In addition to the attributes, we'll map Daffy's birthday into the body of the 'tune' element using the 'body'
@@ -199,7 +199,7 @@
  but no child elements.
  
  One last detail is to change the default date mapper, so we don't have to use the default RFC-3339 formatter.  We also
- reuse the formatter in the writer, by initilizing the writer with the reader's context.
+ reuse the formatter in the writer, by initializing the writer with the reader's context.
  */
 - (void)testAttributesAndBodyMappings
 {
@@ -216,36 +216,36 @@
     
     OXmlReader *reader = [OXmlReader readerWithMapper:mapper];
     reader.context.logReaderStack = NO;
-
+    
     NSDateFormatter *daffyDateFormatter = [[NSDateFormatter alloc] init];              //configure a new default date formatter
     [daffyDateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
     [daffyDateFormatter setDateFormat:@"MMMM d',' yyyy"];                             //format: April 4, 1937
     [reader.context.transform registerDefaultDateFormatter:daffyDateFormatter];        //register formatter with transform
     
-    CartoonCharacter *duck = [reader readXmlText:xml];                                 //read xml
+    CartoonCharacter *duck = [reader readXmlText:xml];                                 //reads xml
     
     STAssertEqualObjects(@"Daffy", duck.firstName, @"mapped 'first' attribute to 'firstName' property");  //test results
     STAssertEqualObjects(@"Duck", duck.lastName, @"mapped 'last' attribute to 'lastName' property");
     STAssertEqualObjects([daffyDateFormatter dateFromString:@"April 4, 1937"], duck.birthDay, @"mapped element body to 'birthDay' property");
     
-    OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper context:reader.context];  //create writer with reader context's new date formatter
-    writer.xmlHeader = nil;                                             //don't include XML header so we can campare strings
+    OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper context:reader.context];  //creates writer with reader context's new date formatter
+    writer.xmlHeader = nil;                                             //doesn't include XML header so we can compare strings
     writer.printer.quoteChar = @"'";                                    //use single quotes for the same reason
     
-    NSString *output = [writer writeXml:duck prettyPrint:NO];           //write xml
+    NSString *output = [writer writeXml:duck prettyPrint:NO];           //writes xml
     STAssertEqualObjects(xml, output, @"input xml equals output xml");
 }
 
 
 /**
  Most of the time mappings can be configured using OXmlElementMapper's builder methods.  However, when fine-grain
- control is required, custom OXmlXPathMapper instances can be created.  OXmlXPathMapper defines several important 
- block properties (i.e. getter, setter, factory and transform functions) that are assigned default functions by 
+ control is required, custom OXmlXPathMapper instances can be created.  OXmlXPathMapper defines several important
+ block properties (i.e. getter, setter, factory and transform functions) that are assigned default functions by
  SAXy, unless you set them first.
  
  In this example, we'll override the default KVC setter and getter blocks in OXmlXPathMapper to split a single tag
  into two properties.  The setter (called by the XML reader) splits the 'name' attribute into segments, assigning
- them to their respective properties.  The getter (called by the XML writer) concatenates the two propererties
+ them to their respective properties.  The getter (called by the XML writer) concatenates the two properties
  back together, returning the value part of the 'name' attribute.
  
  Additionally, two problems have to be avoided:
@@ -254,10 +254,10 @@
  2) avoid writing the 'firstName' and 'lastName' properties to the XML output
  
  The first problem is handled by declaring the 'name' attribute virtual.  The second problem can be solved by either
- an ignoreProperties:@[@"firstName", @"lastName"] clause.  Or, in this case, you could also call the lockMapping 
- method, effectively telling SAXy to ignore the man behind the curtain (i.e. not engage in any self reflection). 
+ an ignoreProperties:@[@"firstName", @"lastName"] clause.  Or, in this case, you could also call the lockMapping
+ method, effectively telling SAXy to ignore the man behind the curtain (i.e. not engage in any self reflection).
  
- Lastly, this example reverts to the default XML RFC-3339 date formatter.  As you may already know, for full ISO 8601 
+ Lastly, this example reverts to the default XML RFC-3339 date formatter.  As you may already know, for full ISO 8601
  date support, you may want to register a good third-party date formatter (see http://boredzo.org/iso8601unparser/).
  */
 - (void)testFineGrainedMapping
@@ -269,43 +269,53 @@
                           ,
                           [[[[OXmlElementMapper elementClass:[CartoonCharacter class]]
                              xpathMapper:[[[[OXmlXPathMapper xpath:@"@name" type:[NSString class]]                //attribute is indicated with '@' prefix
-                                             setter:^(NSString *path, id name, id target, OXContext *ctx) {
-                                                 CartoonCharacter *tune = target;
-                                                 NSArray *segments = [name componentsSeparatedByString:@" "];
-                                                 tune.firstName = [segments count] > 0 ? [segments objectAtIndex:0] : nil;
-                                                 tune.lastName = [segments count] > 1 ? [segments objectAtIndex:1] : nil;
-                                             }]
-                                            getter:^(NSString *path, id source, OXContext *ctx) {
-                                                CartoonCharacter *tune = source;
-                                                return [NSString stringWithFormat:@"%@ %@", tune.firstName, tune.lastName];
+                                            setter:^(NSString *path, id name, id target, OXContext *ctx) {
+                                                CartoonCharacter *tune = target;
+                                                NSArray *segments = [name componentsSeparatedByString:@" "];
+                                                tune.firstName = [segments count] > 0 ? [segments objectAtIndex:0] : nil;
+                                                tune.lastName = [segments count] > 1 ? [segments objectAtIndex:1] : nil;
                                             }]
-                                           isVirtualProperty]   //prevent validation against CartoonCharacter class
-                            ]
+                                           getter:^(NSString *path, id source, OXContext *ctx) {
+                                               CartoonCharacter *tune = source;
+                                               return [NSString stringWithFormat:@"%@ %@", tune.firstName, tune.lastName];
+                                           }]
+                                          isVirtualProperty]   //prevent validation against CartoonCharacter class
+                             ]
                             body:@"birthDay"]
-                           ignoreProperties:@[@"firstName", @"lastName"]]   //don't write (or read) these properties
-                           //lockMapping]  //prevents SAXy from discovering and writing firstName and lastName properties
+                           ignoreProperties:@[@"firstName", @"lastName"]]   //doesn't write (or read) these properties
+                          //lockMapping]  //prevents SAXy from discovering and writing firstName and lastName properties
                           ]];
     
     OXmlReader *reader = [OXmlReader readerWithMapper:mapper];
     reader.context.logReaderStack = NO;
-    CartoonCharacter *fudd = [reader readXmlText:xml];                 //read xml
+    CartoonCharacter *fudd = [reader readXmlText:xml];                 //reads xml
     
     STAssertEqualObjects(@"Elmer", fudd.firstName, @"mapped 'first' attribute to 'firstName' property");  //test results
     STAssertEqualObjects(@"Fudd", fudd.lastName, @"mapped 'last' attribute to 'lastName' property");
     NSDateFormatter *formatter = [reader.context.transform defaultDateFormatter];          //dig out default date formatter
     STAssertEqualObjects([formatter dateFromString:@"1940-03-02T00:00:00+0000"], fudd.birthDay, @"mapped element body to 'birthDay' property");
     
-    OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper];          //create a writer based on mapper
-    writer.xmlHeader = nil;                                             //don't include XML header so we can campare strings
+    OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper];          //creates a writer based on mapper
+    writer.xmlHeader = nil;                                             //doesn't include XML header so we can compare strings
     writer.printer.quoteChar = @"'";                                    //use single quotes for the same reason
     
-    NSString *output = [writer writeXml:fudd prettyPrint:NO];           //write xml
+    NSString *output = [writer writeXml:fudd prettyPrint:NO];           //writes xml
     STAssertEqualObjects(xml, output, @"input xml equals output xml");
 }
 
 
 /**
- Naemespace support.
+ SAXy has full XML naemespace support including support for prefixed and default (non-prefixed) namespaces.
+ 
+ Namespaces can be declared:
+ 
+ 1) per mapping   - in the OXmlMapper constructor
+ 2) per class     - in the OXmlElementMapper constructor
+ 3) per property  - using OXmlElementMapper's switchToNamespaceURI builder method
+ 
+ This example demonstrates how to declare a prefixed namespace for an entire mapping.
+ 
+ See OXiTunesTests.m for an example of a complex, mixed namespace mapping on a RSS document.
  */
 - (void)testNamespaceSupport
 {
@@ -321,18 +331,18 @@
                            xpath:@"last" property:@"lastName"]
                           ]];
     
-    OXmlReader *reader = [OXmlReader readerWithMapper:mapper];                      //create a reader based on the mapper
+    OXmlReader *reader = [OXmlReader readerWithMapper:mapper];                      //creates a reader based on the mapper
     
-    CartoonCharacter *fudd = [reader readXmlText:xml];                 //read xml
+    CartoonCharacter *fudd = [reader readXmlText:xml];                 //reads xml
     
     STAssertEqualObjects(@"Elmer", fudd.firstName, @"mapped 'first' attribute to 'firstName' property");  //test results
     STAssertEqualObjects(@"Fudd", fudd.lastName, @"mapped 'last' attribute to 'lastName' property");
     
-    OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper];          //create a writer based on mapper
-    writer.xmlHeader = nil;                                             //don't include XML header so we can campare strings
+    OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper];          //creates a writer based on mapper
+    writer.xmlHeader = nil;                                             //doesn't include XML header so we can compare strings
     writer.printer.quoteChar = @"'";                                    //use single quotes for the same reason
     
-    NSString *output = [writer writeXml:fudd prettyPrint:NO];           //write xml
+    NSString *output = [writer writeXml:fudd prettyPrint:NO];           //writes xml
     STAssertEqualObjects(xml, output, @"input xml equals output xml");
 }
 
@@ -354,3 +364,4 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+

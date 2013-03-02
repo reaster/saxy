@@ -1,16 +1,16 @@
-//
-//  OXTwitterExampleTests.m
-//  SAXy OX - Object-to-XML mapping library
-//
-//  This demonstrates using SAXy with twitter feeds.
-//
-//  There are both single-object and a multi-object mapping examples using the same data file: 'BarackObamaTwitterFeed.xml'.
-//
-//
-//  Created by Richard Easterling on 2/12/13.
-//
-
-
+/**
+ 
+ OXTwitterExampleTests.m
+ SAXy OX - Object-to-XML mapping library
+ 
+ This demonstrates using SAXy with twitter feeds.
+ 
+ There are both single-object and a multi-object mapping examples using the same data file: 'BarackObamaTwitterFeed.xml'.
+ 
+ 
+ Created by Richard Easterling on 2/12/13.
+ 
+ */
 #import <SenTestingKit/SenTestingKit.h>
 
 #import "OXmlElementMapper.h"
@@ -82,7 +82,7 @@
 
 
 /**
- This demanstrates how to selectiveley pull some data from an XML file. This is useful for read-only 
+ This demonstrates how to selectively pull some data from an XML file. This is useful for read-only
  applications where you don't need the entire document model.
  
  Here a single list of OXSimpleTweet objects is extracted.  Notice the screenName is obtained using
@@ -91,19 +91,19 @@
 - (void)testSimpleRead
 {
     OXmlMapper *mapper = [[OXmlMapper mapper] elements:@[                               //mapper defines a root path and a single class to populate
-                              
-      [OXmlElementMapper rootXPath:@"/statuses/status" toMany:[OXSimpleTweet class]],   //for each 'status' element create a OXSimpleTweet instance
-  
-      [[[[OXmlElementMapper elementClass:[OXSimpleTweet class]]                         //populate OXSimpleTweet properties with the specified xpath values
-         xpath:@"created_at" property:@"date"]
-        xpath:@"text" property:@"text"]
-       xpath:@"user/screen_name" property:@"screenName"]
                           
-    ]];
+                          [OXmlElementMapper rootXPath:@"/statuses/status" toMany:[OXSimpleTweet class]],   //for each 'status' element create a OXSimpleTweet instance
+                          
+                          [[[[OXmlElementMapper elementClass:[OXSimpleTweet class]]                         //populate OXSimpleTweet properties with the specified xpath values
+                             xpath:@"created_at" property:@"date"]
+                            xpath:@"text" property:@"text"]
+                           xpath:@"user/screen_name" property:@"screenName"]
+                          
+                          ]];
     
     OXmlReader *reader = [OXmlReader readerWithMapper:mapper];                          //create a reader using the mapper
     reader.context.logReaderStack = NO;                                                 //set to 'YES' for a mapper trace
-
+    
     NSDateFormatter *twitterDateFormatter = [[NSDateFormatter alloc] init];             //configure transform for twitter date formatting
     [twitterDateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
     [twitterDateFormatter setDateFormat:@"EEE MMM dd HH:mm:ss Z yyyy"];
@@ -124,7 +124,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 
 /**
- This demanstrates a more complete twitter mapping used to read and write a feed. 
+ This demonstrates a more complete twitter mapping used to read and write a feed.
  
  Notice the configuration only specifies element mappings that can't be inferred by SAXy using self reflection of
  the class properties.  In this case, they are:
@@ -132,8 +132,8 @@
  1) The actual scalar types stored in NSNumber using an @encode() statement
  2) BOOL mappings require the special OX_ENCODED_BOOL constant because @encode(BOOL) returns 'c', the mapping for char types
  3) Element names that do not match property names
-
- SAXy figures out everything else automaticly. For example it can see that the 'date' property is an NSDate type and
+ 
+ SAXy figures out everything else automatically. For example it can see that the 'date' property is an NSDate type and
  maps it accordingly.  Likewise, it figures out the relationship between the two object via the 'user' property.
  
  Also twitter does not use the standard XML date format, so we register a custom NSDateFormatter that parses twitter dates.
@@ -153,21 +153,21 @@
     OXmlElementMapper *userMapper = [[[OXmlElementMapper elementClass:[OXTwitterUser class]]
                                       xpath:@"id" property:@"key" scalarType:@encode(unsigned long)]
                                      tagMap:@{
-                                         @"screen_name":       @"screenName",
-                                         @"description":       @"about",
-                                         @"profile_image_url": @"image",
-                                         @"followers_count":   @"followers",
-                                         @"friends_count":     @"friends",
-                                         @"favourites_count":  @"favourites",
-                                         @"statuses_count":    @"posts",
-                                         @"listed_count":      @"listed",
-                                         @"created_at":        @"date"
+                                     @"screen_name":       @"screenName",
+                                     @"description":       @"about",
+                                     @"profile_image_url": @"image",
+                                     @"followers_count":   @"followers",
+                                     @"friends_count":     @"friends",
+                                     @"favourites_count":  @"favourites",
+                                     @"statuses_count":    @"posts",
+                                     @"listed_count":      @"listed",
+                                     @"created_at":        @"date"
                                      }];
     
-    //sharred mapper instance:
+    //shared mapper instance:
     OXmlMapper *mapper = [[OXmlMapper mapper] elements:@[rootMapper, tweetMapper, userMapper]];
     
-    //use sharred context configured to handle twitter date formatting:
+    //use shared context configured to handle twitter date formatting:
     OXmlContext *context = [[OXmlContext alloc] init];
     NSDateFormatter *twitterDateFormatter = [[NSDateFormatter alloc] init];
     [twitterDateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
@@ -198,8 +198,8 @@
  This example refines the data handling by caching user instances to eliminate duplicates.
  
  A custom setter block checks a cache for pre-existing OXTwitterUser instances before setting them on the
- OXTweet instance.  For the cache we use the 'userData' NSDictionary in the OXContext class which is provided 
- by SAXy for just such porposes.
+ OXTweet instance.  For the cache we use the 'userData' NSDictionary in the OXContext class which is provided
+ by SAXy for just such proposes.
  */
 - (void)testReaderAndWriteWithCachedUsers
 {
@@ -229,27 +229,27 @@
                                        tag:@"favorited" scalarType:OX_ENCODED_BOOL]
                                       xpathMapper:userPathMapper]
     ;
-
+    
     
     OXmlElementMapper *userMapper = [[[OXmlElementMapper elementClass:[OXTwitterUser class]]
                                       xpath:@"id" property:@"key" scalarType:@encode(unsigned long)]
                                      tagMap:@{
-                                         @"screen_name":       @"screenName",
-                                         @"description":       @"about",
-                                         @"profile_image_url": @"image",
-                                         @"followers_count":   @"followers",
-                                         @"friends_count":     @"friends",
-                                         @"favourites_count":  @"favourites",
-                                         @"statuses_count":    @"posts",
-                                         @"listed_count":      @"listed",
-                                         @"created_at":        @"date"
+                                     @"screen_name":       @"screenName",
+                                     @"description":       @"about",
+                                     @"profile_image_url": @"image",
+                                     @"followers_count":   @"followers",
+                                     @"friends_count":     @"friends",
+                                     @"favourites_count":  @"favourites",
+                                     @"statuses_count":    @"posts",
+                                     @"listed_count":      @"listed",
+                                     @"created_at":        @"date"
                                      }]
     ;
     
-    //sharred mapper instance:
+    //shared mapper instance:
     OXmlMapper *mapper = [[OXmlMapper mapper] elements:@[rootMapper, tweetMapper, userMapper]];
-        
-    //use sharred context configured to handle twitter date formatting:
+    
+    //use shared context configured to handle twitter date formatting:
     OXmlContext *context = [[OXmlContext alloc] init];
     NSDateFormatter *twitterDateFormatter = [[NSDateFormatter alloc] init];
     [twitterDateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];

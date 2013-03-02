@@ -1,26 +1,27 @@
-//
-//  OXiTunesTests.m
-//  SAXy OX - Object-to-XML mapping library
-//
-//  A mixed-namespace xml example using Apple's iTunes RSS feed. This example demonstrates:
-//
-//    1) Marshalling and unmarshalling a complex xml schema to a multi-class object hierarchy
-//    2) Auto discovery and class-to-element mapping: OXAtomLink
-//    3) Disambiguation of identical element names using namespaces: link and atom:link
-//    4) Mixed namespace use with unspecified default namespace
-//    5) Expanding flat mapping to object hierarchy: OXAlbum, OXArtist and OXCoverArt
-//    6) Mapping an element with simple (atomic) content and attributes using 'body' method: OXAtomCategory and OXCoverArt
-//    7) Mapping to read-only properties
-//    8) Mapping to mutable (NSMutableArray) and non-mutable (NSArray) collection classes
-//    9) Use of custom date formatters and currency formatter
-//   10) Ordering element output via declaration ordering
-//
-//  Sample feed taken from: http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStore.woa/wpa/MRSS/newreleases/limit=300/rss.xml
-//
-//
-//  Created by Richard Easterling on 2/13/13.
-//
+/**
 
+  OXiTunesTests.m
+  SAXy OX - Object-to-XML mapping library
+
+  A mixed-namespace xml example using Apple's iTunes RSS feed. This example demonstrates:
+
+    1) Marshalling and unmarshalling a complex xml schema to a multi-class object hierarchy
+    2) Auto discovery and class-to-element mapping: OXAtomLink
+    3) Disambiguation of identical element names using namespaces: link and atom:link
+    4) Mixed namespace use with unspecified default namespace
+    5) Expanding flat mapping to object hierarchy: OXAlbum, OXArtist and OXCoverArt
+    6) Mapping an element with simple (atomic) content and attributes using 'body' method: OXAtomCategory and OXCoverArt
+    7) Mapping to read-only properties
+    8) Mapping to mutable (NSMutableArray) and non-mutable (NSArray) collection classes
+    9) Use of custom date formatters and currency formatter
+   10) Ordering element output via declaration ordering
+
+  Sample feed taken from: http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStore.woa/wpa/MRSS/newreleases/limit=300/rss.xml
+
+
+  Created by Richard Easterling on 2/13/13.
+
+*/
 #import <SenTestingKit/SenTestingKit.h>
 #import "OXmlElementMapper.h"
 #import "OXmlReader.h"
@@ -163,8 +164,8 @@
 
 - (void)testComplexRSSReadAndWrite
 {
-    #define CHANNEL_DATE_FORMATTER @"CHANNEL_DATE_FORMATTER"
-    #define RELEASE_DATE_FORMATTER @"RELEASE_DATE_FORMATTER"
+#define CHANNEL_DATE_FORMATTER @"CHANNEL_DATE_FORMATTER"
+#define RELEASE_DATE_FORMATTER @"RELEASE_DATE_FORMATTER"
     
     OXmlMapper *mapper = [[[[[[[OXmlMapper mapper]
                                defaultPrefix:@"atom" forNamespaceURI:@"http://www.w3.org/2005/Atom"]
@@ -172,39 +173,39 @@
                              defaultPrefix:@"dc" forNamespaceURI:@"http://purl.org/dc/elements/1.1/"]
                             defaultPrefix:@"sy" forNamespaceURI:@"http://purl.org/rss/1.0/modules/syndication/"]
                            defaultPrefix:@"itms" forNamespaceURI:@"http://phobos.apple.com/rss/1.0/modules/itms/"]
-                          elements:@[                                                               //define root node and element mappings in document order
+                          elements:@[                                                               //defines root node and element mappings in document order
                           
                           [OXmlElementMapper rootXPath:@"/rss/channel" type:[OXRSSChannel class]]   //for 'channel' element create a single OXRSSChannel result instance
                           ,
                           [[[[[[[[[[[[[[[[[OXmlElementMapper elementClass:[OXRSSChannel class]]     //populate OXRSSChannel properties with the specified xpath values
                                           tags:@[@"title", @"link"]]
-                                         switchToNamespaceURI:@"http://www.w3.org/2005/Atom"]       //switch namesapce, 'atom' prefix
-                                        xpath:@"link" property:@"atomLink"]                         //note: 'atom:link' will be mapped differntly than 'link'
-                                       switchToNamespaceURI:nil]                                    //switch back to default namespace
+                                         switchToNamespaceURI:@"http://www.w3.org/2005/Atom"]       //switches namesapce, 'atom' prefix
+                                        xpath:@"link" property:@"atomLink"]                         //note: 'atom:link' will be mapped differently than 'link'
+                                       switchToNamespaceURI:nil]                                    //switches back to default namespace
                                       xpath:@"description" property:@"subTitle"]                    //use old RSS 1.0 name avoiding method of the same name
                                      tags:@[@"language", @"copyright"]]
                                     xpathMapper:[[OXmlXPathMapper xpath:@"lastBuildDate" type:[NSDate class] property:@"lastBuildDate"]
                                                  formatter:CHANNEL_DATE_FORMATTER]]              //date mapper with custom formatter
                                    xpath:@"webMaster"]
                                   xpath:@"ttl" property:@"timeToLive"]
-                                 switchToNamespaceURI:@"http://purl.org/dc/elements/1.1/"]          //switch namesapce, 'dc' prefix
+                                 switchToNamespaceURI:@"http://purl.org/dc/elements/1.1/"]          //switches namesapce, 'dc' prefix
                                 tags:@[@"creator", @"date"]]
-                               switchToNamespaceURI:@"http://purl.org/rss/1.0/modules/syndication/"]//switch namesapce, 'sy' prefix
+                               switchToNamespaceURI:@"http://purl.org/rss/1.0/modules/syndication/"]//switches namesapce, 'sy' prefix
                               tags:@[@"updatePeriod",@"updateFrequency",@"updateBase"]]
-                             switchToNamespaceURI:nil]                                              //switch back to default namespace
+                             switchToNamespaceURI:nil]                                              //switches back to default namespace
                             xpath:@"image"]
                            xpath:@"item" toMany:[OXRSSItem class] property:@"items"]
                           ,
                           [[[[[[[[[[[[[[[[[OXmlElementMapper elementClass:[OXRSSItem class]]           //populate OXRSSItem properties with the specified xpath values
                                           tags:@[@"title", @"link"]]
-                                         xpath:@"description" property:@"subTitle"]                    //use old RSS 1.0 name avoiding iOS method of the same name
+                                         xpath:@"description" property:@"subTitle"]                    //uses old RSS 1.0 name avoiding iOS method of the same name
                                         xpathMapper:[[OXmlXPathMapper xpath:@"pubDate" type:[NSDate class] property:@"pubDate"]
                                                      formatter:CHANNEL_DATE_FORMATTER]]             //date mapper with custom formatter
-                                       switchToNamespaceURI:@"http://purl.org/rss/1.0/modules/content/"]//switch namespace, use the 'content' prefix
+                                       switchToNamespaceURI:@"http://purl.org/rss/1.0/modules/content/"]//switches namespace, use the 'content' prefix
                                       xpath:@"encoded"]
-                                     switchToNamespaceURI:nil]                                          //switch back to default namespace
+                                     switchToNamespaceURI:nil]                                          //switches back to default namespace
                                     xpath:@"category"]
-                                   switchToNamespaceURI:@"http://phobos.apple.com/rss/1.0/modules/itms/"]//switch namespace, use the 'itms' prefix
+                                   switchToNamespaceURI:@"http://phobos.apple.com/rss/1.0/modules/itms/"]//switches namespace, use the 'itms' prefix
                                   xpath:@"album" property:@"album.name" type:[NSString class]]          //expand flat mapping to object hierarchy
                                  xpath:@"albumLink" property:@"album.link" type:[NSURL class]]
                                 xpathMapper:[[OXmlXPathMapper xpath:@"albumPrice" scalar:@encode(float) property:@"album.price"]
@@ -215,10 +216,10 @@
                             xpath:@"rights" property:@"album.rights" type:[NSString class]]
                            xpathMapper:[[OXmlXPathMapper xpath:@"releasedate" type:[NSDate class] property:@"album.releasedate"]
                                         formatter:RELEASE_DATE_FORMATTER]]
-                         ,
+                          ,
                           [[[OXmlElementMapper elementClass:[OXCoverArt class]]                     //populate OXCoverArt properties with the specified xpath values
-                           body:@"href"]
-                          attributes:@[@"height",@"width"]]
+                            body:@"href"]
+                           attributes:@[@"height",@"width"]]
                           ,
                           [[[OXmlElementMapper elementClass:[OXAtomCategory class]]                 //populate OXAtomCategory properties with the specified xpath values
                             attribute:@"domain"]
@@ -227,18 +228,18 @@
                           [[OXmlElementMapper elementClass:[OXAtomLink class]]                      //populate OXAtomLink properties with the specified xpath values
                            attributes:@[@"href",@"rel",@"type"]]                                    //can't rely on auto discovery because properties are attributes
                           
-                          //[[OXmlElementMapper elementClass:[OXRSSImage class]]                    //not neccessary - auto discovered and default mappings work fine
-
+                          //[[OXmlElementMapper elementClass:[OXRSSImage class]]                    //not necessary - auto discovered and default mappings work fine
+                          
                           ]]
     ;
-    OXmlReader *reader = [OXmlReader readerWithMapper:mapper];                                      //create a reader using the mapper
+    OXmlReader *reader = [OXmlReader readerWithMapper:mapper];                                      //creates a reader using the mapper
     
     //register named formatters:
-    NSDateFormatter *channelDateFormatter = [[NSDateFormatter alloc] init];                         //configure transform for atom channel date formatting
+    NSDateFormatter *channelDateFormatter = [[NSDateFormatter alloc] init];                         //configures transform for atom channel date formatting
     [channelDateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
     [channelDateFormatter setDateFormat:@"EEE',' dd MMM yyyy HH:mm:ss Z"];                           //format: Tue, 12 Feb 2013 11:18:42 -0800
     [reader.context.transform registerFormatter:channelDateFormatter withName:CHANNEL_DATE_FORMATTER];
-    NSDateFormatter *releaseDateFormatter = [[NSDateFormatter alloc] init];                         //configure transform for release date formatting
+    NSDateFormatter *releaseDateFormatter = [[NSDateFormatter alloc] init];                         //configures transform for release date formatting
     [releaseDateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
     [releaseDateFormatter setDateFormat:@"MMMM dd',' yyyy"];                                         //format: February 8, 2013
     [reader.context.transform registerFormatter:releaseDateFormatter withName:RELEASE_DATE_FORMATTER];
@@ -246,7 +247,7 @@
     
     reader.context.logReaderStack = NO;
     
-    OXRSSChannel *channel = [reader readXmlFile:@"iTunesNewReleasesRSS.xml"];                       //read the XML -> single OXRSSChannel result instance
+    OXRSSChannel *channel = [reader readXmlFile:@"iTunesNewReleasesRSS.xml"];                       //reads the XML -> single OXRSSChannel result instance
     
     //test OXRSSChannel instance:
     STAssertNotNil(channel, @"channel read");                                                       //test the results
@@ -254,14 +255,17 @@
     STAssertTrue([channel.items count] > 0, @"items read");
     STAssertNotNil(channel.atomLink, @"{http://www.w3.org/2005/Atom}:link mapped to OXAtomLink");
     STAssertEqualObjects(@"application/rss+xml", channel.atomLink.type, @"type attribute mapped to OXAtomLink.type");
-    STAssertNotNil(channel.image, @"automaticly mapped OXRSSImage instance found");
+    STAssertNotNil(channel.image, @"automatically mapped OXRSSImage instance found");
     STAssertEqualObjects(@"http://r.mzstatic.com/images/rss/badge.gif", [channel.image.url absoluteString], @"OXRSSImage 'link' property mapped");
     STAssertEqualObjects(@"hourly", channel.updatePeriod, @"property mapped under 'http://purl.org/rss/1.0/modules/syndication/' namespace");
+    
     NSDateFormatter *dateFormatter = (NSDateFormatter *)[reader.context.transform formatterWithName:OX_DEFAULT_DATE_FORMATTER];
     NSDate *expectedDate; NSError *error; [dateFormatter getObjectValue:&expectedDate forString:@"2013-02-12T11:18:42-08:00" range:nil error:&error];
     STAssertEqualObjects(expectedDate, channel.date, @"channel.date - default date formatter working");
+    
     [dateFormatter getObjectValue:&expectedDate forString:@"2003-09-01T12:00:00+00:00" range:nil error:&error];
     STAssertEqualObjects(expectedDate, channel.updateBase, @"channel.date - default date formatter working");
+    
     dateFormatter = (NSDateFormatter *)[reader.context.transform formatterWithName:@"CHANNEL_DATE_FORMATTER"];
     [dateFormatter getObjectValue:&expectedDate forString:@"Tue, 12 Feb 2013 11:18:42 -0800" range:nil error:&error];
     STAssertEqualObjects(expectedDate, channel.lastBuildDate, @"channel.lastBuildDate - custom date formatter working");
@@ -283,16 +287,15 @@
     dateFormatter = (NSDateFormatter *)[reader.context.transform formatterWithName:RELEASE_DATE_FORMATTER];
     [dateFormatter getObjectValue:&expectedDate forString:@"February 10, 2013" range:nil error:&error];
     STAssertEqualObjects(expectedDate, item.album.releasedate, @"item.album.releasedate - custom date formatter working");
-
+    
     STAssertEquals(6.99f, [item.album.price floatValue], @"price - currency formatter working");
-
-    //Create and fire off writer:
+    
+    //creates and fire off writer:
     OXmlWriter *writer = [[OXmlWriter writerWithMapper:mapper context:reader.context] rootAttributes:@{@"version": @"2.0"}];
     NSString *xml = [writer writeXml:channel prettyPrint:YES];
     //NSLog(@"iTunesNewReleasesRSS.xml = %@", xml);
     
     STAssertNotNil(xml, @"xml output"); //TODO need more writer tests
-    
 }
 
 

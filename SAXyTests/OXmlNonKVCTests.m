@@ -1,21 +1,23 @@
-//
-//  OXmlNonKVCTests.m
-//  SAXy OX - Object-to-XML mapping library
-//
-//  Demonstrates KVC-compliant and non-KVC compliant mappings.
-//
-//  The KVC-compliant example is trivial in it's simplicity.
-//
-//  The non-KVC compliant example is not trivial, but demonstrates SAXy's most advanced features: 
-//  1) proxies
-//  2) custom getter and setter blocks
-//  3) virtual properties
-//  4) mapper locking
-//  5) manual configuration of 'result' property
-//
-//  Created by Richard Easterling on 2/16/13.
-//
+/**
+ 
+  OXmlNonKVCTests.m
+  SAXy OX - Object-to-XML mapping library
 
+  Demonstrates KVC-compliant and non-KVC compliant mappings.
+
+  The KVC-compliant example is trivial in it's simplicity.
+
+  The non-KVC compliant example is not trivial, but demonstrates SAXy's most advanced features, including:
+
+  1) proxies
+  2) custom getter and setter blocks
+  3) virtual properties
+  4) mapper locking
+  5) manual configuration of 'result' property
+
+  Created by Richard Easterling on 2/16/13.
+ 
+ */
 #import <SenTestingKit/SenTestingKit.h>
 #import "OXmlMapper.h"
 #import "OXmlElementMapper.h"
