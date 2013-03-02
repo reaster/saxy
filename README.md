@@ -41,7 +41,7 @@ A SAXy mapper and reader can be defined in just a few lines of code:
 
     NSString *xml = @"<tune><first>Daffy</first><last>Duck</last></tune>";
     
-    OXmlReader *reader = [OXmlReader readerWithMapper:          //declare a reader with embedded mapper
+    OXmlReader *reader = [OXmlReader readerWithMapper:          //declares a reader with embedded mapper
                           [[OXmlMapper mapper] elements:@[
                            [OXmlElementMapper rootXPath:@"/tune" type:[CartoonCharacter class]]
                            ,
@@ -51,7 +51,7 @@ A SAXy mapper and reader can be defined in just a few lines of code:
                            ]]
                           ];
     
-    CartoonCharacter *tune = [reader readXmlText:xml];          //read xml
+    CartoonCharacter *tune = [reader readXmlText:xml];          //reads xml
     
     STAssertEqualObjects(@"Daffy", tune.firstName, @"mapped 'first' element to 'firstName' property");
     STAssertEqualObjects(@"Duck",  tune.lastName,  @"mapped 'last'  element to 'lastName'  property");
