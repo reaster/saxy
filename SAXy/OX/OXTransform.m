@@ -9,6 +9,8 @@
 #import "OXContext.h"
 #import "OXType.h"
 #import "OXPathMapper.h"
+#import "OXUtil.h"
+
 
 @interface OXTransform ()
 - (void)registerDefaultTransformers;
@@ -113,6 +115,7 @@
         return result;
     };
 
+    //NSMutableArray
     [self registerContainerClass:[NSMutableArray class] enumeration:enumerationBlock];
     [self registerContainerClass:[NSMutableArray class] appender: ^(NSString *key, id value, id target, OXContext *ctx) {
         if (value) {
@@ -127,6 +130,7 @@
         }
     }];
 
+    //NSArray
     [self registerContainerClass:[NSArray class] enumeration:enumerationBlock];
     [self registerContainerClass:[NSArray class] appender: ^(NSString *key, id value, id target, OXContext *ctx) {
         OXPathMapper *mapper = ctx.currentMapper;
@@ -141,6 +145,7 @@
         }
     }];
 
+    //NSMutableDictionary
     [self registerContainerClass:[NSMutableDictionary class] enumeration:enumerationBlock];
     [self registerContainerClass:[NSMutableDictionary class] appender: ^(NSString *key, id value, id target, OXContext *ctx) {
         OXPathMapper *mapper = ctx.currentMapper;
@@ -156,6 +161,7 @@
         }
     }];
     
+    //NSDictionary
     [self registerContainerClass:[NSDictionary class] enumeration:enumerationBlock];
     [self registerContainerClass:[NSDictionary class] appender: ^(NSString *key, id value, id target, OXContext *ctx) {
         OXPathMapper *mapper = ctx.currentMapper;
@@ -174,6 +180,7 @@
         }
     }];
     
+    //NSMutableSet
     [self registerContainerClass:[NSMutableSet class] enumeration:enumerationBlock];
     [self registerContainerClass:[NSMutableSet class] appender: ^(NSString *key, id value, id target, OXContext *ctx) {
         if (value) {
@@ -188,6 +195,7 @@
         }
     }];
     
+    //NSSet
     [self registerContainerClass:[NSSet class] enumeration:enumerationBlock];
     [self registerContainerClass:[NSSet class] appender: ^(NSString *key, id value, id target, OXContext *ctx) {
         if (value) {
@@ -205,6 +213,7 @@
         }
     }];
     
+    //NSMutableOrderedSet
     [self registerContainerClass:[NSMutableOrderedSet class] enumeration:enumerationBlock];
     [self registerContainerClass:[NSMutableOrderedSet class] appender: ^(NSString *key, id value, id target, OXContext *ctx) {
         if (value) {
@@ -219,6 +228,7 @@
         }
     }];
     
+    //NSOrderedSet
     [self registerContainerClass:[NSOrderedSet class] enumeration:enumerationBlock];
     [self registerContainerClass:[NSOrderedSet class] appender: ^(NSString *key, id value, id target, OXContext *ctx) {
         if (value) {
@@ -269,6 +279,31 @@
 {
     //__weak OXTransform *weakSelf = self;                //see http://amattn.com/2011/12/07/arc_best_practices.html
     
+    //NSNumber <-> NSString  - Note: for more specific and efficient mapping, use scalar mapping instead of NSNumber
+    [self registerFrom:[NSString class] to:[NSNumber class] transformer:^(id string, OXContext *ctx) {
+        //run-time mapping 
+        NSNumber *result = nil;
+        if (string) {
+            NSString *token = [OXUtil trim: [string lowercaseString] ];
+            BOOL isAllDigits = [OXUtil allDigits:token];                                //all digits?
+            if (isAllDigits) {                                                          //yes: treat it as a number
+                BOOL isDecimal = [token rangeOfString:@"."].location != NSNotFound;     //contains decimal?
+                if (isDecimal) {                                                        //yes: treat it as a double
+                    result = [NSNumber numberWithDouble: [token doubleValue] ];
+                } else {                                                                //no decimal - treat it as a long long
+                    result = [NSNumber numberWithLongLong: [token longLongValue] ];
+                }
+            } else {                                                                    //not all digits - treat it as a BOOL
+                result = [NSNumber numberWithBool:[token boolValue]];
+            }
+        }
+        return result;
+    }];
+    [self registerFrom:[NSNumber class] to:[NSString class] transformer:^(id value, OXContext *ctx) {
+        return value ? [value stringValue] : nil;
+    }];
+
+    //NSMutableString <-> NSString
     [self registerFrom:[NSString class] to:[NSMutableString class] transformer:^(id string, OXContext *ctx) {
         return [string mutableCopy];
     }];
@@ -276,6 +311,7 @@
         return [value copy];
     }];
     
+    //NSURL <-> NSString
     [self registerFrom:[NSString class] to:[NSURL class] transformer:^(id string, OXContext *ctx) {
         return [NSURL URLWithString:string];
     }];
@@ -283,6 +319,7 @@
         return [value absoluteString];
     }];
     
+    //NSMutableData <-> NSString
     [self registerFrom:[NSString class] to:[NSMutableData class] transformer:^(id string, OXContext *ctx) {
         return [NSMutableData dataWithData:[string dataUsingEncoding:NSUTF8StringEncoding]];
     }];
@@ -290,13 +327,17 @@
         return [[NSString alloc] initWithData:value encoding:NSUTF8StringEncoding];
     }];
     
+    //NSData <-> NSString
     [self registerFrom:[NSString class] to:[NSData class] transformer:^(id string, OXContext *ctx) {
-        return [string dataUsingEncoding:NSUTF8StringEncoding];
+        //return [string dataUsingEncoding:NSUTF8StringEncoding];
+        return [OXUtil decodeBase64String:string];
     }];
     [self registerFrom:[NSData class] to:[NSString class] transformer:^(id value, OXContext *ctx) {
-        return [[NSString alloc] initWithData:value encoding:NSUTF8StringEncoding];
+        //return [[NSString alloc] initWithData:value encoding:NSUTF8StringEncoding];
+        return [OXUtil base64StringByEncodingData:value];
     }];
     
+    //NSDate <-> NSString
     [self registerFrom:[NSString class] to:[NSDate class] transformer:^(id string, OXContext *ctx) {
         NSDate *date = nil;
         if (string) {
@@ -318,6 +359,7 @@
         return date;
     }];
     
+    //NSLocale <-> NSString
     [self registerFrom:[NSString class] to:[NSLocale class] transformer:^(id string, OXContext *ctx) {
         return [[NSLocale alloc] initWithLocaleIdentifier:string];
     }];

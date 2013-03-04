@@ -21,6 +21,7 @@
 + (NSString *)lastSegmentFromPath:(NSString *)path separator:(unichar)separator;                // example using '/': a/b/c -> c
 + (NSString *)xmlSafeString:(NSString *)text;                                                   //escape chars: &<>'"
 + (BOOL)isXPathString:(NSString *)string;                                                       //detects multi-element and/or wildcard paths
++ (BOOL)allDigits:(NSString *)text;                                                             //true if text only contains chars: .-+0123456789
 
 #pragma mark - naming
 + (NSString *)guessSingularNoun:(NSString *)pluralNoun;                                         //guesses singular noun, given an english plural
@@ -30,6 +31,10 @@
 + (BOOL)knownCollectionType:(Class)objectClass;                                                 //true if class is a common NS container
 + (BOOL)knownSimpleType:(Class)type;                                                            //true if class is a common NS simple type (i.e. string representation)  
 + (NSString *)scalarString:(const char *)encodedType;                                           //return string representation of encoded (usually scalar) type
+
+#pragma mark - base64
++(NSString *)base64StringByEncodingData:(NSData *)data;                                         //encode data as base64 string
++(NSData *)decodeBase64String:(NSString *)string;                                               //decode base64 string into data
 
 @end
 

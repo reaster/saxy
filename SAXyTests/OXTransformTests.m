@@ -19,8 +19,8 @@
 // test classes
 ////////////////////////////////////////////////////////////////////////////////////////
 
-@interface Email : NSObject
-@property(nonatomic) BOOL *isHtmlBody;
+@interface OXTransTestObj : NSObject
+@property(nonatomic) BOOL isHtmlBody;
 //@property(nonatomic) const char *charString; ??
 @property(nonatomic) char ch;
 @property(nonatomic) unsigned char uch;
@@ -30,9 +30,13 @@
 @property(nonatomic) NSTimeInterval interval;
 @property(nonatomic) NSURL *url;
 @property(nonatomic) NSString *note;
+@property(nonatomic) NSNumber *num1;
+@property(nonatomic) NSNumber *num2;
+@property(nonatomic) NSNumber *num3;
+
 @end
 
-@implementation Email @end
+@implementation OXTransTestObj @end
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // tests
@@ -110,35 +114,85 @@
     OXTransformBlock toBOOL = [_transform transformerFrom:[NSString class] toScalar:OX_ENCODED_BOOL];
     STAssertNotNil(toBOOL, @"toBOOL");
     STAssertEquals(YES, [toBOOL(@"true", _ctx) boolValue], @"test string-to-BOOL block");
-
+    
     OXTransformBlock fromBOOL = [_transform transformerScalar:OX_ENCODED_BOOL to:[NSString class]];
     STAssertNotNil(fromBOOL, @"fromBOOL");
     STAssertEqualObjects(@"true", fromBOOL([NSNumber numberWithBool:YES], _ctx), @"test BOOL-to-string transform block");
     
     //test property type encoding:
-    OXType *emailMeta = [OXType cachedType:[Email class]];  //gathers property metadata on Email class
+    OXType *emailMeta = [OXType cachedType:[OXTransTestObj class]];  //gathers property metadata on OXTransTestObj class
     OXProperty *boolyProp = [emailMeta.properties objectForKey:@"isHtmlBody"];
     STAssertNotNil(boolyProp, @"boolyProp");
-    STAssertTrue(strcmp("T^c,N,V_isHtmlBody", boolyProp.type.scalarEncoding) == 0, @"property encodedType");
+    STAssertTrue(strcmp("Tc,N,V_isHtmlBody", boolyProp.type.scalarEncoding) == 0, @"property encodedType");
     
     OXTransformBlock toBOOL2 = [_transform transformerFrom:[NSString class] toScalar:boolyProp.type.scalarEncoding];
     STAssertNotNil(toBOOL2, @"toBOOL");
     STAssertEquals(YES, [toBOOL2(@"true", _ctx) boolValue], @"test string-to-BOOL block");
     
-    OXTransformBlock fromBOOL2 = [_transform transformerScalar:boolyProp.type.scalarEncoding to:[NSString class]];
+    OXTransformBlock fromBOOL2 = [_transform transformerScalar:OX_ENCODED_BOOL to:[NSString class]];
     STAssertNotNil(fromBOOL2, @"fromBOOL");
     STAssertEqualObjects(@"true", fromBOOL2([NSNumber numberWithBool:YES], _ctx), @"test BOOL-to-string transform block");
-
-    //[OXUtil propertyInspectionForClass:[Email class] withBlock:^(NSString *propertyName, Class propertyClass, const char *attributes) {
+    
+    //[OXUtil propertyInspectionForClass:[OXTransTestObj class] withBlock:^(NSString *propertyName, Class propertyClass, const char *attributes) {
     //    NSLog(@"%@:%@ [%s]", propertyName, NSStringFromClass(propertyClass), attributes);
     //}];
 }
 
+- (void)testString_NSNumberTransforms_whyYouShouldMapYourScalars
+{
+    OXTransformBlock toNumber = [_transform transformerFrom:[NSString class] to:[NSNumber class]];
+    STAssertNotNil(toNumber, @"toNumber");
+    //BOOL
+    STAssertEquals(YES, [toNumber(@"true", nil) boolValue], @"test string-to-NSNumber:BOOL block");
+    STAssertEquals(YES, [toNumber(@"t", nil) boolValue], @"test string-to-NSNumber:BOOL block");
+    STAssertEquals(YES, [toNumber(@"y", nil) boolValue], @"test string-to-NSNumber:BOOL block");
+    STAssertEquals(YES, [toNumber(@"yes", nil) boolValue], @"test string-to-NSNumber:BOOL block");
+    STAssertEquals(NO, [toNumber(@"x", nil) boolValue], @"test string-to-NSNumber:BOOL using anything besides: true, t, yes and y");
+    //double
+    STAssertEquals(1.1, [toNumber(@"1.1", nil) doubleValue], @"test string-to-NSNumber:double");
+    //long long
+    STAssertEquals((long long)1, [toNumber(@"1", nil) longLongValue], @"test string-to-NSNumber:long long");
+    STAssertEquals((long long)0, [toNumber(@"0", nil) longLongValue], @"test string-to-NSNumber:long long");
+    //nil
+    STAssertNil(toNumber(nil, nil), @"test nil in, nil out");
+    
+    OXTransformBlock fromNumber = [_transform transformerFrom:[NSNumber class] to:[NSString class]];
+    STAssertNotNil(fromNumber, @"fromNumber");
+    //double
+    NSNumber *doubleNum = [NSNumber numberWithDouble:33.3];
+    NSString *doubleStr = fromNumber(doubleNum, nil);
+    STAssertEqualObjects(@"33.3", doubleStr, @"NSNumber:double to string");
+    //char
+    NSNumber *charNum = [NSNumber numberWithChar:'?'];
+    NSString *charStr = fromNumber(charNum, nil);
+    STAssertEqualObjects(@"63", charStr, @"NSNumber:char to string - char-ness is not preserved");
+    //BOOL
+    NSNumber *boolNum = [NSNumber numberWithBool:YES];
+    NSString *boolStr = fromNumber(boolNum, nil);
+    STAssertEqualObjects(@"1", boolStr, @"NSNumber:BOOO to string - BOOL-ness is not preserved");
+}
+
+- (void)testBase64Transform
+{
+    OXTransformBlock toBase64 = [_transform transformerFrom:[NSData class] to:[NSString class]];
+    STAssertNotNil(toBase64, @"toBase64");
+    OXTransformBlock fromBase64 = [_transform transformerFrom:[NSString class] to:[NSData class]];
+    STAssertNotNil(fromBase64, @"fromBase64");
+    
+    NSString *string = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 -=`[]\\;',./{}|:<>?\"\n\t\r~!@#$%^&A*()_+";
+    NSData *data = [NSData dataWithBytes:[string UTF8String] length:[string lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
+
+    NSString *base64 = toBase64(data, nil);
+    NSData *data2 = fromBase64(base64, nil);
+    NSString *string2 = [NSString stringWithUTF8String:[data2 bytes]];
+    STAssertEqualObjects(string, string2, @"string-base64 round-trip");
+}
+
 - (void)testKeyForEncodedTypeMethod
 {
-    STAssertEqualObjects(@"^c", [OXTransform keyForEncodedType:"T^c,N,V_isHtmlBody"], @"test keyForEncodedType on BOOL property");
-    STAssertEqualObjects(@"^c", [OXTransform keyForEncodedType:"N,V_isHtmlBody,T^c"], @"test keyForEncodedType on BOOL property");
-    STAssertEqualObjects(@"^c", [OXTransform keyForEncodedType:OX_ENCODED_BOOL], @"test keyForEncodedType on OX_ENCODED_BOOL const");
+    STAssertEqualObjects(@"^c", [OXTransform keyForEncodedType:"T^c,N,V_charPtr"], @"test keyForEncodedType on encoded property");
+    STAssertEqualObjects(@"^c", [OXTransform keyForEncodedType:"N,V_charPtr,T^c"], @"test keyForEncodedType on encoded property");
+    STAssertEqualObjects(@"?B", [OXTransform keyForEncodedType:OX_ENCODED_BOOL], @"test keyForEncodedType on OX_ENCODED_BOOL const");
     STAssertEqualObjects(@"i", [OXTransform keyForEncodedType:@encode(int)], @"test keyForEncodedType on @encode(int)");
     STAssertEqualObjects(@"Q", [OXTransform keyForEncodedType:@encode(unsigned long long)], @"test keyForEncodedType on @encode(unsigned long long)");
     STAssertEqualObjects(@"d", [OXTransform keyForEncodedType:@encode(double)], @"test keyForEncodedType on @encode(double)");

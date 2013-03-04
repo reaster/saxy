@@ -36,7 +36,7 @@ typedef enum {
     OX_POLYMORPHIC  //base class of polymorphic mapping defaulting to NSObject
 } OXTypeEnum;
 
-#define OX_ENCODED_BOOL "^c"                                        //BOOL property encoding. Can't use @encode(BOOL) because it equals @encode(char)
+#define OX_ENCODED_BOOL "?B"                                        //BOOL property encoding. Can't use @encode(BOOL) because it equals @encode(char)
 
 @interface OXType : NSObject
 
