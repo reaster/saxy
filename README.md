@@ -5,17 +5,16 @@ SAXy OX is a full-featured XML marshalling framework for Objective-C.
 
 Features include:
 
- * reading and writing xml from object hierarchies
+ * efficient reading/unmarshalling and writing/marshalling of XML from domain objects
  * full XML namespace support
- * built-in type conversion
- * extensive configuration options
+ * built-in type conversion and formatting
+ * highly configurable API
  * modern Objective-C: ARC and blocks
- * automatic discovery of mapping details
- * no third-party dependencies
- * optimized for iOS
+ * self-reflective automatic mapping
+ * optimized for iOS with no no third-party dependencies
 
 
-There are several well-documented  examples in the SAXyTests folder, including:
+There are several well-documented examples in the SAXyTests folder, including:
 
  * [OXTutorialTests](SAXyTests/OXTutorialTests.m) - a step-by-step introduction to SAXy's features - START HERE!
  * [OXTwitterTests](SAXyTests/OXTwitterExampleTests.m)  - a classic twitter read and write example
