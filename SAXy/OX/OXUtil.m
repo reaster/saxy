@@ -126,6 +126,17 @@
     return result ? result : text;
 }
 
+#pragma mark - file
+
++ (NSData *)readResourceFile:(NSString *)fileName
+{
+    NSString *resourcePath = [[NSBundle bundleForClass:[self class]] resourcePath];
+    NSString *filePath = [resourcePath stringByAppendingPathComponent:fileName];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    return data;
+}
+
+
 #pragma mark - naming
 
 + (NSString *)guessSingularNoun:(NSString *)pluralNoun
@@ -262,11 +273,7 @@
             case 'B': // C++ bool or C99 _Bool
                 return @"NSCFBoolean";
             case '^': // pointer
-                if (strlen(encodedType)>typeIndex+1 && encodedType[typeIndex+1]=='c') {//BOOL encoding for properties
-                    return @"BOOL";
-                } else {
-                    return @"*";
-                }
+            return @"*";
             case '{': return @"struct";
             case 'b': return @"bitfield";
             case '(': return @"union";
@@ -275,7 +282,12 @@
             case '*': return @"char *";
             case '#': return @"Class";
             case ':': return @"selector";
-            case '?': return @"void *"; //unknown type (function pointer, etc)
+            case '?':   // BOOL encoding: '?B'
+                if (strlen(encodedType)>typeIndex+1 && encodedType[typeIndex+1]=='B') {//BOOL encoding for properties
+                    return @"BOOL";
+                } else {
+                    return @"void *"; //unknown type (function pointer, etc)
+                }
             default:
                 return @"?";
         }
@@ -286,7 +298,7 @@
 + (BOOL)knownSimpleType:(Class)type
 {
     return ([type isSubclassOfClass:[NSString class]]      ||
-            [type isSubclassOfClass:[NSNumber class]]      ||
+            [type isSubclassOfClass:[NSValue class]]       ||
             [type isSubclassOfClass:[NSDate class]]        ||
             [type isSubclassOfClass:[NSURL class]]         ||
             [type isSubclassOfClass:[NSLocale class]]      ||

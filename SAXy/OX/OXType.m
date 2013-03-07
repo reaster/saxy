@@ -33,13 +33,33 @@
     return [[OXType alloc] initType:type typeEnum:typeEnum];
 }
 
+- (id)initScalarType:(Class)type scalarEncoding:(const char *)scalarEncoding
+{
+    if (self = [self init]) {
+        _type = type ? type : [NSNumber class]; //if not specified, use NSNumber
+        _typeEnum = OX_SCALAR;
+        _scalarEncoding = scalarEncoding;
+    }
+    return self;
+}
+
++ (id)scalarType:(Class)typeWrapper scalarEncoding:(const char *)scalarEncoding
+{
+    return [[OXType alloc] initScalarType:typeWrapper scalarEncoding:scalarEncoding];
+}
+
+
 - (id)initTypeContainer:(Class)type containing:(Class)childType
 {
     if (self = [self init]) {
         _type = type;
+        //don't use cachedTypes for containers if childType is not NSObject
         _typeEnum = OX_CONTAINER;
-        //don't use cachedTypes for containers if childType is not NSObject 
-        _containerChildType = [OXType type:childType typeEnum:[OXType guessTypeEnumFromClass:childType]];
+        if (childType) {
+            _containerChildType = [OXType type:childType typeEnum:[OXType guessTypeEnumFromClass:childType]];
+//        } else {
+//            _containerChildType = [OXType type:[NSObject class] typeEnum:[OXType guessTypeEnumFromClass:[NSObject class]]];
+        }
     }
     return self;
 }
@@ -70,8 +90,7 @@
     NSString *key = [[NSString alloc] initWithUTF8String:encodedType];
     OXType *result = [_scalarTypeCache objectForKey:key];
     if (result == nil) {
-        result = [[OXType alloc] initWithType:[NSNumber class] typeEnum:OX_SCALAR];
-        result.scalarEncoding = encodedType;
+        result = [OXType scalarType:[NSNumber class] scalarEncoding:encodedType];
         [_scalarTypeCache setObject:result forKey:key];
     }
     return result;
@@ -79,7 +98,7 @@
 
 + (OXType *)cachedType:(Class)type
 {
-    if (type == nil || [type isSubclassOfClass:[NSValue class]])          //don't cache scalar wrapper - needs a special key - use cachedScalarType
+    if (type == nil) // || [type isSubclassOfClass:[NSValue class]])          //don't cache scalar wrapper - needs a special key - use cachedScalarType
         return nil;
     static NSMutableDictionary *_typeCache;
     if (_typeCache == nil)
@@ -98,9 +117,10 @@
 
 + (OXTypeEnum)guessTypeEnumFromClass:(Class)type
 {
-    if ([type isSubclassOfClass:[NSValue class]]) {
-        return OX_SCALAR;
-    } else if ([OXUtil knownSimpleType:type] ) {
+//    if ([type isSubclassOfClass:[NSValue class]]) {   //can't treat as scalar without encoding data
+//        return OX_SCALAR;
+//    } else
+    if ([OXUtil knownSimpleType:type] ) {
         return OX_ATOMIC;
     } else if ([OXUtil knownCollectionType:type]) {
         return OX_CONTAINER;
@@ -134,18 +154,22 @@
         [OXUtil propertyInspectionForClass:self.type withBlock:^(NSString *propertyName, Class propertyClass, const char *attributes) {
             const char *encodedType = attributes ? strchr(attributes, 'T') : "T@";
             BOOL isScalar = (encodedType[1] != '@');
-            OXType *type = [[OXType alloc] initWithType:propertyClass typeEnum:OX_ATOMIC];
+            OXType *type = nil;
             if (isScalar) {
-                type.scalarEncoding = attributes;
-                type.typeEnum = OX_SCALAR;
+                type = [OXType scalarType:nil scalarEncoding:attributes];
+                //type.scalarEncoding = attributes;
+                //type.typeEnum = OX_SCALAR;
             } else if ([OXUtil knownCollectionType:propertyClass]) {
                 //TODO support use of NSClassDescription and toManyRelationshipKeys in OSX?
-                type.containerChildType = [[OXType alloc] initWithType:[NSObject class] typeEnum:OX_POLYMORPHIC];;
-                type.typeEnum = OX_CONTAINER;
+                type = [OXType typeContainer:propertyClass containing:nil];
+                //type.containerChildType = [[OXType alloc] initWithType:[NSObject class] typeEnum:OX_POLYMORPHIC];;
+                //type.typeEnum = OX_CONTAINER;
             } else if ( ! [OXUtil knownSimpleType:propertyClass] ) {
-                type.typeEnum = OX_COMPLEX;
+                type = [OXType type:propertyClass typeEnum:OX_COMPLEX];
+            } else {
+                type = [OXType type:propertyClass typeEnum:OX_ATOMIC];
             }
-            type.type = propertyClass;
+            //type.type = propertyClass;
             OXProperty *prop = [OXProperty property:propertyName type:type];
             [__properties setValue:prop forKey:prop.name];
             //NSLog(@"%@ %@ (%s)->%d", propertyClass, propertyName, attributes, type.typeEnum);

@@ -12,6 +12,9 @@
 #import "OXBlockDef.h"
 @protocol OXContext;
 
+#define OX_ANONYMOUS_XPATH @"_NO_OP_"    //only map class properties, xpath is done by owning property
+
+
 @interface OXComplexMapper : OXPathMapper
 
 @property(strong,nonatomic,readonly)NSArray *pathMappers;               //ordered list of mapped properties

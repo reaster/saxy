@@ -23,6 +23,9 @@
 + (BOOL)isXPathString:(NSString *)string;                                                       //detects multi-element and/or wildcard paths
 + (BOOL)allDigits:(NSString *)text;                                                             //true if text only contains chars: .-+0123456789
 
+#pragma mark - file
++ (NSData *)readResourceFile:(NSString *)fileName;                                              //read file's data from resource bundle
+
 #pragma mark - naming
 + (NSString *)guessSingularNoun:(NSString *)pluralNoun;                                         //guesses singular noun, given an english plural
 

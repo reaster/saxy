@@ -13,9 +13,6 @@
 #import "OXUtil.h"
 
 
-#define OX_ANONYMOUS_XPATH @"_NO_OP_"    //only map class properties, xpath is done by owning property
-
-
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - internal class
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -366,7 +363,12 @@
                 NSAssert1(NO, @"ERROR: root element type must be specified in %@ mapper", rootProperty);
                 break;
             case OX_CONTAINER: {
-                rootType.type = (rootProperty.dictionaryKeyName) ? [NSMutableDictionary class] : [NSMutableArray class];
+                Class childType = rootProperty.toType.containerChildType.type;
+                if (rootProperty.dictionaryKeyName) {
+                    rootProperty.toType = [OXType typeContainer:[NSMutableDictionary class] containing:childType];
+                } else {
+                    rootProperty.toType = [OXType typeContainer:[NSMutableArray class] containing:childType];
+                }
                 break;
             }
             case OX_POLYMORPHIC:
@@ -384,7 +386,6 @@
     _tempBuilderNSURI = nil; //switch back to parent element namespace in case switchToNamespaceURI was called
     if ([self isRootElement]) {
         [self configureRootElement:context];
-        //[self assignDefaultBlocks:context];
     } else if (!self.lock) {
         NSSet *ignoreSet = [NSSet setWithArray:[self collectForEachPathMapper:^(OXPathMapper *mapper) { return mapper.toPathRoot; }]];
         ignoreSet = [ignoreSet setByAddingObjectsFromSet:self.ignoreProperties];
@@ -404,6 +405,7 @@
                     case OX_SCALAR: {
                         //assume NSString fromType, OX_XML_ELEMENT typeEnum and xpath == KVC key
                         simpleMapper = [OXmlXPathMapper xpath:name scalar:property.type.scalarEncoding property:name];
+                        break;
                     }
                     case OX_ATOMIC: {
                         //assume NSString fromType, OX_XML_ELEMENT typeEnum and xpath == KVC key

@@ -13,6 +13,7 @@
 #import <SenTestingKit/SenTestingKit.h>
 
 #import "OXType.h"
+#import "OXProperty.h"
 #import "OXmlReader.h"
 #import "OXmlMapper.h"
 #import "OXmlElementMapper.h"
@@ -162,6 +163,10 @@
 
 - (void)testMappings
 {
+    OXType *commMeta = [OXType cachedType:[CommercialItem class]];
+    OXProperty *prop = [commMeta.properties objectForKey:@"contactAttempsW"];
+    STAssertEquals(OX_ATOMIC, prop.type.typeEnum, @"treat NSNumber as atomic, not scalar");
+    
     OXmlContext *context = [[OXmlContext alloc] init];  //needed for config method
     
     //test CommercialItem mappings:

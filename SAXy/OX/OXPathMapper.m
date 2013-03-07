@@ -152,16 +152,19 @@
             break;
         }
         case OX_SCALAR: {
+            BOOL requireTransform = _fromType ? ![_fromType.type isSubclassOfClass:[NSValue class]] : YES;
             if ( ! self.toTransform && _fromType) {
                 self.toTransform = [context.transform transformerFrom:_fromType.type toScalar:self.toType.scalarEncoding];     //_fromType.type is usualy a NSString
             }
             if ( ! self.fromTransform && _fromType) {
                 self.fromTransform = [context.transform transformerScalar:_toType.scalarEncoding to:_fromType.type];
             }
-            if (!self.toTransform && !self.setter)
-                NSAssert2(NO, @"ERROR: missing required toTransform for %@->%@ scalar mapping", _fromType, _toType);
-            if (!self.fromTransform && !self.getter)
-                NSAssert1(NO, @"ERROR: missing required fromTransform for %@->NSString scalar mapping", _toType);
+            if (requireTransform) {
+                if (!self.toTransform && !self.setter)
+                    NSAssert2(NO, @"ERROR: missing required toTransform for %@->%@ scalar mapping", _fromType, _toType);
+                if (!self.fromTransform && !self.getter)
+                    NSAssert1(NO, @"ERROR: missing required fromTransform for %@->NSString scalar mapping", _toType);
+            }
         }   //fall-through to OX_ATOMIC
         case OX_COMPLEX:
         case OX_ATOMIC: {
@@ -246,6 +249,17 @@
     return errors;
 }
 
+/**
+ Complete the mapping using self-reflection and check for error states.  
+ 
+ Mapping completion tasks:
+   1) set the target Class (_toType.type) based on what we find in the OXProperty
+ 
+ Validation tasks:
+   1) make sure the property name exists in properties dictionary
+   2) if target class is provided, make sure it matches what's found in OXProperty
+   3) check container and scalar types have all required properties set
+  */
 - (NSArray *)verifyToTypeUsingSelfReflection:(OXContext *)context errors:(NSArray *)errors
 {
     if (_parent.toType) {               //no parent, no properties
@@ -268,18 +282,22 @@
                     } else {
                         errors = [self addErrorMessage:[NSString stringWithFormat:@"property class conflict %@ != %@ in %@ -> %@ mapping", NSStringFromClass(actualToClass), NSStringFromClass(_parent.toType.type), _fromPath, _toPath] errors:errors];
                     }
+                    if (_toType.typeEnum == OX_CONTAINER && _toType.containerChildType == nil) {
+                        errors = [self addErrorMessage:[NSString stringWithFormat:@"container property has no child type in %@ mapping", self] errors:errors];
+                    }
                 }
-            } else if (_toType) {   //_toType.type == nil, check for other attributes before overwriting with property type
+            } else if (_toType && _toType.type == nil) {   //check for other attributes before overwriting with property type
                 if (_toType.containerChildType) {
-                    _toType.type = actualToClass;    
-                    _toType.typeEnum = OX_CONTAINER;
+                    self.toType = [OXType typeContainer:actualToClass containing:_toType.containerChildType.type];
                 }
                 if (_toType.scalarEncoding) {
-                    _toType.type = actualToClass;
-                    _toType.typeEnum = OX_SCALAR;
+                    self.toType = [OXType scalarType:actualToClass scalarEncoding:_toType.scalarEncoding];
                 }
-            } else {
+            } else if (_toType == nil) {
                 _toType = toProperty.type;
+            }
+            if (_toType.typeEnum == OX_SCALAR && _toType.scalarEncoding == nil) {
+                errors = [self addErrorMessage:[NSString stringWithFormat:@"scalar property must have scalarEncoding in %@ mapping", self] errors:errors];
             }
         }
         if (_toPath == nil) {

@@ -106,7 +106,8 @@
     [mapper elements:@[ rootMapper, tuneMapper ]];                      //contains two element mappers
     
     OXmlReader *reader = [OXmlReader readerWithMapper:mapper];          //creates a reader based on the mapper
-    
+    reader.context.logReaderStack = NO;                                 //'YES' -> log mapping process
+
     CartoonCharacter *duck = [reader readXmlText:xml];                  //reads xml
     
     STAssertEqualObjects(@"Daffy", duck.firstName, @"mapped 'first' element to 'firstName' property");  //test results
@@ -120,26 +121,30 @@
 }
 
 /**
- SAXy makes extensive use of the builder design pattern. The builder style takes a little getting used to, but once
- mastered allows for concise, flexible mappings. Refer to the 'builder' section of the OXmlMapper and OXmlElementMapper
- header files for available methods.
+ SAXy makes extensive use of the builder design pattern. The builder style in Objective-C takes a little getting  
+ used to, but once mastered allows for concise, flexible mappings. Refer to the 'builder' section of the OXmlMapper 
+ and OXmlElementMapper header files for available methods.
  
- Tip: use Xcode's automatic indentation to help make the builder code more readable.
- 
- In this example we'll take it to the extreme and eliminate all unnecessary instance variables, notice the nested
- 'xpath' statements in elementClass mapping.
- */
+ In this example we'll wrap the 'first' and 'last' mappings around the elementClass constructor.  Also we'll drop the
+ unnecessary instance variables.  You just have to balance your brackets and the code becomes much easier to read.  
+
+ Tips: - use Xcode's automatic indentation (^I) to help make the builder code more readable.
+       - getting wierd errors? verify you're calling a builder method that returns self.
+*/
 - (void)testBuilderPattern
 {
     NSString *xml = @"<tune><first>Daffy</first><last>Duck</last></tune>";
     
     OXmlReader *reader = [OXmlReader readerWithMapper:                  //declare a reader with embedded mapper
-                          [[OXmlMapper mapper] elements:@[
-                           [OXmlElementMapper rootXPath:@"/tune" type:[CartoonCharacter class]]
-                           ,
-                           [[[OXmlElementMapper elementClass:[CartoonCharacter class]]
-                             xpath:@"first" property:@"firstName"]
-                            xpath:@"last" property:@"lastName"]
+                          [[OXmlMapper mapper] elements:@[              //'elemnts:' builder method
+                           
+                               [OXmlElementMapper rootXPath:@"/tune" type:[CartoonCharacter class]]
+                               ,
+                           
+                               [[[OXmlElementMapper elementClass:[CartoonCharacter class]]
+                                 xpath:@"first" property:@"firstName"]  //'xpath:property:' builder method
+                                xpath:@"last" property:@"lastName"]     //'xpath:property:' builder method
+                           
                            ]]
                           ];
     
@@ -150,13 +155,13 @@
 }
 
 /**
- The mapper can be configured to read collections of data by specifying the 'toMany' parameter. The default container type is NSMutableArray, but
- SAXy supports NSDictionary, NSSet, NSOrderedSet, NSArray and their mutable counterparts.
+ The mapper can be configured to read collections of data by calling a 'toMany' constructor. The default container type
+ is NSMutableArray, but SAXy supports NSDictionary, NSSet, NSOrderedSet, NSArray and their mutable counterparts.
  */
 - (void)testReadingLists
 {
     NSString *xml = @"<tunes><tune><first>Elmer</first><last>Fudd</last></tune><tune><first>Daffy</first><last>Duck</last></tune></tunes>";
-    
+        
     //map 'tune' element to CartoonCharacter class:
     OXmlMapper *mapper = [[OXmlMapper mapper]
                           elements:@[
@@ -168,6 +173,7 @@
                           ]];
     
     OXmlReader *reader = [OXmlReader readerWithMapper:mapper];                      //creates a reader based on the mapper
+    reader.context.logReaderStack = NO;                                             //'YES' -> log mapping process 
     
     NSMutableArray *tunes = [reader readXmlText:xml];                               //reads xml
     
@@ -184,8 +190,8 @@
     OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper];          //creates a writer based on mapper
     writer.xmlHeader = nil;                                             //doesn't include XML header so we can campare result string
     
-    NSString *output = [writer writeXml:tunes prettyPrint:NO];          //writes xml using the array
-    STAssertEqualObjects(xml, output, @"input xml equals output xml");
+    NSString *outputXml = [writer writeXml:tunes prettyPrint:NO];       //writes xml using the array
+    STAssertEqualObjects(xml, outputXml, @"input xml equals output xml");
 }
 
 
@@ -215,14 +221,14 @@
                           ]];
     
     OXmlReader *reader = [OXmlReader readerWithMapper:mapper];
-    reader.context.logReaderStack = NO;
-    
-    NSDateFormatter *daffyDateFormatter = [[NSDateFormatter alloc] init];              //configure a new default date formatter
+    reader.context.logReaderStack = NO;                                                 //'YES' -> log mapping process
+
+    NSDateFormatter *daffyDateFormatter = [[NSDateFormatter alloc] init];               //configure a new default date formatter
     [daffyDateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
-    [daffyDateFormatter setDateFormat:@"MMMM d',' yyyy"];                             //format: April 4, 1937
-    [reader.context.transform registerDefaultDateFormatter:daffyDateFormatter];        //register formatter with transform
+    [daffyDateFormatter setDateFormat:@"MMMM d',' yyyy"];                               //format: April 4, 1937
+    [reader.context.transform registerDefaultDateFormatter:daffyDateFormatter];         //register formatter with transform
     
-    CartoonCharacter *duck = [reader readXmlText:xml];                                 //reads xml
+    CartoonCharacter *duck = [reader readXmlText:xml];                                  //reads xml
     
     STAssertEqualObjects(@"Daffy", duck.firstName, @"mapped 'first' attribute to 'firstName' property");  //test results
     STAssertEqualObjects(@"Duck", duck.lastName, @"mapped 'last' attribute to 'lastName' property");
@@ -232,8 +238,8 @@
     writer.xmlHeader = nil;                                             //doesn't include XML header so we can compare strings
     writer.printer.quoteChar = @"'";                                    //use single quotes for the same reason
     
-    NSString *output = [writer writeXml:duck prettyPrint:NO];           //writes xml
-    STAssertEqualObjects(xml, output, @"input xml equals output xml");
+    NSString *outputXml = [writer writeXml:duck prettyPrint:NO];        //writes xml
+    STAssertEqualObjects(xml, outputXml, @"input xml equals output xml");
 }
 
 
@@ -287,7 +293,8 @@
                           ]];
     
     OXmlReader *reader = [OXmlReader readerWithMapper:mapper];
-    reader.context.logReaderStack = NO;
+    reader.context.logReaderStack = NO;                                //'YES' -> log mapping process
+    
     CartoonCharacter *fudd = [reader readXmlText:xml];                 //reads xml
     
     STAssertEqualObjects(@"Elmer", fudd.firstName, @"mapped 'first' attribute to 'firstName' property");  //test results
@@ -331,7 +338,7 @@
                            xpath:@"last" property:@"lastName"]
                           ]];
     
-    OXmlReader *reader = [OXmlReader readerWithMapper:mapper];                      //creates a reader based on the mapper
+    OXmlReader *reader = [OXmlReader readerWithMapper:mapper];         //creates a reader based on the mapper
     
     CartoonCharacter *fudd = [reader readXmlText:xml];                 //reads xml
     

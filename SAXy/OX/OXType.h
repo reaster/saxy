@@ -36,22 +36,22 @@ typedef enum {
     OX_POLYMORPHIC  //base class of polymorphic mapping defaulting to NSObject
 } OXTypeEnum;
 
-#define OX_ENCODED_BOOL "?B"                                        //BOOL property encoding. Can't use @encode(BOOL) because it equals @encode(char)
+#define OX_ENCODED_BOOL "?B"                                       //BOOL property encoding. Can't use @encode(BOOL) because it equals @encode(char)
 
 @interface OXType : NSObject
 
 #pragma mark - required properties
-@property(assign,nonatomic,readwrite)OXTypeEnum typeEnum;           //required, determines what category of class is being modeled
-@property(strong,nonatomic,readwrite)Class type;                    //required, thee Objective-C class being described
+@property(assign,nonatomic,readonly)OXTypeEnum typeEnum;           //required, determines what category of class is being modeled
+@property(strong,nonatomic,readonly)Class type;                    //required, thee Objective-C class being described
 
 #pragma mark - OX_SCALAR
-@property(assign,nonatomic,readwrite)const char *scalarEncoding;    //scalars only: can be @encode(<scalar>) or property encoding value
+@property(assign,nonatomic,readonly)const char *scalarEncoding;    //scalars only: can be @encode(<scalar>) or property encoding value
 
 #pragma mark - OX_CONTAINER:
-@property(strong,nonatomic,readwrite)OXType *containerChildType;    //containers only: child type held by container, can be polymorphic (i.e. NSObject)
+@property(strong,nonatomic,readonly)OXType *containerChildType;    //containers only: child type held by container, can be polymorphic (i.e. NSObject)
 
 #pragma mark - OX_COMPLEX:
-@property(strong,nonatomic,readwrite)NSDictionary *properties;      //complex only: map of OXProperty keyed by their property names. Obtained by self reflection.
+@property(strong,nonatomic,readonly)NSDictionary *properties;      //complex only: map of OXProperty keyed by their property names. Obtained by self reflection.
 @property(assign,nonatomic,readonly)BOOL propertiesLoaded;          //complex only: flag to allow lazy-loading of properties via self reflection
 
 #pragma mark - constructors
@@ -61,10 +61,7 @@ typedef enum {
 #pragma mark - caches
 + (OXType *)cachedType:(Class)type;
 + (OXType *)cachedScalarType:(const char *)encodedType;
-
-#pragma mark - utility
-+ (OXTypeEnum)guessTypeEnumFromClass:(Class)type;
-
++ (id)scalarType:(Class)typeWrapper scalarEncoding:(const char *)scalarEncoding;
 
 @end
 

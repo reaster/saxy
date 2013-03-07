@@ -303,6 +303,14 @@
         return value ? [value stringValue] : nil;
     }];
 
+    //NSDecimalNumber <-> NSString
+    [self registerFrom:[NSString class] to:[NSDecimalNumber class] transformer:^(id string, OXContext *ctx) {
+        return [NSDecimalNumber decimalNumberWithString:string];
+    }];
+    [self registerFrom:[NSDecimalNumber class] to:[NSString class] transformer:^(id value, OXContext *ctx) {
+        return [value stringValue];
+    }];
+    
     //NSMutableString <-> NSString
     [self registerFrom:[NSString class] to:[NSMutableString class] transformer:^(id string, OXContext *ctx) {
         return [string mutableCopy];
@@ -372,6 +380,8 @@
 
 - (OXTransformBlock)transformerFrom:(Class)fromType toScalar:(const char *)encodedType
 {
+    if ([fromType isSubclassOfClass:[NSValue class]])
+        return nil; //already a wrapped scalar - TODO can we change the NSValue encoding?
     NSString *fromKey = NSStringFromClass(fromType);
     NSMutableDictionary *fromMap = [_transformers objectForKey:fromKey];
     if (fromMap == nil)

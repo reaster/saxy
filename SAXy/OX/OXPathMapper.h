@@ -89,6 +89,7 @@ typedef enum {
 #pragma mark - configure
 - (NSArray *)configure:(OXContext *)context;                            //must be called before mappers are used, isConfigured is set after completion
 - (void)assignDefaultBlocks:(OXContext *)context;                       //if not assigned already, set default getter,setter,toTransform,fromTransform & factory blocks
+- (NSArray *)verifyToTypeUsingSelfReflection:(OXContext *)context errors:(NSArray *)errors; //TODO remove me
 
 @end
 

@@ -155,9 +155,13 @@
         NSAssert1(NO, @"ERROR: invalid nil context parameter in 'configure:(OXContext *)' method call on mapper: %@", self);
     NSArray *errors = nil;
     if (!self.isConfigured) {
+//        if ([NSStringFromClass(self.toType.type) isEqualToString:@"CommercialItem"])
+//             NSLog(@"CommercialItem");
         [self assignDefaultBlocks:context];
         [self addMissingProperties:context];
         for(OXPathMapper *mapper in _pathMappers) {
+//            if ([@"contactAttempsW" isEqualToString:mapper.toPath])
+//                NSLog(@"contactAttempsW");
             NSArray *subErrors = [mapper configure:context];
             if (mapper.factory == nil && mapper.toType.typeEnum != OX_ATOMIC && mapper.toType.typeEnum != OX_SCALAR)
                 NSAssert1(NO, @"factory block should never be nil, assignDefaultBlocks:context not being called for mapper: %@", mapper);

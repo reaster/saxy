@@ -1,5 +1,5 @@
 //
-//  OXUtilTests.m
+//  OXTransformTests.m
 //  SAXy OX - Object-to-XML mapping library
 //
 //  Created by Richard Easterling on 1/11/13.
@@ -43,11 +43,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 
-@interface OXUtilTests : SenTestCase
+@interface OXTransformTests : SenTestCase
 
 @end
 
-@implementation OXUtilTests
+@implementation OXTransformTests
 {
     OXmlContext *_ctx;
     OXTransform *_transform;
@@ -179,7 +179,7 @@
     OXTransformBlock fromBase64 = [_transform transformerFrom:[NSString class] to:[NSData class]];
     STAssertNotNil(fromBase64, @"fromBase64");
     
-    NSString *string = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 -=`[]\\;',./{}|:<>?\"\n\t\r~!@#$%^&A*()_+";
+    NSString *string = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 -=`[]\\;',./{}|:<>?\n\t\r~!@#$%^&A*()_+";
     NSData *data = [NSData dataWithBytes:[string UTF8String] length:[string lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
 
     NSString *base64 = toBase64(data, nil);

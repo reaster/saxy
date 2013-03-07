@@ -134,7 +134,7 @@
  3) Element names that do not match property names
  
  SAXy figures out everything else automatically. For example it can see that the 'date' property is an NSDate type and
- maps it accordingly.  Likewise, it figures out the relationship between the two object via the 'user' property.
+ maps it accordingly.  Likewise, it figures out the relationship between the two objects via the 'user' property.
  
  Also twitter does not use the standard XML date format, so we register a custom NSDateFormatter that parses twitter dates.
  The date formatter is registered with a stand-alone context instance, that is passed to both the reader and writer.
