@@ -1,0 +1,125 @@
+[
+  {
+    "id" : 100101,
+    "name" : "Daffy Duck",
+    "url" : "http://en.wikipedia.org/wiki/Daffy_Duck",
+    "first_appearance" : "April 17, 1937",
+    "appearances" : "133",
+    "image": null,
+    "references" : [
+      "http://www.imdb.com/character/ch0027422/",
+      "http://en.wikiquote.org/wiki/Daffy_Duck/",
+      null
+    ],
+    "starred_in" : [
+      {
+        "name" : "Porky's Duck Hunt",
+        "year" : 1937,
+        "url" : "http://en.wikipedia.org/wiki/Porky's_Duck_Hunt"
+      },
+      {
+        "name" : "Ducking the Devil",
+        "year" : 1957,
+        "url" : "http://en.wikipedia.org/wiki/Ducking_the_Devil"
+      },
+      {
+        "name" : "Duck Amuck",
+        "year" : 1953,
+        "url" : "http://en.wikipedia.org/wiki/Duck_Amuck"
+      }
+    ],
+    "cartoon_series" : [
+      "Merrie Melodies",
+      "Looney Tunes"
+    ],
+    "studio" : {
+      "address" : {
+        "country" : "USA",
+        "state" : "CA",
+        "city" : "Burbank",
+        "zip" : 91522
+      },
+      "name" : "Warner Bros.",
+      "latitude" : 34.152141,
+      "longitude" : -118.336852,
+      "url" : "http://www.warnerbros.com/"
+    },
+    "buddies" : [
+      {
+        "id" : 100103,
+        "name" : "Bugs Bunny"
+      },
+      {
+        "id" : 100104,
+        "name" : "Porky Pig",
+        "appearances" : null
+      }
+    ],
+    "golden_age_of_animation_member" : "true",
+    "lastupdated" : "2013-03-07T12:30:00+0000",
+    "arch_rivals" : [
+      {
+        "id" : 100102,
+        "name" : "Wile E. Coyote"
+      },
+      {
+        "id" : 100103,
+        "name" : "Bugs Bunny"
+      }
+    ]
+  },
+  {
+    "id" : 100102,
+    "name" : "Wile E. Coyote",
+    "url" : "http://en.wikipedia.org/wiki/Wile_E._Coyote_and_Road_Runner",
+    "first_appearance" : "September 17, 1949",
+    "starred_in" : [
+      {
+        "name" : "Fast and Furry-ous",
+        "year" : 1949,
+        "url" : "http://en.wikipedia.org/wiki/Fast_and_Furry-ous"
+      },
+      {
+        "name" : "Coyote Falls",
+        "year" : 2010,
+        "url" : "http://en.wikipedia.org/wiki/Coyote_Falls"
+      }
+    ]
+  },
+  {
+    "id" : 100103,
+    "name" : "Bugs Bunny",
+    "url" : "http://en.wikipedia.org/wiki/Bugs_Bunny",
+    "first_appearance" : "April 30, 1938",
+    "starred_in" : [
+      {
+        "name" : "A Wild Hare",
+        "year" : 1940,
+        "url" : "http://en.wikipedia.org/wiki/A_Wild_Hare"
+      },
+      {
+        "name" : "Who Framed Roger Rabbit",
+        "year" : 1988,
+        "url" : "http://en.wikipedia.org/wiki/Who_Framed_Roger_Rabbit"
+      }
+    ]
+  },
+  {
+    "id" : 100104,
+    "name" : "Porky Pig",
+    "url" : "http://en.wikipedia.org/wiki/Porky_Pig",
+    "first_appearance" : "March 9, 1935",
+    "starred_in" : [
+      {
+        "name" : "I Haven't Got a Hat",
+        "year" : 1935,
+        "url" : "http://en.wikipedia.org/wiki/I_Haven't_Got_a_Hat"
+      },
+      {
+        "name" : "Porky's Hare Hunt",
+        "year" : 1938,
+        "url" : "http://en.wikipedia.org/wiki/Porky's_Hare_Hunt"
+      }
+    ]
+  }
+]

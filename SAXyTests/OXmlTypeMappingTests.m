@@ -399,7 +399,7 @@
     STAssertEquals(1, rCount, @"locked mapping");
     STAssertEqualObjects([OXmlContext class], root.toType.type, @"use context to hold result");
     STAssertEqualObjects(ctx, root.factory(nil, ctx), @"instance factory just returns context instance");
-    NSArray *RCC = @[@"/",@"contacts",@"contact"];
+    NSArray *RCC = @[OX_ROOT_PATH,@"contacts",@"contact"];
     STAssertTrue([root.xpath matches:RCC], @"root path less leaf node");
     
     //test OXmlElementMapper toMany result property
@@ -424,7 +424,7 @@
     //test OXmlElementMapper
     STAssertEqualObjects([OXmlContext class], root.toType.type, @"use context to hold result");
     STAssertEqualObjects(ctx, root.factory(nil, ctx), @"instance factory just returns context instance");
-    NSArray *R = @[@"/"];
+    NSArray *R = @[OX_ROOT_PATH];
     STAssertTrue([root.xpath matches:R], @"root path less leaf node");
     
     //test OXmlElementMapper toMany result property

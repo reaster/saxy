@@ -73,11 +73,11 @@
 - (NSString *)tagPath
 {
     if ([self.pathStack count] == 1) {
-        return @"/";
+        return OX_ROOT_PATH;
     } else {
         NSMutableString *_tagPath = [NSMutableString string];
         for(NSString *tag in self.pathStack) {
-            if ( ! [tag isEqualToString:@"/"] ) { //skip root node
+            if ( ! [tag isEqualToString:OX_ROOT_PATH] ) { //skip root node
                 [_tagPath appendFormat:@"/%@", tag];
             }
         }

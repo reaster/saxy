@@ -1,12 +1,13 @@
-//
-//  OXProperty.h
-//  SAXy OX - Object-to-XML mapping library
-//
-//  Metadata to describe a property to the mapping sytem, which is simply a (meta) type and a name.
-//
-//  Created by Richard Easterling on 2/10/13.
-//
+/**
+ 
+  OXProperty.h
+  SAXy OX - Object-to-XML mapping library
 
+  Metadata to describe a property to the mapping sytem, which is simply a (meta) type and a name.
+
+  Created by Richard Easterling on 2/10/13.
+
+ */
 #import <Foundation/Foundation.h>
 #import "OXType.h"
 

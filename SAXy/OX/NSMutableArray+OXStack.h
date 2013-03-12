@@ -1,13 +1,14 @@
-//
-//  NSMutableArray+OXStack.h
-//  SAXy OX - Object-to-XML mapping library
-//
-//  Extends NSMutableArray to behave like a stack.
-//  Note the indexes for peekAtIndex method are the revere of objectAtIndex method's indexes.
-//
-//  Created by Richard Easterling on 1/28/13.
-//
+/**
 
+  NSMutableArray+OXStack.h
+  SAXy OX - Object-to-XML mapping library
+
+  Extends NSMutableArray to behave like a stack.
+  Note the indexes for peekAtIndex method are the revere of objectAtIndex method's indexes.
+
+  Created by Richard Easterling on 1/28/13.
+
+ */
 #import <Foundation/Foundation.h>
 
 @interface NSArray (OXStack)

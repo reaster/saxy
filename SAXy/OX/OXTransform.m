@@ -103,6 +103,16 @@
     [_containerAppenders setObject:appender forKey:key];
 }
 
+/**
+ Add enumeration and appender blocks for all common container types. 
+ 
+ All the enumeration blocks basiclly call the objectEnumerator method which returns a NSFastEnumeration instance.
+ 
+ Appender blocks will assign a new container instance, if one does not yet exist.  Large collection reads on non-mutable
+ containers will result in poor memory usage, which can be alleviated by registering more efficient implementations.
+ 
+ Ignores toTransformer and fromTransformer which as a special case, are reserved for atomic and scalar child types.
+ */
 - (void)registerDefaultContainerBlocks
 {
     //TODO add support for NSPointerArray, NSMapTable, and NSHashTable, someday...
@@ -251,16 +261,12 @@
 
 - (OXTransformBlock)transformerFrom:(Class)fromType to:(Class)toType
 {
-    if ([fromType isEqual:toType]) {
-        return nil;                     //trasform not needed for identical types: ^(id value, OXContext *ctx) { return value; };
-    } else {
-        NSString *fromKey = NSStringFromClass(fromType);
-        NSMutableDictionary *fromMap = [_transformers objectForKey:fromKey];
-        if (fromMap == nil)
-            return nil;
-        NSString *toKey = NSStringFromClass(toType);
-        return [fromMap objectForKey:toKey];
-    }
+    NSString *fromKey = NSStringFromClass(fromType);
+    NSMutableDictionary *fromMap = [_transformers objectForKey:fromKey];
+    if (fromMap == nil)
+        return nil;
+    NSString *toKey = NSStringFromClass(toType);
+    return [fromMap objectForKey:toKey];
 }
 
 - (void)registerFrom:(Class)fromType to:(Class)toType transformer:(OXTransformBlock)transformer
@@ -268,11 +274,17 @@
     NSString *fromKey = NSStringFromClass(fromType);
     NSMutableDictionary *fromMap = [_transformers objectForKey:fromKey];
     if (fromMap == nil) {
+        if (transformer == nil)
+            return;
         fromMap = [NSMutableDictionary dictionaryWithCapacity:13];
         [_transformers setObject:fromMap forKey:fromKey];
     }
     NSString *toKey = NSStringFromClass(toType);
-    [fromMap setObject:transformer forKey:toKey];
+    if (transformer == nil) {  
+        [fromMap removeObjectForKey:toKey];             //remove if nil passed in
+    } else {
+        [fromMap setObject:transformer forKey:toKey];   //set or overwrite if transformer != nil
+    }
 }
 
 - (void)registerDefaultStringTransformers
@@ -622,6 +634,14 @@
     [self registerDefaultStringTransformers];                   //to-string and from-string default non-scalar transformers
     [self registerDefaultStringToScalarTransformers];                   //string-to-scalar transformers
     [self registerDefaultScalarToStringTransformers:self.treatScalarZerosAsNil]; //scalar-to-string transformers
+    if (self.treatScalarZerosAsNil) {
+        //NSNumber <-> NSNumber  - prevents noisy JSON zero output: 'key':0 
+        [self registerFrom:[NSNumber class] to:[NSNumber class] transformer:^(id value, OXContext *ctx) {
+            return value && [value doubleValue] != 0.0 ? value : nil;
+        }];
+    } else {
+        [self registerFrom:[NSNumber class] to:[NSNumber class] transformer:nil];
+    }
 }
 
 
@@ -654,7 +674,7 @@
     NSDateFormatter *_rfc3339DateFormatter = [[NSDateFormatter alloc] init];
     NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
     [_rfc3339DateFormatter setLocale:enUSPOSIXLocale];
-    [_rfc3339DateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+    [_rfc3339DateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];  //Apple's example is too fragile: yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'
     [_rfc3339DateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     [self registerFormatter:_rfc3339DateFormatter withName:OX_RFC3339_DATE_FORMATTER];
     
@@ -664,6 +684,12 @@
     [_shortStyleDateFormatter setDateStyle:NSDateFormatterShortStyle];
     [_shortStyleDateFormatter setTimeStyle:NSDateFormatterShortStyle];
     [self registerFormatter:_shortStyleDateFormatter withName:OX_SHORT_STYLE_DATE_FORMATTER];
+    
+//    NSDateFormatter *_longStyleDateFormatter = [[NSDateFormatter alloc] init];
+//    [_longStyleDateFormatter setLocale:enUSPOSIXLocale];
+//    [_longStyleDateFormatter setDateFormat:@"MMMM d',' yyyy"];
+//    [_longStyleDateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+//    [self registerFormatter:_longStyleDateFormatter withName:OX_LONG_DATE_FORMATTER];
     
     NSNumberFormatter *_currencyFormatter = [[NSNumberFormatter alloc] init];
     [_currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];

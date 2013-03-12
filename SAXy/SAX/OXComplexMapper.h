@@ -1,18 +1,19 @@
-//
-//  OXComplexMapper.h
-//  SAXy OX - Object-to-XML mapping library
-//
-//  This class extends OXPathMapper to support complex types with properties.  It also supports various means
-//  of limiting what is mapped (ignoreProperties and lock).
-//
-//  Created by Richard Easterling on 2/10/13.
-//
+/**
 
+  OXComplexMapper.h
+  SAXy OX - Object-to-XML mapping library
+
+  This class extends OXPathMapper to support complex types with properties.  It also supports various means
+  of limiting what is mapped (ignoreProperties and lock).
+
+  Created by Richard Easterling on 2/10/13.
+
+ */
 #import "OXPathMapper.h"
 #import "OXBlockDef.h"
 @protocol OXContext;
 
-#define OX_ANONYMOUS_XPATH @"_NO_OP_"    //only map class properties, xpath is done by owning property
+#define OX_ANONYMOUS_XPATH @"_NO_PATH_"    //only map class properties, xpath is done by owning property
 
 
 @interface OXComplexMapper : OXPathMapper

@@ -19,13 +19,13 @@
 #pragma mark - properties
 @property(weak,nonatomic,readonly) OXmlMapper *mapper;
 @property(strong,nonatomic,readwrite) NSURL *url;
-@property(strong,nonatomic,readwrite) NSString *error;
-@property(strong,nonatomic,readonly) NSError *parserError;
+@property(strong,nonatomic,readonly) NSArray *errors;
+//@property(strong,nonatomic,readonly) NSError *parserError;
 @property(strong,nonatomic,readonly) OXmlContext *context;
 
 #pragma mark - constructor
-+ (id)readerWithContext:(OXmlContext *)context mapper:(OXmlMapper *)xmlMapper;
 + (id)readerWithMapper:(OXmlMapper *)xmlMapper;
++ (id)readerWithMapper:(OXmlMapper *)xmlMapper context:(OXmlContext *)context;
 
 #pragma mark - parser
 // read XML from NSData

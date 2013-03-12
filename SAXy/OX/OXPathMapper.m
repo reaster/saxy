@@ -149,10 +149,23 @@
                     };
                 }
             }
+            //Allow atomic/scalar container child types to be converted to/from string values, needed for NSDate, NSURL, etc.
+            //TODO
+            // 1) add childFromType property        - assuming NSString for now
+            // 2) add dedicated toChildTransform    - using container property toTransform for now
+            // 3) add dedicated fromChildTransform  - using container property fromTransform for now
+            OXType *childType = _toType.containerChildType;
+            if (childType.typeEnum == OX_ATOMIC || childType.typeEnum == OX_SCALAR) {
+                Class fromClass = [NSString class];     //this assumtions prevents arrays of JSON numbers or booleans - to fix, have to store childFromType
+                if ( ! self.toTransform)
+                    self.toTransform = [context.transform transformerFrom:fromClass to:childType.type];     //hijack unused toTransform
+                if ( ! self.fromTransform && _fromType)
+                    self.fromTransform = [context.transform transformerFrom:childType.type to:fromClass];   //hijack unused fromTransform
+            }
             break;
         }
         case OX_SCALAR: {
-            BOOL requireTransform = _fromType ? ![_fromType.type isSubclassOfClass:[NSValue class]] : YES;
+            BOOL requireTransform = _fromType ? ![_fromType.type isSubclassOfClass:[NSValue class]] : YES;  //don't complain about NSNumber mappings
             if ( ! self.toTransform && _fromType) {
                 self.toTransform = [context.transform transformerFrom:_fromType.type toScalar:self.toType.scalarEncoding];     //_fromType.type is usualy a NSString
             }
@@ -298,6 +311,18 @@
             }
             if (_toType.typeEnum == OX_SCALAR && _toType.scalarEncoding == nil) {
                 errors = [self addErrorMessage:[NSString stringWithFormat:@"scalar property must have scalarEncoding in %@ mapping", self] errors:errors];
+            }
+            if (_toType.typeEnum == OX_CONTAINER && [_toType.type isSubclassOfClass:[NSDictionary class]]) {
+                Class childType = _toType.containerChildType.type;
+                if (_dictionaryKeyName == nil) {
+                    errors = [self addErrorMessage:[NSString stringWithFormat:@"'dictionaryKeyName' is nil, it must point to a valid property of %@ in %@ mapping", NSStringFromClass(childType), self] errors:errors];
+                } else {
+                    OXType *oxChildType = [OXType cachedType:childType];
+                    OXProperty *keyProp = [oxChildType.properties objectForKey:_dictionaryKeyName];
+                    if (keyProp == nil && [_dictionaryKeyName rangeOfString:@"."].location == NSNotFound) {
+                        errors = [self addErrorMessage:[NSString stringWithFormat:@"dictionaryKeyName: '%@' not a valid property of %@ class in %@ mapping", _dictionaryKeyName, NSStringFromClass(childType), self] errors:errors];
+                    }
+                }
             }
         }
         if (_toPath == nil) {

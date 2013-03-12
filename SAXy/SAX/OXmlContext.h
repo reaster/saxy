@@ -40,8 +40,6 @@ typedef NSString* (^OXmlElementFilterBlock)(NSString *elementName, NSString *ele
 //@property(strong,readwrite,nonatomic) NSMutableDictionary *namespaces;            //indexed by prefix
 @property(copy,readwrite,nonatomic) OXmlAttributeFilterBlock attributeFilterBlock;  //enables global filtering of attributes
 @property(copy,readwrite,nonatomic) OXmlElementFilterBlock elementFilterBlock;      //enables global filtering of elements
-@property(assign,readwrite,nonatomic) BOOL logReaderStack;                          //log tag mapping - powerfull debugging tool
-@property(assign,readwrite,nonatomic) BOOL logReaderInput;                          //log input XML - usefull for remote data debugging
 
 #pragma mark - OXSAXActionEnum stack
 - (void)pushMappingType:(OXSAXActionEnum)mappingType;

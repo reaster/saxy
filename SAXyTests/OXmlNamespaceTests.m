@@ -137,7 +137,7 @@
                           ]]
     ;
     //test lookups:
-    OXmlElementMapper *rootMapper = [mapper elementMapperForPath:@"/"];
+    OXmlElementMapper *rootMapper = [mapper elementMapperForPath:OX_ROOT_PATH];
     STAssertNotNil(rootMapper, @"root mapper");
     OXmlXPathMapper *resultMapper1 = [rootMapper elementMapperByTag:@"ns" nsURI:@"ns.com/x"];
     STAssertNotNil(resultMapper1, @"result by-path mapper");
@@ -198,7 +198,7 @@
                           ]]
     ;
     //test lookups:
-    OXmlElementMapper *rootMapper = [mapper elementMapperForPath:@"/"];
+    OXmlElementMapper *rootMapper = [mapper elementMapperForPath:OX_ROOT_PATH];
     STAssertNotNil(rootMapper, @"root mapper");
     OXmlXPathMapper *resultMapper1 = [rootMapper matchPathStack:@[@"ns"] forNSPrefix:nil];
     STAssertNotNil(resultMapper1, @"result by-path mapper");

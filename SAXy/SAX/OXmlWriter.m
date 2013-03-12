@@ -152,7 +152,7 @@
             elementName = [tags lastObject];    //set elementName to leaf
         }
     }
-    BOOL rootElementSkip = [@"/" isEqualToString:elementName];
+    BOOL rootElementSkip = [OX_ROOT_PATH isEqualToString:elementName];
     
     //pre-gather data to avoid emitting empty tags
     NSArray *attributes = [self attributesFromObject:object mapping:elementMapper includeRootAttributes:NO];
@@ -166,7 +166,7 @@
     if (!isEmptyTag || bodyMapper) {
         for (NSString *tag in tags) {
             BOOL isLeaf = [tag isEqualToString:elementName];
-            if ([@"/" isEqualToString:tag]) {
+            if ([OX_ROOT_PATH isEqualToString:tag]) {
                 _isRoot = YES;                   //set flag and skip root element
             } else {
                 //_printer.nsPrefix = elementMapper.nsPrefix;
@@ -267,7 +267,7 @@
     //print one or more close tags:
     if (!isEmptyTag || bodyMapper) {
         for (NSString *tag in [tags reverseObjectEnumerator]) {
-            if ( ! [@"/" isEqualToString:tag] && ! [elementName isEqualToString:tag]) {
+            if ( ! [OX_ROOT_PATH isEqualToString:tag] && ! [elementName isEqualToString:tag]) {
                 _printer.indent -= 1;
                 [_printer endTag:tag indent:YES];
             }

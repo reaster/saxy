@@ -31,10 +31,10 @@ typedef enum {
 
 #pragma mark - properties
 @property(strong,nonatomic,readonly)OXPathLite *xpath;      //parsed version of fromPath expression - only created for complex element paths
-@property(strong,nonatomic,readonly)OXType *proxyType;      //if present, will be instantiated instead of declared toType class
+@property(strong,nonatomic,readonly)OXType *proxyType;      //if present, will be instantiated instead of declared toType class - TODO move to OXPathMapper
 @property(strong,nonatomic,readonly)NSString *nsURI;        //namespace of tag. If not specified, defaults to parent nsURI
 @property(assign,nonatomic,readonly)OXmlTypeEnum xmlType;   //what type of XML node this maps to
-@property(strong,nonatomic,readonly)OXmlXPathMapper *next;  //allows chaining of mappers with the same lookup key (i.e. the same leafPath)
+@property(strong,nonatomic,readonly)OXmlXPathMapper *next;  //allows chaining of mappers with the same lookup key (i.e. the same leafPath) - TODO move to OXPathMapper
 
 
 #pragma mark - constructors

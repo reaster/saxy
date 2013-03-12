@@ -176,7 +176,7 @@
 
 + (OXmlTypeEnum)xmlTypeFromPath:(NSString *)xpath
 {
-    NSArray *segments = [xpath componentsSeparatedByString:@"/"];
+    NSArray *segments = [xpath componentsSeparatedByString:OX_ROOT_PATH];
     NSString *tag = [segments lastObject];
     if ([tag hasPrefix:OX_ATTRIBUTE_PREFIX]) {
         return OX_XML_ATTRIBUTE;
@@ -189,7 +189,7 @@
 
 + (NSString *)xpathToKVCPath:(NSString *)xpath
 {
-    NSString *result = [xpath stringByReplacingOccurrencesOfString:@"/" withString:@"."];
+    NSString *result = [xpath stringByReplacingOccurrencesOfString:OX_ROOT_PATH withString:@"."];
     result = [result stringByReplacingOccurrencesOfString:OX_ATTRIBUTE_PREFIX withString:@""];
     result = [result stringByReplacingOccurrencesOfString:@".text()" withString:@""];   //handle case: elem/text()
     result = [result stringByReplacingOccurrencesOfString:OX_TEXT_NODE withString:@""];

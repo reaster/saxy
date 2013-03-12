@@ -1,12 +1,13 @@
-//
-//  OXUtil.h
-//  SAXy OX - Object-to-XML mapping library
-//
-//  Miscellaneous static support methods, mostly concerned with string handling or self reflection.
-//
-//  Created by Richard Easterling on 2/10/13.
-//
+/**
 
+  OXUtil.h
+  SAXy OX - Object-to-XML mapping library
+
+  Miscellaneous static support methods, mostly concerned with string handling or self reflection.
+
+  Created by Richard Easterling on 2/10/13.
+
+ */
 #import <Foundation/Foundation.h>
 #import "OXBlockDef.h"
 

@@ -175,7 +175,7 @@
     [context.transform registerDefaultDateFormatter:twitterDateFormatter];
     
     //create and invoke a reader on a twitter feed
-    OXmlReader *reader = [OXmlReader readerWithContext:context mapper:mapper];
+    OXmlReader *reader = [OXmlReader readerWithMapper:mapper context:context];
     NSArray *tweets = [reader readXmlFile:@"BarackObamaTwitterFeed.xml"];
     STAssertTrue([tweets count] > 0, @"tweets read");
     OXTweet *tweet = [tweets objectAtIndex:0];
@@ -213,7 +213,7 @@
                                            } else {                            //no: save user in cache
                                                [ctx.userData setObject:user forKey:user.key];
                                            }
-                                           if (((OXmlContext *)ctx).logReaderStack)
+                                           if (ctx.logReaderStack)
                                                NSLog(@"  end: %@ - %@.%@ += '%@', cached:%@", [(OXmlContext*)ctx tagPath], target, property, user, cachedUser ? @"true":@"false");
                                            [target setValue:user forKey:property];  //set using KVC
                                        }]
@@ -257,7 +257,7 @@
     [context.transform registerDefaultDateFormatter:twitterDateFormatter];
     
     //create and invoke a reader on a twitter feed
-    OXmlReader *reader = [OXmlReader readerWithContext:context mapper:mapper];
+    OXmlReader *reader = [OXmlReader readerWithMapper:mapper context:context];
     NSArray *tweets = [reader readXmlFile:@"BarackObamaTwitterFeed.xml"];
     
     //test for no duplicate OXTwitterUser instances with the same id

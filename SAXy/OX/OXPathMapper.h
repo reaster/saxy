@@ -1,32 +1,33 @@
-//
-//  OXPathMapper.h
-//  SAXy OX - Object-to-XML mapping library
-//
-//  The heart of the OX system is the PathMapper class which encapsulates how to map one type to another, specificly how
-//  to map a source type (fromType) to a target type (toType).
-//
-//  Each type can have a path associated with it (toPath and fromPath respecively). The path is usually just the property name 
-//  (for example: 'city'), but it can also be a KVC description ('contact.address.city') or in the XML reahlm,
-//  an element, attribute or xpath description ('/contact/address/@city'). Complex paths have a list of
-//  component parts starting with a 'root' node and ending with a 'leaf' node.
-//
-//  The action part of the OX mapping system happens in block functions.  Blocks are defined for object instantiation (factory),
-//  type conversion (toTransform, fromTransform), property access (getter, setter) and container child access (enumerator,
-//  appender).  Generaly, blocks are assigned automaticly by the OX system and just work. When special handling is required, the
-//  user can override specific blocks allowing a high degree of customization.  Default blocks found in the OXTransfer class can
-//  be customized or used as templates.  Blocks are passed an instance of the context at run-time, allowing access to other features
-//  in the system, as well as, providing a means to pass values accross calls.
-//
-//  Users only needs to supply the information that can not be obtained automatiy via self reflection on the taget classes. This typically
-//  includes scalar encoding details, container child types and paths, when the target and source names are not identical.
-//
-//  The 'configure' method triggers self-reflection, conflict checking and default block assignment. It is normally called automaticly by
-//  the system on first lookup call.
-//  
-//   
-//  Created by Richard Easterling on 1/28/13.
-//
+/**
 
+  OXPathMapper.h
+  SAXy OX - Object-to-XML mapping library
+
+  The heart of the OX system is the PathMapper class which encapsulates how to map one type to another, specificly how
+  to map a source type (fromType) to a target type (toType).
+
+  Each type can have a path associated with it (toPath and fromPath respecively). The path is usually just the property name 
+  (for example: 'city'), but it can also be a KVC description ('contact.address.city') or in the XML reahlm,
+  an element, attribute or xpath description ('/contact/address/@city'). Complex paths have a list of
+  component parts starting with a 'root' node and ending with a 'leaf' node.
+
+  The action part of the OX mapping system happens in block functions.  Blocks are defined for object instantiation (factory),
+  type conversion (toTransform, fromTransform), property access (getter, setter) and container child access (enumerator,
+  appender).  Generaly, blocks are assigned automaticly by the OX system and just work. When special handling is required, the
+  user can override specific blocks allowing a high degree of customization.  Default blocks found in the OXTransfer class can
+  be customized or used as templates.  Blocks are passed an instance of the context at run-time, allowing access to other features
+  in the system, as well as, providing a means to pass values accross calls.
+
+  Users only needs to supply the information that can not be obtained automatiy via self reflection on the taget classes. This typically
+  includes scalar encoding details, container child types and paths, when the target and source names are not identical.
+
+  The 'configure' method triggers self-reflection, conflict checking and default block assignment. It is normally called automaticly by
+  the system on first lookup call.
+  
+   
+  Created by Richard Easterling on 1/28/13.
+
+ */
 #import <Foundation/Foundation.h>
 #import "OXType.h"
 #import "OXBlockDef.h"
@@ -38,7 +39,7 @@ typedef enum {
     OX_COMPLEX_MAPPER
 } OXMapperEnum;
 
-
+#define OX_ROOT_PATH @"/"
 
 @interface OXPathMapper : NSObject
 

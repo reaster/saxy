@@ -7,14 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		79A8C9DF16DB3CE80082E8AE /* OXmlNamespaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9D516DB3CE80082E8AE /* OXmlNamespaceTests.m */; };
-		79A8C9F116DC2FEE0082E8AE /* OXiTunesRSSExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9E716DC2FED0082E8AE /* OXiTunesRSSExampleTests.m */; };
-		79A8C9F316DC2FEE0082E8AE /* OXmlNonKVCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9E916DC2FED0082E8AE /* OXmlNonKVCTests.m */; };
-		79A8C9F416DC2FEE0082E8AE /* OXmlTypeMappingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9EA16DC2FED0082E8AE /* OXmlTypeMappingTests.m */; };
-		79A8C9F616DC2FEE0082E8AE /* OXPathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9EC16DC2FED0082E8AE /* OXPathTests.m */; };
-		79A8C9F816DC2FEE0082E8AE /* OXTransformTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9EF16DC2FEE0082E8AE /* OXTransformTests.m */; };
-		79A8C9F916DC2FEE0082E8AE /* OXTwitterExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9F016DC2FEE0082E8AE /* OXTwitterExampleTests.m */; };
-		79A8C9FC16DD38A20082E8AE /* OXTutorialTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8C9FB16DD38A10082E8AE /* OXTutorialTests.m */; };
+		79A8CA0616E504B90082E8AE /* OXJSONPathMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA0516E504B90082E8AE /* OXJSONPathMapper.m */; };
+		79A8CA0716E504B90082E8AE /* OXJSONPathMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA0516E504B90082E8AE /* OXJSONPathMapper.m */; };
+		79A8CA0A16E5078D0082E8AE /* OXJSONObjectMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA0916E5078D0082E8AE /* OXJSONObjectMapper.m */; };
+		79A8CA0B16E5078D0082E8AE /* OXJSONObjectMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA0916E5078D0082E8AE /* OXJSONObjectMapper.m */; };
+		79A8CA0E16E507EF0082E8AE /* OXJSONMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA0D16E507EF0082E8AE /* OXJSONMapper.m */; };
+		79A8CA0F16E507EF0082E8AE /* OXJSONMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA0D16E507EF0082E8AE /* OXJSONMapper.m */; };
+		79A8CA1A16E56B490082E8AE /* OXJSONReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA1916E56B480082E8AE /* OXJSONReader.m */; };
+		79A8CA1B16E56B490082E8AE /* OXJSONReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA1916E56B480082E8AE /* OXJSONReader.m */; };
+		79A8CA6516E90FFE0082E8AE /* OXJSONTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA5C16E90FFE0082E8AE /* OXJSONTests.m */; };
+		79A8CA6F16EAB9C00082E8AE /* OXJSONWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA6E16EAB9BF0082E8AE /* OXJSONWriter.m */; };
+		79A8CA7016EAB9C00082E8AE /* OXJSONWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA6E16EAB9BF0082E8AE /* OXJSONWriter.m */; };
+		79A8CA8416ED4CB60082E8AE /* tunes.json in Resources */ = {isa = PBXBuildFile; fileRef = 79A8CA8316ED4CB60082E8AE /* tunes.json */; };
+		79A8CA8E16EFA5170082E8AE /* OXiTunesRSSExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA8516EFA5130082E8AE /* OXiTunesRSSExampleTests.m */; };
+		79A8CA8F16EFA5170082E8AE /* OXmlNamespaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA8616EFA5140082E8AE /* OXmlNamespaceTests.m */; };
+		79A8CA9016EFA5170082E8AE /* OXmlNonKVCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA8716EFA5140082E8AE /* OXmlNonKVCTests.m */; };
+		79A8CA9116EFA5170082E8AE /* OXmlTypeMappingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA8816EFA5140082E8AE /* OXmlTypeMappingTests.m */; };
+		79A8CA9216EFA5170082E8AE /* OXPathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA8916EFA5150082E8AE /* OXPathTests.m */; };
+		79A8CA9316EFA5170082E8AE /* OXTransformTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA8A16EFA5150082E8AE /* OXTransformTests.m */; };
+		79A8CA9416EFA5170082E8AE /* OXTutorialTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA8B16EFA5160082E8AE /* OXTutorialTests.m */; };
+		79A8CA9516EFA5170082E8AE /* OXTwitterExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA8C16EFA5160082E8AE /* OXTwitterExampleTests.m */; };
+		79A8CA9616EFA5170082E8AE /* OXUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8CA8D16EFA5160082E8AE /* OXUtilTests.m */; };
 		79F8A3B716C97F6500491143 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A3B616C97F6500491143 /* Foundation.framework */; };
 		79F8A3C616C97F6500491143 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A3C516C97F6500491143 /* SenTestingKit.framework */; };
 		79F8A3C816C97F6500491143 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A3C716C97F6500491143 /* UIKit.framework */; };
@@ -82,15 +95,28 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		79A8C9D516DB3CE80082E8AE /* OXmlNamespaceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlNamespaceTests.m; sourceTree = "<group>"; };
-		79A8C9E716DC2FED0082E8AE /* OXiTunesRSSExampleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXiTunesRSSExampleTests.m; sourceTree = "<group>"; };
-		79A8C9E916DC2FED0082E8AE /* OXmlNonKVCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlNonKVCTests.m; sourceTree = "<group>"; };
-		79A8C9EA16DC2FED0082E8AE /* OXmlTypeMappingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlTypeMappingTests.m; sourceTree = "<group>"; };
-		79A8C9EC16DC2FED0082E8AE /* OXPathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXPathTests.m; sourceTree = "<group>"; };
-		79A8C9EF16DC2FEE0082E8AE /* OXTransformTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXTransformTests.m; sourceTree = "<group>"; };
-		79A8C9F016DC2FEE0082E8AE /* OXTwitterExampleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXTwitterExampleTests.m; sourceTree = "<group>"; };
-		79A8C9FB16DD38A10082E8AE /* OXTutorialTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXTutorialTests.m; sourceTree = "<group>"; };
 		79A8C9FF16E17EB60082E8AE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		79A8CA0416E504B90082E8AE /* OXJSONPathMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXJSONPathMapper.h; sourceTree = "<group>"; };
+		79A8CA0516E504B90082E8AE /* OXJSONPathMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXJSONPathMapper.m; sourceTree = "<group>"; };
+		79A8CA0816E5078D0082E8AE /* OXJSONObjectMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXJSONObjectMapper.h; sourceTree = "<group>"; };
+		79A8CA0916E5078D0082E8AE /* OXJSONObjectMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXJSONObjectMapper.m; sourceTree = "<group>"; };
+		79A8CA0C16E507EF0082E8AE /* OXJSONMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXJSONMapper.h; sourceTree = "<group>"; };
+		79A8CA0D16E507EF0082E8AE /* OXJSONMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXJSONMapper.m; sourceTree = "<group>"; };
+		79A8CA1816E56B480082E8AE /* OXJSONReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXJSONReader.h; sourceTree = "<group>"; };
+		79A8CA1916E56B480082E8AE /* OXJSONReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXJSONReader.m; sourceTree = "<group>"; };
+		79A8CA5C16E90FFE0082E8AE /* OXJSONTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXJSONTests.m; sourceTree = "<group>"; };
+		79A8CA6D16EAB9BF0082E8AE /* OXJSONWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXJSONWriter.h; sourceTree = "<group>"; };
+		79A8CA6E16EAB9BF0082E8AE /* OXJSONWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXJSONWriter.m; sourceTree = "<group>"; };
+		79A8CA8316ED4CB60082E8AE /* tunes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tunes.json; sourceTree = "<group>"; };
+		79A8CA8516EFA5130082E8AE /* OXiTunesRSSExampleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXiTunesRSSExampleTests.m; sourceTree = "<group>"; };
+		79A8CA8616EFA5140082E8AE /* OXmlNamespaceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlNamespaceTests.m; sourceTree = "<group>"; };
+		79A8CA8716EFA5140082E8AE /* OXmlNonKVCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlNonKVCTests.m; sourceTree = "<group>"; };
+		79A8CA8816EFA5140082E8AE /* OXmlTypeMappingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXmlTypeMappingTests.m; sourceTree = "<group>"; };
+		79A8CA8916EFA5150082E8AE /* OXPathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXPathTests.m; sourceTree = "<group>"; };
+		79A8CA8A16EFA5150082E8AE /* OXTransformTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXTransformTests.m; sourceTree = "<group>"; };
+		79A8CA8B16EFA5160082E8AE /* OXTutorialTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXTutorialTests.m; sourceTree = "<group>"; };
+		79A8CA8C16EFA5160082E8AE /* OXTwitterExampleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXTwitterExampleTests.m; sourceTree = "<group>"; };
+		79A8CA8D16EFA5160082E8AE /* OXUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXUtilTests.m; sourceTree = "<group>"; };
 		79F8A3B316C97F6500491143 /* libSAXy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSAXy.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		79F8A3B616C97F6500491143 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		79F8A3BA16C97F6500491143 /* SAXy-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SAXy-Prefix.pch"; sourceTree = "<group>"; };
@@ -162,6 +188,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		79A8CA0316E503E40082E8AE /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				79A8CA0416E504B90082E8AE /* OXJSONPathMapper.h */,
+				79A8CA0516E504B90082E8AE /* OXJSONPathMapper.m */,
+				79A8CA0816E5078D0082E8AE /* OXJSONObjectMapper.h */,
+				79A8CA0916E5078D0082E8AE /* OXJSONObjectMapper.m */,
+				79A8CA0C16E507EF0082E8AE /* OXJSONMapper.h */,
+				79A8CA0D16E507EF0082E8AE /* OXJSONMapper.m */,
+				79A8CA1816E56B480082E8AE /* OXJSONReader.h */,
+				79A8CA1916E56B480082E8AE /* OXJSONReader.m */,
+				79A8CA6D16EAB9BF0082E8AE /* OXJSONWriter.h */,
+				79A8CA6E16EAB9BF0082E8AE /* OXJSONWriter.m */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
 		79F8A3AA16C97F6500491143 = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +239,7 @@
 		79F8A3B816C97F6500491143 /* SAXy */ = {
 			isa = PBXGroup;
 			children = (
+				79A8CA0316E503E40082E8AE /* JSON */,
 				79F8A3EE16C9824E00491143 /* OX */,
 				79F8A40616C9825E00491143 /* SAX */,
 				79F8A3B916C97F6500491143 /* Supporting Files */,
@@ -214,14 +258,16 @@
 		79F8A3CD16C97F6500491143 /* SAXyTests */ = {
 			isa = PBXGroup;
 			children = (
-				79A8C9FB16DD38A10082E8AE /* OXTutorialTests.m */,
-				79A8C9E716DC2FED0082E8AE /* OXiTunesRSSExampleTests.m */,
-				79A8C9E916DC2FED0082E8AE /* OXmlNonKVCTests.m */,
-				79A8C9EA16DC2FED0082E8AE /* OXmlTypeMappingTests.m */,
-				79A8C9EC16DC2FED0082E8AE /* OXPathTests.m */,
-				79A8C9EF16DC2FEE0082E8AE /* OXTransformTests.m */,
-				79A8C9F016DC2FEE0082E8AE /* OXTwitterExampleTests.m */,
-				79A8C9D516DB3CE80082E8AE /* OXmlNamespaceTests.m */,
+				79A8CA8516EFA5130082E8AE /* OXiTunesRSSExampleTests.m */,
+				79A8CA8616EFA5140082E8AE /* OXmlNamespaceTests.m */,
+				79A8CA8716EFA5140082E8AE /* OXmlNonKVCTests.m */,
+				79A8CA8816EFA5140082E8AE /* OXmlTypeMappingTests.m */,
+				79A8CA8916EFA5150082E8AE /* OXPathTests.m */,
+				79A8CA8A16EFA5150082E8AE /* OXTransformTests.m */,
+				79A8CA8B16EFA5160082E8AE /* OXTutorialTests.m */,
+				79A8CA8C16EFA5160082E8AE /* OXTwitterExampleTests.m */,
+				79A8CA8D16EFA5160082E8AE /* OXUtilTests.m */,
+				79A8CA5C16E90FFE0082E8AE /* OXJSONTests.m */,
 				79F8A3EB16C9810A00491143 /* res */,
 				79F8A3CE16C97F6500491143 /* Supporting Files */,
 			);
@@ -243,6 +289,7 @@
 				79F8A43616CAF7EF00491143 /* BarackObamaTwitterFeed.xml */,
 				79F8A3EC16C9810A00491143 /* ContactsTestData.xml */,
 				79F8A44016CCAED200491143 /* iTunesNewReleasesRSS.xml */,
+				79A8CA8316ED4CB60082E8AE /* tunes.json */,
 			);
 			path = res;
 			sourceTree = "<group>";
@@ -369,6 +416,7 @@
 				79F8A3ED16C9810A00491143 /* ContactsTestData.xml in Resources */,
 				79F8A43716CAF7EF00491143 /* BarackObamaTwitterFeed.xml in Resources */,
 				79F8A44116CCAED200491143 /* iTunesNewReleasesRSS.xml in Resources */,
+				79A8CA8416ED4CB60082E8AE /* tunes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +459,11 @@
 				79F8A42916C9825E00491143 /* OXPathLite.m in Sources */,
 				79F8A42D16C983AA00491143 /* NSMutableArray+OXStack.m in Sources */,
 				79F8A43B16CC5DFC00491143 /* OXContext.m in Sources */,
+				79A8CA0616E504B90082E8AE /* OXJSONPathMapper.m in Sources */,
+				79A8CA0A16E5078D0082E8AE /* OXJSONObjectMapper.m in Sources */,
+				79A8CA0E16E507EF0082E8AE /* OXJSONMapper.m in Sources */,
+				79A8CA1A16E56B490082E8AE /* OXJSONReader.m in Sources */,
+				79A8CA6F16EAB9C00082E8AE /* OXJSONWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,14 +487,21 @@
 				79F8A42A16C9825E00491143 /* OXPathLite.m in Sources */,
 				79F8A42E16C983AA00491143 /* NSMutableArray+OXStack.m in Sources */,
 				79F8A43C16CC5DFC00491143 /* OXContext.m in Sources */,
-				79A8C9DF16DB3CE80082E8AE /* OXmlNamespaceTests.m in Sources */,
-				79A8C9F116DC2FEE0082E8AE /* OXiTunesRSSExampleTests.m in Sources */,
-				79A8C9F316DC2FEE0082E8AE /* OXmlNonKVCTests.m in Sources */,
-				79A8C9F416DC2FEE0082E8AE /* OXmlTypeMappingTests.m in Sources */,
-				79A8C9F616DC2FEE0082E8AE /* OXPathTests.m in Sources */,
-				79A8C9F816DC2FEE0082E8AE /* OXTransformTests.m in Sources */,
-				79A8C9F916DC2FEE0082E8AE /* OXTwitterExampleTests.m in Sources */,
-				79A8C9FC16DD38A20082E8AE /* OXTutorialTests.m in Sources */,
+				79A8CA0716E504B90082E8AE /* OXJSONPathMapper.m in Sources */,
+				79A8CA0B16E5078D0082E8AE /* OXJSONObjectMapper.m in Sources */,
+				79A8CA0F16E507EF0082E8AE /* OXJSONMapper.m in Sources */,
+				79A8CA1B16E56B490082E8AE /* OXJSONReader.m in Sources */,
+				79A8CA6516E90FFE0082E8AE /* OXJSONTests.m in Sources */,
+				79A8CA7016EAB9C00082E8AE /* OXJSONWriter.m in Sources */,
+				79A8CA8E16EFA5170082E8AE /* OXiTunesRSSExampleTests.m in Sources */,
+				79A8CA8F16EFA5170082E8AE /* OXmlNamespaceTests.m in Sources */,
+				79A8CA9016EFA5170082E8AE /* OXmlNonKVCTests.m in Sources */,
+				79A8CA9116EFA5170082E8AE /* OXmlTypeMappingTests.m in Sources */,
+				79A8CA9216EFA5170082E8AE /* OXPathTests.m in Sources */,
+				79A8CA9316EFA5170082E8AE /* OXTransformTests.m in Sources */,
+				79A8CA9416EFA5170082E8AE /* OXTutorialTests.m in Sources */,
+				79A8CA9516EFA5170082E8AE /* OXTwitterExampleTests.m in Sources */,
+				79A8CA9616EFA5170082E8AE /* OXUtilTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

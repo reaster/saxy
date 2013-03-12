@@ -25,11 +25,11 @@
 
 #pragma mark - constructor
 
-- (id)initWithContext:(OXmlContext *)context mapper:(OXmlMapper *)mapper
+- (id)initWithMapper:(OXmlMapper *)mapper context:(OXmlContext *)context
 {
     if ((self = [super init])) {
         _context = context ? context : [[OXmlContext alloc] init];
-        _error = nil;
+        _errors = nil;
         _namespaceAware = NO;   //ignores (strips prefixes) XML namespaces
         _mapper = mapper;
         
@@ -37,14 +37,29 @@
     return self;
 }
 
-+ (id)readerWithContext:(OXmlContext *)context mapper:(OXmlMapper *)xmlMapper
++ (id)readerWithMapper:(OXmlMapper *)xmlMapper context:(OXmlContext *)context;
 {
-    return [[OXmlReader alloc] initWithContext:context mapper:xmlMapper];
+    return [[OXmlReader alloc] initWithMapper:xmlMapper context:context];
 }
 
 + (id)readerWithMapper:(OXmlMapper *)xmlMapper
 {
-    return [OXmlReader readerWithContext:nil mapper:xmlMapper];
+    return [OXmlReader readerWithMapper:xmlMapper context:nil];
+}
+
+
+#pragma mark - utility
+
+- (NSArray *)addError:(NSError *)error
+{
+    _errors = (_errors == nil) ? [NSArray arrayWithObject:error] : [_errors arrayByAddingObject:error];
+    return _errors;
+}
+
+- (NSArray *)addErrorMessage:(NSString *)errorMessage
+{
+    NSError *error = [NSError errorWithDomain:@"com.outsourcecafe.ox" code:99 userInfo:@{NSLocalizedDescriptionKey:errorMessage}];
+    return [self addError:error];
 }
 
 
@@ -125,10 +140,10 @@
 - (void)parserDidStartDocument:(NSXMLParser *)parser
 {
     _logStack = _context.logReaderStack;    //set logging flag
-    [_context.pathStack push:@"/" ];
+    [_context.pathStack push:OX_ROOT_PATH ];
     OXmlElementMapper *mapper = [_mapper matchElement:_context nsPrefix:nil];
     if (mapper && mapper.mapperEnum == OX_COMPLEX_MAPPER) {
-        NSObject *targetObj = mapper.factory(@"/", _context);// [[objectClass alloc] init];
+        NSObject *targetObj = mapper.factory(OX_ROOT_PATH, _context);// [[objectClass alloc] init];
         [_context.instanceStack push:targetObj];
         [_context.mapperStack push:mapper];
         [_context pushMappingType:OX_SAX_OBJECT_ACTION];
@@ -141,7 +156,7 @@
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
     NSString *docTag = [_context.pathStack peek];
-    NSAssert1([@"/" isEqualToString:docTag], @"ERROR in parserDidEndDocument: bottom of context.pathStack should contain '/', not %@", docTag);
+    NSAssert1([OX_ROOT_PATH isEqualToString:docTag], @"ERROR in parserDidEndDocument: bottom of context.pathStack should contain '/', not %@", docTag);
     if (_logStack) NSLog(@"  end: %@ - skipping", [_context tagPath]);
 }
 
@@ -304,15 +319,13 @@
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
 {
-    self.error = [NSString stringWithFormat:@"XML Parsing Error on %@, Error %i, Description: %@, Line: %i, Column: %i",
-                  [self.url absoluteString],
-                  [parseError code],
-                  [[parser parserError] localizedDescription],
-                  [parser lineNumber],
-                  [parser columnNumber]];
-    if (_logStack) {
-        NSLog(@"%@ parser:parseErrorOccurred: %@", NSStringFromClass([self class]), self.error);
-    }
+    NSString *errMsg = [NSString stringWithFormat:@"XML Parsing Error on %@, Error %i, Description: %@, Line: %i, Column: %i",
+                        [self.url absoluteString],
+                        [parseError code],
+                        [[parser parserError] localizedDescription],
+                        [parser lineNumber],
+                        [parser columnNumber]];
+    [self addErrorMessage:errMsg];
 }
 
 
@@ -322,21 +335,18 @@
 {
     [parser setDelegate:self];
     [parser setShouldResolveExternalEntities:NO];
-    self.error = nil;
-    BOOL success = YES;
-    NSArray *errors = [self.mapper configure:_context]; //use reflections to create type-specific function blocks
-    if (errors && [errors count] > 0) {
-        success = NO;
-        self.error = [errors objectAtIndex:0];
-        for(NSError *error in errors) {
-            NSLog(@"ERROR: %@", [error.userInfo objectForKey:NSLocalizedDescriptionKey]);
+    _errors = [self.mapper configure:_context]; //use reflections to create type-specific function blocks
+    if (_errors) {
+        if (_logStack) {
+            for(NSError *error in _errors) {
+                NSLog(@"ERROR: %@", [error.userInfo objectForKey:NSLocalizedDescriptionKey]);
+            }
         }
-    }
-    if (success) {
+        return nil;
+    } else {
         _namespaceAware = self.mapper.namespaceAware;
-        success = [parser parse]; //if not successful, delegate is informed of error
+        return [parser parse] ? _context.result : nil;  //if not successful, delegate is informed of error
     }
-    return success ? _context.result : nil;
 }
 
 - (id)readXmlData:(NSData *)xmlData fromURL:(NSURL *)aUrl

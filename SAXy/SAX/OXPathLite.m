@@ -8,6 +8,7 @@
 #import "OXPathLite.h"
 #import "NSMutableArray+OXStack.h"
 #import "OXUtil.h"
+#import "OXPathMapper.h"    //just need OX_ROOT_PATH
 
 
 @interface OXPathLite ()
@@ -56,7 +57,7 @@
 
 + (id)xpath:(NSString *)xpath
 {
-    return [[OXPathLite alloc] initXPath:xpath pathSeparator:@"/"];
+    return [[OXPathLite alloc] initXPath:xpath pathSeparator:OX_ROOT_PATH];
 }
 
 
@@ -107,7 +108,7 @@
             tok2 = [tokenEnumerator nextObject];
         } else if (isSep1) {                                
             if (isRoot) {                                   //root node
-                [__tagStack push:@"/"];
+                [__tagStack push:OX_ROOT_PATH];
                 [__tagTypeStack push:[NSNumber numberWithInteger:OXRootPathType]];
                 tok1 = tok2;
                 tok2 = [tokenEnumerator nextObject];
@@ -167,7 +168,7 @@
     NSInteger docIdx = [docTagStack count] - 1;
     NSInteger pathIdx = [_tagStack count] - 1;;
     BOOL seekMatch = NO;
-    const BOOL isDocRoot = [@"/" isEqualToString:[docTagStack objectAtIndex:0]];
+    const BOOL isDocRoot = [OX_ROOT_PATH isEqualToString:[docTagStack objectAtIndex:0]];
     NSInteger seekLimit = 0;
     while(docIdx >= 0 && pathIdx >= 0) {
         const NSString *docTag = [docTagStack objectAtIndex:docIdx];

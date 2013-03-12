@@ -105,7 +105,7 @@
             mapper.next = existingMapper;   //link mappers pointing to the same tag
         [nsMap setObject:mapper forKey:keyTag];
     }
-    if ([ @"/" isEqualToString:mapper.fromPathRoot]) {
+    if ([ OX_ROOT_PATH isEqualToString:mapper.fromPathRoot]) {
         _rootMapper = mapper;
     }
     [_mappersIndexedByClass setObject:mapper forKey:NSStringFromClass(mapper.toType.type)]; //reverse mappings

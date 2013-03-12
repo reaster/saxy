@@ -1,28 +1,29 @@
-//
-//  OXMeta.h
-//  SAXy OX - Object-to-XML mapping library
-//
-//  Type metadata needed for mapping system. Types supported include:
-//
-//    atomic        - single-value types
-//    scalar        - atomic scalar values, often in a wrapper class like NSValue or NSNumber
-//    containers    - with a child type
-//    complex       - multi-property classes
-//    polymorphic   - placeholder types, usually NSObject
-//
-//  Relevent properties are determined by the typeEnum setting. 
-//  Because scalars are burried in an amorphic class (usually NSNumber)
-//  additional information (scalarEncoding) is required to properly map their values. Likewise,
-//  container (NSArray, NSDictionary, etc.) mapping requires child type information. Finally, complex
-//  multi-value types are defined by their properties which this class will automaticly obtain using
-//  self reflection.
-//
-//  TODO probably should be renamed OXMetaType.
-//
-//
-//  Created by Richard Easterling on 1/26/13.
-//
+/**
 
+  OXMeta.h
+  SAXy OX - Object-to-XML mapping library
+
+  Type metadata needed for mapping system. Types supported include:
+
+    atomic        - single-value types
+    scalar        - atomic scalar values, often in a wrapper class like NSValue or NSNumber
+    containers    - with a child type
+    complex       - multi-property classes
+    polymorphic   - placeholder types, usually NSObject
+
+  Relevent properties are determined by the typeEnum setting. 
+  Because scalars are burried in an amorphic class (usually NSNumber)
+  additional information (scalarEncoding) is required to properly map their values. Likewise,
+  container (NSArray, NSDictionary, etc.) mapping requires child type information. Finally, complex
+  multi-value types are defined by their properties which this class will automaticly obtain using
+  self reflection.
+
+  TODO probably should be renamed OXMetaType.
+
+
+  Created by Richard Easterling on 1/26/13.
+
+*/
 #import <Foundation/Foundation.h>
 @protocol OXContext;
 @class OXProperty;

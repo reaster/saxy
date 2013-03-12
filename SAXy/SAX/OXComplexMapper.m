@@ -163,8 +163,8 @@
 //            if ([@"contactAttempsW" isEqualToString:mapper.toPath])
 //                NSLog(@"contactAttempsW");
             NSArray *subErrors = [mapper configure:context];
-            if (mapper.factory == nil && mapper.toType.typeEnum != OX_ATOMIC && mapper.toType.typeEnum != OX_SCALAR)
-                NSAssert1(NO, @"factory block should never be nil, assignDefaultBlocks:context not being called for mapper: %@", mapper);
+//            if (mapper.factory == nil && mapper.toType.typeEnum != OX_ATOMIC && mapper.toType.typeEnum != OX_SCALAR)
+//                NSAssert1(NO, @"factory block should never be nil, assignDefaultBlocks:context not being called for mapper: %@", mapper);
             errors = subErrors == nil ? errors : (errors ? [subErrors arrayByAddingObjectsFromArray:errors] : subErrors);
         }
         self.isConfigured = YES;

@@ -104,13 +104,13 @@
 
 + (id)root
 {
-    return [[OXmlElementMapper alloc] initElement:@"/" toClass:[OXmlContext class] nsURI:nil];
+    return [[OXmlElementMapper alloc] initElement:OX_ROOT_PATH toClass:[OXmlContext class] nsURI:nil];
 }
 
 + (id)rootXPath:(NSString *)xpath nsURI:(NSString *)nsURI
 {
     OXmlElementMapper *rootMapper = [[OXmlElementMapper alloc] initElement:xpath toClass:[OXmlContext class] nsURI:nsURI];
-    NSAssert1([xpath hasPrefix:@"/"], @"root element xpath must start with root node (/): %@", xpath);
+    NSAssert1([xpath hasPrefix:OX_ROOT_PATH], @"root element xpath must start with root node (/): %@", xpath);
     return rootMapper;
 }
 
@@ -344,7 +344,7 @@
 
 #pragma mark - configure
 
-- (void)configureRootElement:(OXContext *)context
+- (void)configureRootElement:(OXContext *)context       //TODO move to OXComplexMapper?
 {
     self.factory = ^(NSString *path, OXContext *ctx){ return context; }; //just return existing context instance
     self.lock = YES;                                                        //don't map other context properties
