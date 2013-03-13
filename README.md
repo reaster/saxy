@@ -1,7 +1,8 @@
-SAXy OX - Objective-C Object-to-XML Marshalling Library
+SAXy OX - Objective-C XML and JSON Binding Library
 ====
 
-SAXy OX is a full-featured XML marshalling framework for Objective-C.  
+SAXy OX is a full-featured XML and JSON marshalling framework for Objective-C.  It's purpose is to allow domain objects to
+be serialized to XML or JSON with a minimal amount of coding.
 
 Features include:
 
@@ -20,6 +21,7 @@ There are several well-documented examples in the SAXyTests folder, including:
  * [OXTwitterTests](SAXyTests/OXTwitterExampleTests.m)  - a classic twitter read and write example
  * [OXiTunesTests](SAXyTests/OXiTunesRSSExampleTests.m)   - an advanced mixed namespace iTunes RSS mapping example
  * [OXmlNonKVCTests](SAXyTests/OXmlNonKVCTests.m) - simple KVC and complex non-KVC-compliant mapping examples 
+ * [OXJSONTests](SAXyTests/OXJSONTests.m) - a detailed JSON read and write example
 
 
 Usage tips
