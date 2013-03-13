@@ -74,11 +74,11 @@
 
 
 /**
- SAXy's most important classes are:
+ SAXy's most important XML mapping classes are:
  
  1) OXmlReader          - used for reading XML (unmarshalling) to class instances
  2) OXmlWriter          - used for writing XML (marshalling) from class instances
- 3) OXmlMapper          - high-level mapping of how to convert an XML schema to a object hierarchy
+ 3) OXmlMapper          - high-level mapping of how to convert an XML schema to an object hierarchy
  4) OXmlElementMapper   - describes how attributes and elements are converted to class properties
  
  Readers and writers are easy to use and understand, all they require to do their job is a mapper instance.
@@ -128,8 +128,8 @@
  In this example we'll wrap the 'first' and 'last' mappings around the elementClass constructor.  Also we'll drop the
  unnecessary instance variables.  You just have to balance your brackets and the code becomes much easier to read.  
 
- Tips: - use Xcode's automatic indentation (^I) to help make the builder code more readable.
-       - getting wierd errors? verify you're calling a builder method that returns self.
+ Mapping tips: - use Xcode's automatic indentation (^I) to help make the builder code more readable.
+               - getting wierd errors? verify you're calling a builder method that returns self.
 */
 - (void)testBuilderPattern
 {

@@ -5,14 +5,42 @@
 
   Non-trivial JSON mapping example demonstrating how to:
  
-  1) read and write JSON to an from domain objects
+  1) read and write JSON to and from domain objects
   2) map across inheritance hierarchies
   3) keep mapping declarations concise using the builder pattern
   4) register a default date formatter and apply other formatters individually
   5) register a global type transformer to avoid zero (false booleans in this case) scalar output
   6) flatten and expand a mapping using KVC paths (OXStudioLocation and OXStudioAddress respectively)
-  7) SAXy's automatic mapping (OXStudioLocation)
+  7) map to common Objective-C scalar, object and container types
+
+  The object hierarchy below (OXTuneEntity, OXStudioLocation, OXStudioAddress, OXCartoon and OXTune)
+  and the sample JSON file (res/tunes.json) are designed to exercise as many of SAXy's capabilities
+  as possible.  
  
+  SAXy's most important JSON mapping classes are:
+ 
+  1) OXJSONReader          - used for reading JSON (unmarshalling) to class instances
+  2) OXJSONWriter          - used for writing JSON (marshalling) from class instances
+  3) OXJSONMapper          - high-level mapping of how to convert an JSON data to an object hierarchy
+  4) OXJSONObjectMapper    - maps class properties to JSON data using KVC (Key-Value-Coding) paths
+ 
+  Readers and writers are easy to use and understand, usually just requiring a mapper instance to do their job.
+  OXJSONMapper instances basically contain list of object mappings, starting with a single root mapping.
+ 
+  OXJSONObjectMapper instances associate each class property with a JSON KVC path, along with the relavent type
+  information. 
+ 
+  In general, JSON mappings need only include information SAXy can't infer from self-reflection or inference.  
+  Conditions SAXy can't infer include:
+ 
+  1) property names that don't match JSON key names
+  2) expected child types in containers (NSArray, NSSet, etc.)
+  3) expected scalar type in NSNumber properties
+  4) non-string JSON input (i.e. you must tell SAXy where to expect NSNumber data)
+  5) BOOL properties because they look like char types to Objective-C, use OX_ENCODED_BOOL as the scalar type
+ 
+  Mapping tips: - use Xcode's automatic indentation (^I) to help make the builder code more readable.
+                - getting wierd errors? verify you're calling a builder method that returns self.
 
   Created by Richard Easterling on 3/4/13.
 

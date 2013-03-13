@@ -29,7 +29,7 @@ Usage tips
  * run the examples (Product->Test in Xcode), set break points to inspect state 
  * watch the mapper in action by setting: reader.context.logReaderStack = YES;
  * create your own mapping by starting with a working example and making small modifications
-
+ * the JSON or XML folder can be removed if not being used
 
 As an example, given the class:
 

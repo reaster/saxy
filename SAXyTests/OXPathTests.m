@@ -2,6 +2,8 @@
 //  OXPathTests.m
 //  SAXy OX - Object-to-XML mapping library
 //
+//  Test SAXy's subset of xpath features.
+//
 //  Created by Richard Easterling on 1/25/13.
 //
 
@@ -14,12 +16,6 @@
 
 @implementation OXPathTests
 
-//OXRootPathType,
-//OXElementPathType,
-//OXAnyPathType,
-//OXAttributePathType,
-//OXTextPathType
-//OXAnyAnyPathType,
 
 - (void)testTokenizerAndMatcher
 {
