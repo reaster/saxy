@@ -6,13 +6,21 @@
 //
 
 #import "OXmlWriter.h"
-//#import "OXmlelementMapper.h"
 #import "OXUtil.h"
+#import "NSMutableArray+OXStack.h"
 
 
 #define XML_SCHEMA_INSTANCE_NS_PREFIX @"xmlns:xsi"
 #define XML_SCHEMA_INSTANCE_NS_URL @"http://www.w3.org/2001/XMLSchema-instance"
 #define XML_SCHEMA_LOCATION_NS_PREFIX @"xsi:schemaLocation"
+
+//@interface OXmlWriter ()
+////tag level stack - only needed for removing duplicate nested tags
+//- (void)pushLevel:(NSUInteger)level;
+//- (NSUInteger)popLevel;
+//- (NSUInteger)peekLevel;
+//- (NSUInteger)countLevel:(NSUInteger)level;
+//@end
 
 @implementation OXmlWriter
 {
@@ -20,9 +28,10 @@
     NSString *_currentNsURI;
 }
 
+
 #pragma mark - constructors
 
-- (id)initWriterWithMapper:(OXmlMapper *)mapper context:(OXContext *)context
+- (id)initWriterWithMapper:(OXmlMapper *)mapper context:(OXmlContext *)context
 {
     if (self = [super init]) {
         _xmlHeader = OC_DEFAULT_XML_HEADER;
@@ -30,6 +39,7 @@
         _context = context ? context : [[OXmlContext alloc] init];
         _currentNsURI = OX_DEFAULT_NAMESPACE;
         _printer = [[OXmlPrinter alloc] init];
+        //_nestedElementLevelStack = [NSMutableArray arrayWithCapacity:23];
     }
     return self;
 }
@@ -39,7 +49,7 @@
     return [[OXmlWriter alloc] initWriterWithMapper:mapper context:nil];
 }
 
-+ (id)writerWithMapper:(OXmlMapper *)mapper context:(OXContext *)context
++ (id)writerWithMapper:(OXmlMapper *)mapper context:(OXmlContext *)context
 {
     return [[OXmlWriter alloc] initWriterWithMapper:mapper context:context];
 }
@@ -55,10 +65,6 @@
 
 #pragma mark - utilities
 
-//- (OXmlElementMapper *)rootMapperMatchingObject:(id)object
-//{
-//    return [_mapper rootElementMapperForClass:[object class]];
-//}
 
 - (NSArray *)attributesFromObject:(id)object mapping:(OXmlElementMapper *)elementMapper includeRootAttributes:(BOOL)isRoot
 {
@@ -85,10 +91,10 @@
     if (isRoot) {
         //list _rootNodeAttributes first
         if (_rootNodeAttributes) {
-            for(NSString *key in [_rootNodeAttributes keyEnumerator]) {
+            for(NSString *key in _rootNodeAttributes) {
                 if (!attrList) attrList = [NSMutableArray array];
                 [attrList addObject:key];
-                NSString *value = [_rootNodeAttributes valueForKey:key];    //TODO toString transformer
+                NSString *value = [_rootNodeAttributes objectForKey:key];    //TODO toString transformer
                 [attrList addObject:value];
             }
         }
@@ -133,7 +139,7 @@
         elementMapper = [_mapper elementMapperForClass:[object class]];
     }
     NSAssert2(elementMapper != nil, @"ERROR in writeElement: No elementMapper registered for %@ class for object: %@", NSStringFromClass([object class]), object);
-
+    
     //only change NS if the element is not a default (non-prefixed) NS and it's not the same as the current NS:
     if ( ! [elementMapper.nsURI isEqualToString:OX_DEFAULT_NAMESPACE] && ! [elementMapper.nsURI isEqualToString:_currentNsURI] ) {
         _currentNsURI = [elementMapper.nsURI isEqualToString:OX_DEFAULT_NAMESPACE ] ? _currentNsURI : elementMapper.nsURI;
@@ -181,7 +187,7 @@
         }
     }
     
-    //special case: tags that have nil text body are printed as empty tags to distingious nil from empty strings: <tag />
+    //special case: tags that have nil text body are printed as empty tags to distinguish nil from empty strings: <tag />
     if (isEmptyTag && bodyMapper) {
         [_printer closeEmptyTag];
         [_printer newLine];
@@ -201,7 +207,11 @@
             NSString *saveNsPrefix = _printer.nsPrefix;
             for(NSString *elementKey in elementPropertyKeys) {
                 OXmlXPathMapper *pathMapper = [elementMapper elementMapperByProperty:elementKey];
-                NSString *childTag = [@"*" isEqualToString:pathMapper.fromPath] ? nil : pathMapper.fromPath;    //TODO wildcard/polymorphic support is half-baked
+                NSString *childTag = pathMapper.fromPath;
+                BOOL isWildcard = [@"*" isEqualToString:pathMapper.fromPathLeaf];
+                if (isWildcard && pathMapper.pathFactory == nil) {    //wildcard/polymorphic mappings require pathFactory block
+                    NSAssert1(NO, @"OXmlWriter requires wildcard/polymorphic mappings to define a pathFactory block in mapper: %@", pathMapper);
+                }
                 _context.currentMapper = pathMapper;
                 id childData = pathMapper.getter(pathMapper.toPath, object, _context);
                 if (childData) {
@@ -211,8 +221,8 @@
                     if ( namespaceChange ) {
                         _currentNsURI = pathMapper.nsURI;
                         _printer.nsPrefix = [_currentNsURI isEqualToString:OX_DEFAULT_NAMESPACE ] ? nil : [_mapper.nsByURI objectForKey:_currentNsURI];
-//                        _currentNsURI = [pathMapper.nsURI isEqualToString:OX_DEFAULT_NAMESPACE ] ? _currentNsURI : pathMapper.nsURI;
-//                        _printer.nsPrefix = [_currentNsURI isEqualToString:OX_DEFAULT_NAMESPACE ] ? nil : [_mapper.nsByURI objectForKey:_currentNsURI];
+                        //                        _currentNsURI = [pathMapper.nsURI isEqualToString:OX_DEFAULT_NAMESPACE ] ? _currentNsURI : pathMapper.nsURI;
+                        //                        _printer.nsPrefix = [_currentNsURI isEqualToString:OX_DEFAULT_NAMESPACE ] ? nil : [_mapper.nsByURI objectForKey:_currentNsURI];
                     }
                     switch (pathMapper.toType.typeEnum) {
                         case OX_CONTAINER: {  // handle list of child elements:
@@ -220,13 +230,25 @@
                             for(id itemData in enumeration) {
                                 switch (pathMapper.toType.containerChildType.typeEnum) {
                                     case OX_COMPLEX: {
-                                        [self writeElement:childTag fromObject:itemData elementMapper:nil];
+                                        if (isWildcard) {
+                                            _context.currentMapper = pathMapper;
+                                            NSString *dynamicTag = pathMapper.pathFactory(itemData, _context);
+                                            [self writeElement:dynamicTag fromObject:itemData elementMapper:nil];
+                                        } else {
+                                            [self writeElement:childTag fromObject:itemData elementMapper:nil];
+                                        }
                                         break;
                                     }
                                     case OX_SCALAR:
                                     case OX_ATOMIC: {
                                         NSString *childValue = [itemData isKindOfClass:[NSString class]] ? (NSString *)itemData : [itemData stringValue];
-                                        [_printer element:childTag value:childValue];
+                                        if (isWildcard) {
+                                            _context.currentMapper = pathMapper;
+                                            NSString *dynamicTag = pathMapper.pathFactory(itemData, _context);
+                                            [_printer element:dynamicTag value:childValue];
+                                        } else {
+                                            [_printer element:childTag value:childValue];
+                                        }
                                         break;
                                     }
                                     case OX_POLYMORPHIC:
@@ -239,13 +261,25 @@
                             break;
                         }
                         case OX_COMPLEX: {  // handle single child element:
-                            [self writeElement:pathMapper.fromPath fromObject:childData elementMapper:nil];
+                            if (isWildcard) {
+                                _context.currentMapper = pathMapper;
+                                NSString *dynamicTag = pathMapper.pathFactory(childData, _context);
+                                [self writeElement:dynamicTag fromObject:childData elementMapper:nil];
+                            } else {
+                                [self writeElement:pathMapper.fromPath fromObject:childData elementMapper:nil];
+                            }
                             break;
                         }
                         case OX_SCALAR:     // handle single-value (automic) element:
                         case OX_ATOMIC: {
                             NSString *childValue = [childData isKindOfClass:[NSString class]] ? (NSString *)childData : [childData stringValue];
-                            [_printer element:childTag value:childValue];
+                            if (isWildcard) {
+                                _context.currentMapper = pathMapper;
+                                NSString *dynamicTag = pathMapper.pathFactory(childData, _context);
+                                [_printer element:dynamicTag value:childValue];
+                            } else {
+                                [_printer element:childTag value:childValue];
+                            }
                             break;
                         }
                         case OX_POLYMORPHIC:
@@ -275,6 +309,7 @@
     }
 }
 
+
 - (NSString *)writeXml:(id)object elementMapper:(OXmlElementMapper *)elementMapper prettyPrint:(BOOL)prettyPrint
 {
     [_printer reset];
@@ -296,6 +331,7 @@
 
 - (NSString *)writeXml:(id)object prettyPrint:(BOOL)prettyPrint
 {
+    [_context reset];
     if (_mapper.rootMapper) {
         OXmlXPathMapper *resultMapper = [_mapper.rootMapper elementMapperByProperty:@"result"];
         NSAssert1(resultMapper != nil, @"ERROR: result property mapping not found in root mapper: %@", _mapper.rootMapper);

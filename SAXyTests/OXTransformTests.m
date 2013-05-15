@@ -1,10 +1,13 @@
-//
-//  OXTransformTests.m
-//  SAXy OX - Object-to-XML mapping library
-//
-//  Created by Richard Easterling on 1/11/13.
-//
+/**
+ 
+  OXTransformTests.m
+  SAXy OX - Object-to-XML mapping library
 
+  Tests type conversion handling in OXTransform class.
+ 
+  Created by Richard Easterling on 1/11/13.
+
+*/
 #import <SenTestingKit/SenTestingKit.h>
 #import "OXUtil.h"
 #import "OXType.h"
@@ -12,7 +15,6 @@
 #import "OXmlXPathMapper.h"
 #import "OXProperty.h"
 #import "OXTransform.h"
-#import <CoreLocation/CLLocation.h>
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +66,6 @@
     // Tear-down code here.
     [super tearDown];
 }
-
 
 - (void)testLocaleTransforms
 {
@@ -138,6 +139,18 @@
     //}];
 }
 
+- (void)testTimezoneTransforms
+{
+    //test OX_ENCODED_BOOL
+    OXTransformBlock toTimeZone = [_transform transformerFrom:[NSString class] to:[NSTimeZone class]];
+    STAssertNotNil(toTimeZone, @"toBOOL");
+    STAssertEqualObjects([NSTimeZone timeZoneWithAbbreviation:@"GMT"], toTimeZone(@"GMT", _ctx), @"test string-to-TimeZone block");
+    
+    OXTransformBlock fromTimeZone = [_transform transformerFrom:[NSTimeZone class] to:[NSString class]];
+    STAssertNotNil(fromTimeZone, @"fromTimeZone");
+    STAssertEqualObjects(@"GMT", fromTimeZone([NSTimeZone timeZoneWithAbbreviation:@"GMT"], _ctx), @"test TimeZone-to-string transform block");
+}
+
 - (void)testString_NSNumberTransforms_whyYouShouldMapYourScalars
 {
     OXTransformBlock toNumber = [_transform transformerFrom:[NSString class] to:[NSNumber class]];
@@ -207,6 +220,19 @@
     STAssertEquals(s, s, @"original safe");
     STAssertEqualObjects(@"&lt;&#39;&quot;psycho&quot;&gt;&amp;", [OXUtil xmlSafeString:@"<'\"psycho\">&"], @"escaped safe");
 }
+
+
+//- (void)testURLEncoding
+//{
+//    //OXTransformBlock toNumber = [_transform transformerFrom:[NSString class] to:[NSNumber class]];
+//    NSURL *url1 = [NSURL URLWithString:@"http://web.com/x?id=1084&amp;acc=36399"];
+//    STAssertEqualObjects([url1 absoluteString], @"http://web.com/x?id=1084&acc=36399", @"url encoding");
+//    NSURL *url2 = [NSURL URLWithString:@"http://web.com/x?id=1084&acc=36399"];
+//    STAssertNotNil(url2, @"url not nil");
+//    STAssertEqualObjects([url2 absoluteString], @"http://web.com/x?id=1084&acc=36399", @"url encoding");
+//    NSString *text2 = [url2 absoluteString];
+//    STAssertNotNil(text2, @"url not nil");
+//}
 
 
 - (void)testScalarEncodingScheme

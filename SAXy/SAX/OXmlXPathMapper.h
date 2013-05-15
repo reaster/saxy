@@ -42,6 +42,8 @@ typedef enum {
 + (id)xpath:(NSString *)xpath type:(Class)type;
 + (id)xpath:(NSString *)xpath type:(Class)type property:(NSString *)property;
 + (id)xpath:(NSString *)xpath scalar:(const char *)encodedType property:(NSString *)property;
++ (id)xpath:(NSString *)xpath toMany:(Class)childType containerType:(Class)containerType property:(NSString *)property;
++ (id)xpath:(NSString *)xpath toMany:(Class)childType property:(NSString *)property dictionaryKey:(NSString *)keyProperty;
 
 #pragma mark - builder
 - (OXmlXPathMapper *)factory:(OXFactoryBlock)factory;
@@ -55,6 +57,7 @@ typedef enum {
 - (OXmlXPathMapper *)proxyClass:(Class)proxyClass;
 - (OXmlXPathMapper *)isVirtualProperty;
 - (OXmlXPathMapper *)formatter:(NSString *)formatterName;
+- (OXmlXPathMapper *)path:(OXPathFactoryBlock)pathFactory;
 
 #pragma mark - utility
 + (OXmlTypeEnum)xmlTypeFromPath:(NSString *)xpath;

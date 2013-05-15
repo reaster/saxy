@@ -12,14 +12,30 @@
 - (id)init
 {
     if ((self = [super init])) {
+        _transform = [[OXTransform alloc] init];
+        _userData = [NSMutableDictionary dictionary];
         _pathStack = [[NSMutableArray alloc] init];
         _instanceStack = [[NSMutableArray alloc] init];
         _mapperStack = [[NSMutableArray alloc] init];
-        _transform = [[OXTransform alloc] init];
-        _userData = [NSMutableDictionary dictionary];
     }
     return self;
 }
+
+- (void)resetUserData
+{
+    
+    [_userData removeAllObjects];
+}
+
+- (void)reset
+{
+    [_pathStack clear];
+    [_instanceStack clear];
+    [_mapperStack clear];
+    _currentMapper = nil;
+    _result = nil;
+}
+
 
 @end
 

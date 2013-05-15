@@ -19,7 +19,7 @@
 
 @interface OXmlWriter : NSObject
 
-@property(strong,nonatomic,readonly)OXContext *context;
+@property(strong,nonatomic,readonly)OXmlContext *context;
 @property(strong,nonatomic,readonly)OXmlMapper *mapper;
 @property(strong,nonatomic,readwrite)OXmlPrinter *printer;
 @property(strong,nonatomic,readwrite)NSString *xmlHeader;
@@ -34,7 +34,7 @@
 
 #pragma mark - constructors
 + (id)writerWithMapper:(OXmlMapper *)mapper;
-+ (id)writerWithMapper:(OXmlMapper *)mapper context:(OXContext *)context;
++ (id)writerWithMapper:(OXmlMapper *)mapper context:(OXmlContext *)context;
 
 
 #pragma mark - builder

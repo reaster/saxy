@@ -362,10 +362,15 @@
         NSDate *date = nil;
         if (string) {
             NSString *formatterName = ctx.currentMapper.formatterName;
-            NSDateFormatter *formatter = (NSDateFormatter *)[ctx.transform formatterWithName:formatterName ? formatterName : OX_DEFAULT_DATE_FORMATTER];
-            //see http://stackoverflow.com/questions/4330137/parsing-rfc3339-dates-with-nsdateformatter-in-ios-4-x-and-macos-x-10-6-impossib
-            NSError *error;
-            [formatter getObjectValue:&date forString:string range:nil error:&error]; //date = [formatter dateFromString:string];
+            NSFormatter *formatter = (NSFormatter *)[ctx.transform formatterWithName:formatterName ? formatterName : OX_DEFAULT_DATE_FORMATTER];
+            if ([formatter isKindOfClass:[NSDateFormatter class]]) {
+              //see http://stackoverflow.com/questions/4330137/parsing-rfc3339-dates-with-nsdateformatter-in-ios-4-x-and-macos-x-10-6-impossib
+                NSError *error;
+                [(NSDateFormatter *)formatter getObjectValue:&date forString:string range:nil error:&error]; //date = [formatter dateFromString:string];
+            } else {
+                NSString *error;
+                [formatter getObjectValue:&date forString:string errorDescription:&error];  //TODO add error to context
+            }
         }
         return date;
     }];
@@ -373,8 +378,8 @@
         NSString *date = nil;
         if (value) {
             NSString *formatterName = ctx.currentMapper.formatterName;
-            NSDateFormatter *formatter = (NSDateFormatter *)[ctx.transform formatterWithName:formatterName ? formatterName : OX_DEFAULT_DATE_FORMATTER];
-            date = [formatter stringFromDate:value];
+            NSFormatter *formatter = (NSFormatter *)[ctx.transform formatterWithName:formatterName ? formatterName : OX_DEFAULT_DATE_FORMATTER];
+            date = [formatter stringForObjectValue:value];
         }
         return date;
     }];
@@ -386,6 +391,15 @@
     [self registerFrom:[NSLocale class] to:[NSString class] transformer:^(id value, OXContext *ctx) {
         return [value localeIdentifier];
     }];
+    
+    //NSTimeZone <-> NSString - using abbreviations: GMT, PST, PDT, EST, etc.
+    [self registerFrom:[NSString class] to:[NSTimeZone class] transformer:^(id string, OXContext *ctx) {
+        return [NSTimeZone timeZoneWithAbbreviation:string];
+    }];
+    [self registerFrom:[NSTimeZone class] to:[NSString class] transformer:^(id value, OXContext *ctx) {
+        return [value abbreviation];
+    }];
+
 }
 
 #pragma mark - object-to-scalar transformers
@@ -565,41 +579,49 @@
 
 - (void)registerDefaultStringToScalarTransformers
 {
+    //NSString convenience methods:
+    //- (double)doubleValue;
+    //- (float)floatValue;
+    //- (int)intValue;
+    //- (NSInteger)integerValue NS_AVAILABLE(10_5, 2_0);
+    //- (long long)longLongValue NS_AVAILABLE(10_5, 2_0);
+    //- (BOOL)boolValue NS_AVAILABLE(10_5, 2_0);  // Skips initial space characters (whitespaceSet), or optional -/+ sign followed by zeroes. Returns YES on encountering one of "Y", "y", "T", "t", or a digit 1-9. It ignores any trailing characters.
+
     [self registerFrom:[NSString class] toScalar:OX_ENCODED_BOOL transformer:^(id string, OXContext *ctx) {    // Bool
-        return [NSNumber numberWithBool:[string boolValue]];
+        return [NSNumber numberWithBool:[(NSString *)string boolValue]];
     }];
     [self registerFrom:[NSString class] toScalar:@encode(boolean_t) transformer:^(id string, OXContext *ctx) {      // C++ bool or C99 _Bool
-        return [NSNumber numberWithBool:[string boolValue]];
+        return [NSNumber numberWithBool:[(NSString *)string boolValue]];
     }];
     [self registerFrom:[NSString class] toScalar:@encode(char) transformer:^(id string, OXContext *ctx) {
-        return [NSNumber numberWithChar:[string characterAtIndex:0]];
+        return [NSNumber numberWithChar:[(NSString *)string characterAtIndex:0]];
     }];
     [self registerFrom:[NSString class] toScalar:@encode(unsigned char) transformer:^(id string, OXContext *ctx) {
-        return [NSNumber numberWithUnsignedChar:[string characterAtIndex:0]];
+        return [NSNumber numberWithUnsignedChar:[(NSString *)string characterAtIndex:0]];
     }];
     [self registerFrom:[NSString class] toScalar:@encode(short) transformer:^(id string, OXContext *ctx) {
-        return [NSNumber numberWithShort:[string intValue]];
+        return [NSNumber numberWithShort:(short)[(NSString *)string intValue]];
     }];
     [self registerFrom:[NSString class] toScalar:@encode(unsigned short) transformer:^(id string, OXContext *ctx) {
-        return [NSNumber numberWithUnsignedShort:[string intValue]];
+        return [NSNumber numberWithUnsignedShort:(short)[(NSString *)string intValue]];
     }];
     [self registerFrom:[NSString class] toScalar:@encode(int) transformer:^(id string, OXContext *ctx) {
-        return [NSNumber numberWithInt:[string intValue]];
+        return [NSNumber numberWithInt:[(NSString *)string intValue]];
     }];
     [self registerFrom:[NSString class] toScalar:@encode(unsigned int) transformer:^(id string, OXContext *ctx) {
-        return [NSNumber numberWithUnsignedInt:[string intValue]];
+        return [NSNumber numberWithUnsignedInt:[(NSString *)string intValue]];
     }];
     [self registerFrom:[NSString class] toScalar:@encode(long) transformer:^(id string, OXContext *ctx) {
-        return [NSNumber numberWithLong:[string integerValue]];
+        return [NSNumber numberWithLong:(long)[(NSString *)string longLongValue]];
     }];
     [self registerFrom:[NSString class] toScalar:@encode(unsigned long) transformer:^(id string, OXContext *ctx) {
-        return [NSNumber numberWithUnsignedLong:[string longLongValue]];
+        return [NSNumber numberWithUnsignedLong:(unsigned long)[(NSString *)string longLongValue]];
     }];
     [self registerFrom:[NSString class] toScalar:@encode(long long) transformer:^(id string, OXContext *ctx) {
-        return [NSNumber numberWithLongLong:[string longLongValue]];
+        return [NSNumber numberWithLongLong:[(NSString *)string longLongValue]];
     }];
     [self registerFrom:[NSString class] toScalar:@encode(unsigned long long) transformer:^(id string, OXContext *ctx) {
-        return [NSNumber numberWithUnsignedLongLong:[string boolValue]];
+        return [NSNumber numberWithUnsignedLongLong:(unsigned long long)[(NSString *)string longLongValue]];
     }];
     [self registerFrom:[NSString class] toScalar:@encode(float) transformer:^(id string, OXContext *ctx) {
         NSNumber *result = nil;
@@ -609,7 +631,7 @@
                 NSNumberFormatter *formatter = (NSNumberFormatter *)[ctx.transform formatterWithName:formatterName];
                 result = [formatter numberFromString:string];
             } else {
-                result = [NSNumber numberWithFloat:[string floatValue]];
+                result = [NSNumber numberWithFloat:[(NSString *)string floatValue]];
             }
         }
         return result;
@@ -622,7 +644,7 @@
                 NSNumberFormatter *formatter = (NSNumberFormatter *)[ctx.transform formatterWithName:formatterName];
                 result = [formatter numberFromString:string];
             } else {
-                result = [NSNumber numberWithDouble:[string doubleValue]];
+                result = [NSNumber numberWithDouble:[(NSString *)string doubleValue]];
             }
         }
         return result;
@@ -637,7 +659,7 @@
     if (self.treatScalarZerosAsNil) {
         //NSNumber <-> NSNumber  - prevents noisy JSON zero output: 'key':0 
         [self registerFrom:[NSNumber class] to:[NSNumber class] transformer:^(id value, OXContext *ctx) {
-            return value && [value doubleValue] != 0.0 ? value : nil;
+            return value && [(NSNumber *)value doubleValue] != 0.0 ? value : nil;
         }];
     } else {
         [self registerFrom:[NSNumber class] to:[NSNumber class] transformer:nil];
@@ -653,9 +675,9 @@
     return [_namedFormatters objectForKey:name];
 }
 
-- (NSDateFormatter *)defaultDateFormatter
+- (NSFormatter *)defaultDateFormatter
 {
-    return (NSDateFormatter *)[self formatterWithName:OX_DEFAULT_DATE_FORMATTER];
+    return [self formatterWithName:OX_DEFAULT_DATE_FORMATTER];
 }
 
 - (void)registerFormatter:(NSFormatter *)formatter withName:(const NSString *)name
@@ -663,7 +685,7 @@
     [_namedFormatters setObject:formatter forKey:name];
 }
 
-- (void)registerDefaultDateFormatter:(NSDateFormatter *)dateFormatter
+- (void)registerDefaultDateFormatter:(NSFormatter *)dateFormatter
 {
     [self registerFormatter:dateFormatter withName:OX_DEFAULT_DATE_FORMATTER];
 }

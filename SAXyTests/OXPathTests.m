@@ -1,12 +1,13 @@
-//
-//  OXPathTests.m
-//  SAXy OX - Object-to-XML mapping library
-//
-//  Test SAXy's subset of xpath features.
-//
-//  Created by Richard Easterling on 1/25/13.
-//
+/**
+ 
+  OXPathTests.m
+  SAXy OX - Object-to-XML mapping library
 
+  Test SAXy's subset of xpath features.
+
+  Created by Richard Easterling on 1/25/13.
+
+*/
 #import <SenTestingKit/SenTestingKit.h>
 #import "OXPathLite.h"
 

@@ -19,6 +19,25 @@
 
 @implementation OXPathLite
 
+static NSArray *_OXPathTypeArray;
+
++ (void)initialize
+{
+    //create constants for OXPathType enum
+    _OXPathTypeArray = @[
+                         [NSNumber numberWithInt:OXUnknownType],
+                         [NSNumber numberWithInt:OXRootPathType],
+                         [NSNumber numberWithInt:OXElementPathType],
+                         [NSNumber numberWithInt:OXAnyPathType],
+                         [NSNumber numberWithInt:OXAttributePathType],
+                         [NSNumber numberWithInt:OXTextPathType],
+                         [NSNumber numberWithInt:OXAnyAnyPathType]
+                         ];
+    for (int typeEnum=0; typeEnum < [_OXPathTypeArray count]; typeEnum++) { //need a sanity check
+        NSAssert1(typeEnum == [[_OXPathTypeArray objectAtIndex:typeEnum] intValue], @"_OXPathTypeArray out-of-sync with OXPathType[%d]", typeEnum);
+    }
+}
+
 @synthesize tagStack = _tagStack;
 @synthesize tagTypeStack = _tagTypeStack;
 
@@ -74,7 +93,7 @@
     NSScanner *scanner = [NSScanner scannerWithString:xpath];
     NSString *token = nil;
     NSString *sep = nil;
-    NSMutableArray *tempStack = [NSMutableArray array];
+    NSMutableArray *tempStack = [NSMutableArray arrayWithCapacity:3]; //typical two-path segment
     while ([scanner isAtEnd] == NO) {
         [scanner scanUpToString:separator intoString:&token];
         token = [OXUtil trim:token];
@@ -103,13 +122,13 @@
         BOOL isSep2 = [separator isEqualToString:tok2];
         if (isSep1 && isSep2) {                             //xpath double wildcard
             [__tagStack push:@"**"];
-            [__tagTypeStack push:[NSNumber numberWithInteger:OXAnyAnyPathType]];
+            [__tagTypeStack push:[_OXPathTypeArray objectAtIndex:OXAnyAnyPathType]];
             tok1 = [tokenEnumerator nextObject];            //consume both tokens
             tok2 = [tokenEnumerator nextObject];
         } else if (isSep1) {                                
             if (isRoot) {                                   //root node
                 [__tagStack push:OX_ROOT_PATH];
-                [__tagTypeStack push:[NSNumber numberWithInteger:OXRootPathType]];
+                [__tagTypeStack push:[_OXPathTypeArray objectAtIndex:OXRootPathType]];
                 tok1 = tok2;
                 tok2 = [tokenEnumerator nextObject];
             } else {                                        //non-root separators - ignore
@@ -119,20 +138,20 @@
         } else {                                            //none-separator token
             if ([tok1 isEqualToString:@"*"]) {              //wildcard
                 [__tagStack push:@"*"];
-                [__tagTypeStack push:[NSNumber numberWithInteger:OXAnyPathType]];
+                [__tagTypeStack push:[_OXPathTypeArray objectAtIndex:OXAnyPathType]];
             } else if ([tok1 isEqualToString:@"**"]) {  //text node
                 [__tagStack push:@"**"];
-                [__tagTypeStack push:[NSNumber numberWithInteger:OXAnyAnyPathType]];
+                [__tagTypeStack push:[_OXPathTypeArray objectAtIndex:OXAnyAnyPathType]];
             } else if ([tok1 hasPrefix:@"@"]) {              //attribute
                 NSString *attr = [tok1 substringWithRange:NSMakeRange(1,[tok1 length]-1)];
                 [__tagStack push:attr];
-                [__tagTypeStack push:[NSNumber numberWithInteger:OXAttributePathType]];
+                [__tagTypeStack push:[_OXPathTypeArray objectAtIndex:OXAttributePathType]];
             } else if ([tok1 isEqualToString:@"text()"]) {  //text node
                 [__tagStack push:@"."];
-                [__tagTypeStack push:[NSNumber numberWithInteger:OXTextPathType]];
+                [__tagTypeStack push:[_OXPathTypeArray objectAtIndex:OXTextPathType]];
             } else {                                        //element token
                 [__tagStack push:tok1];          
-                [__tagTypeStack push:[NSNumber numberWithInteger:OXElementPathType]];
+                [__tagTypeStack push:[_OXPathTypeArray objectAtIndex:OXElementPathType]];
             }
             tok1 = tok2;
             tok2 = [tokenEnumerator nextObject];

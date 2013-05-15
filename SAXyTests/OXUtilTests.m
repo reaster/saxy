@@ -1,11 +1,11 @@
-//
-//  OXUtilTests.m
-//  SAXy
-//
-//  Created by Richard on 3/4/13.
-//  Copyright (c) 2013 Outsource Cafe, Inc. All rights reserved.
-//
+/**
+  OXUtilTests.m
+  SAXy
 
+  Created by Richard on 3/4/13.
+  Copyright (c) 2013 Outsource Cafe, Inc. All rights reserved.
+
+*/
 #import <SenTestingKit/SenTestingKit.h>
 #import "OXUtil.h"
 #import "OXType.h"

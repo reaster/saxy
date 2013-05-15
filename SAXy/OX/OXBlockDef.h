@@ -20,6 +20,8 @@ typedef id (^OXGetterBlock)(NSString *path, id source, OXContext *ctx);
 
 typedef id<NSFastEnumeration> (^OXEnumerationBlock)(id container, OXContext *ctx);
 
+typedef NSString *(^OXPathFactoryBlock)(id object, OXContext *ctx);
+
 typedef id (^OXTransformBlock)(id source, OXContext *ctx);
 
 typedef id (^OXForEachPathMapperBlock)(OXPathMapper *mapper);

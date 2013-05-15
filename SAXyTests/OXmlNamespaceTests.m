@@ -1,10 +1,13 @@
-//
-//  OXmlNamespaceTests.m
-//  SAXy OX - Object-to-XML mapping library
-//
-//  Created by Richard Easterling on 2/19/13.
-//
+/**
+ 
+  OXmlNamespaceTests.m
+  SAXy OX - Object-to-XML mapping library
+ 
+  Tests XML namespace support.
 
+  Created by Richard Easterling on 2/19/13.
+
+*/
 #import <SenTestingKit/SenTestingKit.h>
 #import "OXmlMapper.h"
 #import "OXmlElementMapper.h"

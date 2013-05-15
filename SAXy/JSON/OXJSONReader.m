@@ -182,6 +182,7 @@
 - (id)read:(id)jsonObject
 {
     _logMapping = _context.logReaderStack;
+    [_context reset];
     _errors = [self.mapper configure:_context]; //use reflections to create type-specific function blocks
     if (_errors) {
         if (_logMapping) {

@@ -165,6 +165,7 @@
 - (NSData *)writeAsData:(id)object
 {
     _logMapping = _context.logReaderStack;
+    [_context reset];
     _errors = [ _mapper configure:_context];
     if (_errors == nil) {
         [_context setValue:object forKey:@"result"];

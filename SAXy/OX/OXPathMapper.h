@@ -43,7 +43,7 @@ typedef enum {
 
 @interface OXPathMapper : NSObject
 
-#pragma mark - type source (from) and target (to)
+#pragma mark - target and source types
 @property(strong,nonatomic,readwrite)OXType *toType;                    //target OXType for this mapping
 @property(strong,nonatomic,readwrite)OXType *fromType;                  //source OXType for this mapping
 
@@ -56,6 +56,7 @@ typedef enum {
 @property(strong,nonatomic,readwrite)NSString *fromPath;                //single property name or KVC key path
 @property(strong,nonatomic,readonly)NSString *fromPathRoot;             //root segment of fromPath, KVC example: a.b.c -> a
 @property(strong,nonatomic,readonly)NSString *fromPathLeaf;             //leaf segment of fromPath, KVC example: a.b.c -> c
+@property(copy,nonatomic,readwrite)OXPathFactoryBlock pathFactory;      //generates path name dynamicly from object
 
 #pragma mark - constructor block
 @property(copy,nonatomic,readwrite)OXFactoryBlock factory;              //returns (a usualy new) instance of toClass
@@ -90,7 +91,7 @@ typedef enum {
 #pragma mark - configure
 - (NSArray *)configure:(OXContext *)context;                            //must be called before mappers are used, isConfigured is set after completion
 - (void)assignDefaultBlocks:(OXContext *)context;                       //if not assigned already, set default getter,setter,toTransform,fromTransform & factory blocks
-- (NSArray *)verifyToTypeUsingSelfReflection:(OXContext *)context errors:(NSArray *)errors; //TODO remove me
+//- (NSArray *)verifyToTypeUsingSelfReflection:(OXContext *)context errors:(NSArray *)errors; //TODO remove me
 
 @end
 

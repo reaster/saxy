@@ -88,7 +88,7 @@
  supports a subset of the xpath language, but most of the time you can just think element names when you see xpath.
  
  This example modifies the last by explicitly mapping the CartoonCharacter's properties, something that was done
- automatically by SAXy before. We'll also shorten the element names to make it more interesting.
+ automatically by SAXy in the previous example. We'll also shorten the element names to make it more interesting.
  */
 - (void)testLibraryAnatomy
 {
@@ -299,7 +299,7 @@
     
     STAssertEqualObjects(@"Elmer", fudd.firstName, @"mapped 'first' attribute to 'firstName' property");  //test results
     STAssertEqualObjects(@"Fudd", fudd.lastName, @"mapped 'last' attribute to 'lastName' property");
-    NSDateFormatter *formatter = [reader.context.transform defaultDateFormatter];          //dig out default date formatter
+    NSDateFormatter *formatter = (NSDateFormatter *)[reader.context.transform defaultDateFormatter];      //dig out default date formatter
     STAssertEqualObjects([formatter dateFromString:@"1940-03-02T00:00:00+0000"], fudd.birthDay, @"mapped element body to 'birthDay' property");
     
     OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper];          //creates a writer based on mapper

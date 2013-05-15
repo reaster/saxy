@@ -42,6 +42,9 @@
 @property(assign,readwrite,nonatomic) BOOL logReaderStack;              //log tag mapping - helpful debugging tool
 @property(assign,readwrite,nonatomic) BOOL logReaderInput;              //log input data - usefull for remote data debugging
 
+- (void)reset;
+- (void)resetUserData;
+
 @end
 
 //

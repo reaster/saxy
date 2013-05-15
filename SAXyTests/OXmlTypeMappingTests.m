@@ -1,15 +1,16 @@
-//
-//  XMLTests.m
-//  SAXy OX - Object-to-XML mapping library
-//
-//  Test coverage for types and various mapping configurations supported by SAXy.
-//
-//  Created by Richard Easterling on 1/14/13.
-//
-// TODO add support for NSDecimal and test with NSDecimalMaxSize, NSDecimalNoScale
-//      add tests with NSIntegerMax, NSIntegerMin, NSUIntegerMax 
+/**
+ 
+  XMLTests.m
+  SAXy OX - Object-to-XML mapping library
 
+  Test coverage for types and various mapping configurations supported by SAXy.
 
+  Created by Richard Easterling on 1/14/13.
+
+ TODO add support for NSDecimal and test with NSDecimalMaxSize, NSDecimalNoScale
+      add tests with NSIntegerMax, NSIntegerMin, NSUIntegerMax 
+
+*/
 #import <SenTestingKit/SenTestingKit.h>
 
 #import "OXType.h"
@@ -222,10 +223,15 @@
     //marshal XML and test resulting data:
     reader.context.logReaderStack = NO;
     NSArray *array = [reader readXmlFile:@"ContactsTestData.xml"];
+    if (reader.errors) {
+        NSLog(@"ERROR: %@", [reader.errors objectAtIndex:0]);
+        STFail(@"XML errors");
+    }
     STAssertNotNil(array, @"xml returned array not nil");
     NSAssert([array count] > 0, @"results");
     CommercialItem *comm = [array objectAtIndex:0];
     STAssertEqualObjects(@"Havasupai Tribe", comm.name, @"name from xml");
+    STAssertNotNil(comm.homePage, @"comm.homePage != nil");
     STAssertEqualObjects(comm.homePage, [NSURL URLWithString:@"http://home.com/index.html"], @"comm.homePage");
     STAssertNotNil(comm.lastUpdated, @"date parsed and set");
     NSDateFormatter *formatter = (NSDateFormatter *)[reader.context.transform formatterWithName:OX_DEFAULT_DATE_FORMATTER];
@@ -248,7 +254,11 @@
     STAssertNotNil(comm.address,                @"comm.address from xml");
     STAssertNotNil(comm.address.orgunit,        @"comm.address.orgunit from xml");
     STAssertEquals(comm.address.zip,            86435, @"zip int from xml");
-    
+    STAssertNotNil(comm.emails,                 @"comm.emails from xml");
+    STAssertEquals((NSUInteger)2,               [comm.emails count], @"comm.emails count");
+    EmailItem *email1 = [comm.emails objectForKey:@"home"];
+    NSString *url1 = [email1.url absoluteString];
+    STAssertEqualObjects(@"http://dude.com/x?a=1&b=2", url1, @"url encoding");
 }
 
 - (void)testReadSingleResult

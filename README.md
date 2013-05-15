@@ -6,7 +6,7 @@ be serialized to XML or JSON with a minimal amount of coding.
 
 Features include:
 
- * efficient reading/unmarshalling and writing/marshalling of XML from domain objects
+ * efficient reading/unmarshalling and writing/marshalling of XML or JSON from domain objects
  * full XML namespace support
  * built-in type conversion and formatting
  * highly configurable API

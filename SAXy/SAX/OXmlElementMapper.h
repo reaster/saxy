@@ -91,6 +91,8 @@
 - (OXmlElementMapper *)body:(NSString *)bodyProperty scalarType:(char const *)encodedType;
 - (OXmlElementMapper *)attribute:(NSString *)tag;
 - (OXmlElementMapper *)attributes:(NSArray *)tags;
+- (OXmlElementMapper *)attribute:(NSString *)tag scalarType:(char const *)encodedType;
+- (OXmlElementMapper *)attribute:(NSString *)tag scalarType:(char const *)encodedType property:(NSString*)property;
 - (OXmlElementMapper *)attribute:(NSString *)tag property:(NSString*)property;
 - (OXmlElementMapper *)attribute:(NSString *)tag property:(NSString*)property type:(Class)propertyClass;
 - (OXmlElementMapper *)xpath:(NSString *)xpath toMany:(Class)childType;

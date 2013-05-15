@@ -3,7 +3,7 @@
  OXTwitterExampleTests.m
  SAXy OX - Object-to-XML mapping library
  
- This demonstrates using SAXy with twitter feeds.
+ This test file demonstrates using SAXy with twitter feeds.
  
  There are both single-object and a multi-object mapping examples using the same data file: 'BarackObamaTwitterFeed.xml'.
  
@@ -199,7 +199,7 @@
  
  A custom setter block checks a cache for pre-existing OXTwitterUser instances before setting them on the
  OXTweet instance.  For the cache we use the 'userData' NSDictionary in the OXContext class which is provided
- by SAXy for just such proposes.
+ by SAXy for just such purposes.
  */
 - (void)testReaderAndWriteWithCachedUsers
 {
@@ -258,6 +258,7 @@
     
     //create and invoke a reader on a twitter feed
     OXmlReader *reader = [OXmlReader readerWithMapper:mapper context:context];
+    //reader.context.logReaderStack = YES;                                                 //log reader mappings
     NSArray *tweets = [reader readXmlFile:@"BarackObamaTwitterFeed.xml"];
     
     //test for no duplicate OXTwitterUser instances with the same id

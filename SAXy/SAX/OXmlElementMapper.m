@@ -57,8 +57,8 @@
 @implementation OXmlElementMapper
 {
     NSMutableDictionary *_namespaceMap;
-    NSDictionary *_attributeMapByTag;
-    NSDictionary *_elementMapByTag;
+    //NSDictionary *_attributeMapByTag;
+    //NSDictionary *_elementMapByTag;
     OXmlXPathMapper *_bodyMapper;
     OXmlXPathMapper *_wildcardMapper;
     NSString *_pathRoot;
@@ -273,7 +273,7 @@
 @dynamic bodyMapper;
 - (OXmlXPathMapper *)bodyMapper
 {
-    if (_elementMapByTag == nil) {
+    if (_elementMapByProperty == nil) {
         [self categorizePropertiesByTag];
     }
     return _bodyMapper;
@@ -472,7 +472,7 @@
 
 - (OXmlElementMapper *)tagMap:(NSDictionary *)tagToPropertyMap
 {
-    for(NSString *tag in [tagToPropertyMap keyEnumerator]) {
+    for(NSString *tag in tagToPropertyMap) {
         NSString *property = [tagToPropertyMap objectForKey:tag];
         [self xpath:tag property:property];
     }
@@ -555,6 +555,18 @@
     return [self addSimpleMapping: [OXmlXPathMapper xpath:attr type:nil property:property]];
 }
 
+- (OXmlElementMapper *)attribute:(NSString *)tag scalarType:(char const *)encodedType
+{
+    NSString *attr = [OXmlXPathMapper xpathToAttribute:tag];
+    return [self addSimpleMapping: [OXmlXPathMapper xpath:attr scalar:encodedType property:nil] ];
+}
+
+- (OXmlElementMapper *)attribute:(NSString *)tag scalarType:(char const *)encodedType property:(NSString*)property
+{
+    NSString *attr = [OXmlXPathMapper xpathToAttribute:tag];
+    return [self addSimpleMapping: [OXmlXPathMapper xpath:attr scalar:encodedType property:property] ];
+}
+
 - (OXmlElementMapper *)attribute:(NSString *)tag property:(NSString*)property type:(Class)propertyClass
 {
     NSString *attr = [OXmlXPathMapper xpathToAttribute:tag];
@@ -563,9 +575,10 @@
 
 - (OXmlElementMapper *)xpath:(NSString *)xpath toMany:(Class)childType property:(NSString*)property containerType:(Class)containerType
 {
-    OXType *childOXType = [OXType typeContainer:containerType containing:childType];
-    OXmlXPathMapper *mapper = [OXmlXPathMapper xpath:xpath type:containerType property:property];
-    mapper.toType = childOXType;
+    //OXType *childOXType = [OXType typeContainer:containerType containing:childType];
+    //OXmlXPathMapper *mapper = [OXmlXPathMapper xpath:xpath type:containerType property:property];
+    //mapper.toType = childOXType;
+    OXmlXPathMapper *mapper = [OXmlXPathMapper xpath:xpath toMany:childType containerType:containerType property:property];
     return [self addSimpleMapping:mapper];
 }
 
@@ -583,10 +596,7 @@
 
 - (OXmlElementMapper *)xpath:(NSString *)xpath toMany:(Class)childType property:(NSString*)property dictionaryKey:(NSString *)keyProperty
 {
-    OXType *containerType = [OXType typeContainer:nil containing:childType];
-    OXmlXPathMapper *mapper = [OXmlXPathMapper xpath:xpath type:nil property:property];
-    mapper.toType = containerType;
-    mapper.dictionaryKeyName = keyProperty;
+    OXmlXPathMapper *mapper = [OXmlXPathMapper xpath:xpath toMany:childType property:property dictionaryKey:keyProperty];
     return [self addSimpleMapping:mapper];
 }
 

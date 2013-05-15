@@ -3,8 +3,8 @@
     <c:contact>
         <c:orginization>
             <c:name>Havasupai Tribe</c:name>
-            <c:homePage>http://home.com/index.html</c:homePage>
             <c:lastUpdated>2013-01-22T15:45:30-0000</c:lastUpdated>
+            <c:homePage>http://home.com/index.html</c:homePage>
             <c:notes>bla bla bla</c:notes>
             <c:prospect>true</c:prospect>
             <c:status>A</c:status>
@@ -23,7 +23,7 @@
             <!--
              -->
             <c:emails>
-                <c:email type="home" note="the man">dude@havasupai.org</c:email>
+                <c:email type="home" note="the man" url="http://dude.com/x?a=1&amp;b=2">dude@havasupai.org</c:email>
                 <c:email type="work" note="">infoe@havasupai.org</c:email>
             </c:emails>
             <c:address>

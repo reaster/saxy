@@ -21,6 +21,9 @@
     NSMutableDictionary *_mappersByNamespace;
     BOOL _logStack;
     BOOL _namespaceAware;
+    //optimizations:
+    NSString *_cachedNsPrefix;
+    NSMutableDictionary *_cachedNsTags;
 }
 
 #pragma mark - constructor
@@ -32,7 +35,8 @@
         _errors = nil;
         _namespaceAware = NO;   //ignores (strips prefixes) XML namespaces
         _mapper = mapper;
-        
+        _cachedNsPrefix = @"?";
+        _cachedNsTags = [NSMutableDictionary dictionaryWithCapacity:51];
     }
     return self;
 }
@@ -68,20 +72,32 @@
 
 - (NSString *)removeTagPrefix:(NSString *)qName
 {
-//    if (_namespaceAware) {
-//        return qName;
-//    } else {
-        int nsIndex = [OXUtil firstIndexOfChar:':' inString:qName];
-        return (nsIndex < 0) ? qName : [qName substringFromIndex:nsIndex+1];
-//    }
+    //if (_namespaceAware) {
+    NSRange range = [qName rangeOfString:@":"];
+    if (range.location == NSNotFound) {
+        return qName;
+    } else {
+        NSString *cachedTag = [_cachedNsTags objectForKey:qName];
+        if (cachedTag == nil) {
+            cachedTag = [qName substringFromIndex:range.location+1];
+            [_cachedNsTags setObject:cachedTag forKey:qName];
+        }
+        return cachedTag;
+    }
 }
 
 - (NSString *)namespacePrefix:(NSString *)qName
 {
     if (_namespaceAware) {
-        //int nsIndex = [OXUtil firstIndexOfChar:':' inString:qName];
         NSRange range = [qName rangeOfString:@":"];
-        return (range.location == NSNotFound) ? nil : [qName substringToIndex:range.location];
+        if (range.location == NSNotFound) {
+            return nil;
+        } else {
+            if ( ! [qName hasPrefix:_cachedNsPrefix]) {
+                _cachedNsPrefix = [qName substringToIndex:range.location];
+            }
+            return _cachedNsPrefix;
+        }
     } else {
         return nil;
     }
@@ -89,7 +105,7 @@
 
 - (void)registerNamespaces:(NSDictionary *)attributes
 {
-    for (NSString *name in [attributes keyEnumerator]) {
+    for (NSString *name in attributes) {
         if ([name hasPrefix:@"xmlns"]) {
             [self.mapper overridePrefix:name forNamespaceURI:[attributes objectForKey:name]];
             _namespaceAware = YES;
@@ -100,7 +116,7 @@
 - (NSString *)startTagAsString:(NSString *)tag attributes:(NSDictionary *)attributes
 {
     NSMutableString *xml = [NSMutableString stringWithFormat:@"<%@ ",tag];
-    for(id key in [attributes keyEnumerator]) {
+    for(id key in attributes) {
         NSString *value = (NSString *)[attributes objectForKey:key];
         [xml appendFormat:@"%@='%@' ",key, value];
     }
@@ -155,8 +171,8 @@
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
-    NSString *docTag = [_context.pathStack peek];
-    NSAssert1([OX_ROOT_PATH isEqualToString:docTag], @"ERROR in parserDidEndDocument: bottom of context.pathStack should contain '/', not %@", docTag);
+    //NSString *docTag = [_context.pathStack peek];
+    NSAssert1([OX_ROOT_PATH isEqualToString:[_context.pathStack peek]], @"ERROR in parserDidEndDocument: bottom of context.pathStack should contain '/', not %@", [_context.pathStack peek]);
     if (_logStack) NSLog(@"  end: %@ - skipping", [_context tagPath]);
 }
 
@@ -166,7 +182,7 @@
         @try {
             //reset body text
             [_context clearText];
-            if (attributes) {
+            if ([attributes count] > 0) {
                 [self registerNamespaces:attributes];
             }
             NSRange colon = [tag rangeOfString:@":"];
@@ -175,6 +191,8 @@
             NSString *nsURI = nsPrefix ? [_mapper.nsByPrefix objectForKey:nsPrefix] : nil;
             if (nsURI == nil)
                 nsURI = OX_DEFAULT_NAMESPACE;
+//            if ([@"c:homePage" isEqualToString:tag])
+//                NSLog(@"link: %@",tag);
             //put tag on the stack
             [_context.pathStack push:elementName];
             OXmlElementMapper *parentMapper = [_context.mapperStack peek];
@@ -201,11 +219,14 @@
                     [_context pushMappingType:OX_SAX_OBJECT_ACTION];
                     if (_logStack) NSLog(@"start: %@ - construct/push: %@", [_context tagPath], targetObj);
                     //process attributes
-                    for(NSString *attrName in [attributes keyEnumerator]) {
+                    for(NSString *attrName in attributes) {
                         if (![attrName hasPrefix:@"xmlns"] ) {
                             colon = [attrName rangeOfString:@":"];
                             NSString *key = colon.location == NSNotFound ? attrName : [self removeTagPrefix:attrName];
-                            NSString *value = _context.attributeFilterBlock(key, (NSString *)[attributes objectForKey:attrName]);
+                            NSString *rawValue = [attributes objectForKey:attrName];
+                            if ([rawValue rangeOfString:@"&amp;"].location != NSNotFound)
+                                NSLog(@"%@=\"%@\"", key, rawValue);
+                            NSString *value = _context.attributeFilterBlock(key, rawValue);
                             if (value) {
                                 if (mapper) {
                                     NSString *attrNSURI = colon.location == NSNotFound ? nsURI : [_mapper.nsByPrefix objectForKey:[self namespacePrefix:attrName]];
@@ -249,6 +270,8 @@
     @autoreleasepool {
         OXSAXActionEnum mappingType = [_context peekMappingType];
         OXSAXActionEnum parentMappingType = [_context peekMappingTypeAtIndex:1];
+//        if ([tag isEqualToString:@"p:wpt"])
+//            NSLog(@"%@", tag);
         if (mappingType == OX_SAX_SKIP_ACTION) {
             if (_logStack) NSLog(@"  end: %@ - skipping", [_context tagPath]);
         } else if (parentMappingType == OX_SAX_SKIP_ACTION && [_context.instanceStack count] < 2) {
@@ -260,9 +283,9 @@
             //get object off the top of stack and process according to mapping type
             NSObject *targetObj = [_context.instanceStack peek];
             OXmlElementMapper *elementMapper = [_context.mapperStack peek];
-            NSString *parentElement = [_context.pathStack peekAtIndex:1];
+//            NSString *parentElement = [_context.pathStack peekAtIndex:1];
             if (elementMapper == nil)
-                NSAssert1(elementMapper != nil, @"no OXmlElementMapper found for %@", parentElement);
+                NSAssert1(elementMapper != nil, @"no OXmlElementMapper found for %@", [_context.pathStack peekAtIndex:1]);
             if (mappingType == OX_SAX_OBJECT_ACTION) {
                 OXmlElementMapper *parentMapper = [_context.mapperStack peekAtIndex:1];
                 NSObject *child = targetObj;
@@ -284,11 +307,11 @@
                     _context.currentMapper = xpathMapper;
                     if (xpathMapper.toType.typeEnum == OX_CONTAINER) {
                         if (_logStack) NSLog(@"  end: %@ - %@.%@ += '%@'", [_context tagPath], parent, xpathMapper.toPath, child);
-                        NSAssert1(xpathMapper.appender != nil, @"appender not set for property: %@", xpathMapper);//TODO remove me!!
+                        //NSAssert1(xpathMapper.appender != nil, @"appender not set for property: %@", xpathMapper);//TODO remove me!!
                         xpathMapper.appender(xpathMapper.toPath, child, parent, _context);
                     } else {
                         if (_logStack) NSLog(@"  end: %@ - %@.%@='%@'", [_context tagPath], parent, xpathMapper.toPath, child);
-                        NSAssert1(xpathMapper.setter != nil, @"setter not set for property: %@", xpathMapper);//TODO remove me!!
+                        //NSAssert1(xpathMapper.setter != nil, @"setter not set for property: %@", xpathMapper);//TODO remove me!!
                         xpathMapper.setter(xpathMapper.toPath, child, parent, _context);
                     }
                 } else {
@@ -335,6 +358,7 @@
 {
     [parser setDelegate:self];
     [parser setShouldResolveExternalEntities:NO];
+    [_context reset];
     _errors = [self.mapper configure:_context]; //use reflections to create type-specific function blocks
     if (_errors) {
         if (_logStack) {
@@ -345,7 +369,9 @@
         return nil;
     } else {
         _namespaceAware = self.mapper.namespaceAware;
-        return [parser parse] ? _context.result : nil;  //if not successful, delegate is informed of error
+        id result = [parser parse] ? _context.result : nil;  //if not successful, delegate is informed of error
+        [_context reset];   //clear reader memory
+        return result;
     }
 }
 

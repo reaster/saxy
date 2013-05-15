@@ -27,7 +27,7 @@
 
   Supported (non-scalar) object types are:
 
-    NSString, NSMutableString, NSURL, NSDate, NSData, NSLocale
+    NSString, NSMutableString, NSURL, NSDate, NSData, NSLocale, NSTimeZone
 
   NSValueTransformer is not directly supported, however it's integration is trivial. For example:
 
@@ -88,10 +88,10 @@
 
 #pragma mark - formatters
 - (NSFormatter *)formatterWithName:(const NSString *)name;
-- (NSDateFormatter *)defaultDateFormatter;
+- (NSFormatter *)defaultDateFormatter;
 
 - (void)registerFormatter:(NSFormatter *)formatter withName:(const NSString *)name;
-- (void)registerDefaultDateFormatter:(NSDateFormatter *)dateFormatter;      //registered under OX_DEFAULT_DATE_FORMATTER name
+- (void)registerDefaultDateFormatter:(NSFormatter *)dateFormatter;      //registered under OX_DEFAULT_DATE_FORMATTER name
 
 #pragma mark - collection
 - (OXEnumerationBlock)enumerationForContainer:(Class)containerClass;

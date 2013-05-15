@@ -13,6 +13,24 @@
 {
     NSMutableArray *_mappingTypeStack;
     NSMutableString *_currentStringValue;
+    
+    NSString *_cachedImmutableText;
+}
+
+static NSArray *_mappingTypeWrappers;
+
++ (void)initialize
+{
+    //create constants for OXSAXActionEnum
+    _mappingTypeWrappers = @[                                                   //avoid allocating NSNumbers over and over again
+                             [NSNumber numberWithInt:OX_SAX_UNDEFINED_ACTION],
+                             [NSNumber numberWithInt:OX_SAX_VALUE_ACTION],
+                             [NSNumber numberWithInt:OX_SAX_OBJECT_ACTION],
+                             [NSNumber numberWithInt:OX_SAX_SKIP_ACTION]
+                             ];
+    for (int typeEnum=0; typeEnum < [_mappingTypeWrappers count]; typeEnum++) { //need a sanity check
+        NSAssert1(typeEnum == [[_mappingTypeWrappers objectAtIndex:typeEnum] intValue], @"_mappingTypeWrappers out-of-sync with OXSAXActionEnum[%d]", typeEnum);
+    }
 }
 
 
@@ -35,11 +53,19 @@
     return self;
 }
 
+- (void)reset
+{
+    [super reset];
+    [_mappingTypeStack clear];
+    [self clearText];
+}
+
 #pragma mark - OXSAXActionEnum stack
 
 - (void)pushMappingType:(OXSAXActionEnum)mappingType
 {
-    [_mappingTypeStack addObject:[NSNumber numberWithInt:mappingType]];
+    //[_mappingTypeStack addObject:[NSNumber numberWithInt:mappingType]]; generates a lot of heap waste
+    [_mappingTypeStack addObject:_mappingTypeWrappers[mappingType]];
 }
 - (OXSAXActionEnum)popMappingType
 {
@@ -58,15 +84,34 @@
 #pragma mark - element body text
 - (NSString *)text
 {
-    return [_currentStringValue copy];
+    //optimzied to avoid allocating extra string copies
+    if (_cachedImmutableText) {
+        return _cachedImmutableText;
+    } else {
+         return [_currentStringValue length] == 0 ? nil : [_currentStringValue copy];   
+    }
 }
+
 - (void)clearText
 {
     [_currentStringValue setString:@""];
+    _cachedImmutableText = nil;
 }
+
 - (void)appendText:(NSString *)text
 {
-    [_currentStringValue appendString:text];
+    //optimzied to avoid allocating extra string copies 
+    if (_cachedImmutableText) { //2nd hit - can't avoid using NSMutableString (_currentStringValue)
+        [_currentStringValue appendString:_cachedImmutableText];
+        _cachedImmutableText = nil;
+        [_currentStringValue appendString:text];
+    } else {
+        if ([_currentStringValue length] == 0) {
+            _cachedImmutableText = text;            //most comman/efficient case
+        } else {
+            [_currentStringValue appendString:text];
+        }
+    }
 }
 
 #pragma mark - debug

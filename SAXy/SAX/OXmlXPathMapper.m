@@ -72,6 +72,24 @@
     return [[OXmlXPathMapper alloc] initXpath:xpath scalar:encodedType property:property];
 }
 
++ (id)xpath:(NSString *)xpath toMany:(Class)childType containerType:(Class)containerType property:(NSString *)property
+{
+    OXType *containerOXType = [OXType typeContainer:containerType containing:childType];
+    OXmlXPathMapper *mapper = [[OXmlXPathMapper alloc] initXpath:xpath type:containerType property:property];
+    mapper.toType = containerOXType;
+    return mapper;
+}
+
++ (id)xpath:(NSString *)xpath toMany:(Class)childType property:(NSString *)property dictionaryKey:(NSString *)keyProperty
+{
+    OXType *containerOXType = [OXType typeContainer:nil containing:childType];
+    OXmlXPathMapper *mapper = [[OXmlXPathMapper alloc] initXpath:xpath type:nil property:property];
+    mapper.toType = containerOXType;
+    mapper.dictionaryKeyName = keyProperty;
+    return mapper;
+}
+
+
 #pragma mark - builder
 
 - (OXmlXPathMapper *)factory:(OXFactoryBlock)factory
@@ -137,6 +155,12 @@
 - (OXmlXPathMapper *)formatter:(NSString *)formatterName
 {
     [self setValue:formatterName forKey:@"formatterName"];
+    return self;
+}
+
+- (OXmlXPathMapper *)path:(OXPathFactoryBlock)pathFactory
+{
+    self.pathFactory = pathFactory;
     return self;
 }
 
