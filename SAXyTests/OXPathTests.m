@@ -20,14 +20,18 @@
 
 - (void)testTokenizerAndMatcher
 {
+    //parsed test data:
     NSArray *roota = @[@"/", @"a"];
+    NSArray *rootb = @[@"/", @"b"];
     NSArray *ab = @[@"a", @"b"];
     NSArray *ad = @[@"a", @"d"];
     NSArray *abcd = @[@"a", @"b", @"c", @"d"];
     NSArray *rootab = @[@"/", @"a", @"b"];
+    NSArray *rootcb = @[@"/", @"c", @"b"];
     NSArray *rootad = @[@"/", @"a", @"d"];
     NSArray *rootabcd = @[@"/", @"a", @"b", @"c", @"d"];
     NSArray *abtext = @[@"a", @"b", @"text()"];
+    NSArray *xyb = @[@"x", @"y", @"b"];
     
     OXPathLite *wildcard = [OXPathLite xpath:@"*"];
     STAssertEquals(OXAnyPathType, [[wildcard.tagTypeStack objectAtIndex:0] integerValue], @"OXAnyPathType");
@@ -72,17 +76,28 @@
     STAssertEqualObjects(@"**", [dwildcard.tagStack objectAtIndex:0], @"dwildcard");
     NSAssert([dwildcard matches:@[@"dwildcard"]], @"dwildcard");
     
+    OXPathLite *dwildcard7 = [OXPathLite xpath:@"*/b"];
+    STAssertTrue([dwildcard7 matches:ab], @"a/b - match anything first element");
+    STAssertFalse([dwildcard7 matches:rootb], @"/b - must be a first element");
+    
     OXPathLite *dwildcard6 = [OXPathLite xpath:@"/a/**/d"];
-    STAssertTrue([dwildcard6 matches:rootabcd], @"/a/b/c/d");
-    STAssertTrue([dwildcard6 matches:rootad], @"/a/d");
-    STAssertTrue([dwildcard6 matches:abcd], @"a/b/c/d");
-    STAssertTrue([dwildcard6 matches:ad], @"a/d");
+    STAssertTrue([dwildcard6 matches:rootabcd], @"/a/b/c/d - match anything between a and d");
+    STAssertTrue([dwildcard6 matches:rootad], @"/a/d - match nothing (zero or more) between a and d");
+    STAssertFalse([dwildcard6 matches:abcd], @"a/b/c/d - no root");
+    STAssertFalse([dwildcard6 matches:ad], @"a/d - no root");
     
     OXPathLite *dwildcard5 = [OXPathLite xpath:@"a/**/d"];
     STAssertTrue([dwildcard5 matches:abcd], @"a/b/c/d");
     STAssertTrue([dwildcard5 matches:ad], @"a/d");
     STAssertTrue([dwildcard5 matches:rootabcd], @"/a/b/c/d");
     STAssertTrue([dwildcard5 matches:rootad], @"/a/d");
+    
+    OXPathLite *swildcard4 = [OXPathLite xpath:@"/*/b"];
+    STAssertFalse([swildcard4 matches:ab], @"a/b - no root");
+    STAssertFalse([swildcard4 matches:xyb], @"x/y/b - no root");
+    STAssertFalse([swildcard4 matches:rootad], @"/a/d - fails on leaf node");
+    STAssertTrue([swildcard4 matches:rootab], @"/a/b - matches single wildcard");
+    STAssertTrue([swildcard4 matches:rootcb], @"/c/b - matches single wildcard");
     
     OXPathLite *dwildcard4 = [OXPathLite xpath:@"a/b/*/d"];
     STAssertFalse([dwildcard4 matches:ab], @"a/b");

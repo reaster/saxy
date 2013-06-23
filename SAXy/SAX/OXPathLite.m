@@ -182,6 +182,9 @@ static NSArray *_OXPathTypeArray;
     return NO;
 }
 
+/**
+ Walks path nodes (from leaf to root), matching document nodes until a mismatch or full match is found.
+*/
 - (BOOL)matches:(NSArray *)docTagStack
 {
     NSInteger docIdx = [docTagStack count] - 1;
@@ -189,17 +192,22 @@ static NSArray *_OXPathTypeArray;
     BOOL seekMatch = NO;
     const BOOL isDocRoot = [OX_ROOT_PATH isEqualToString:[docTagStack objectAtIndex:0]];
     NSInteger seekLimit = 0;
-    while(docIdx >= 0 && pathIdx >= 0) {
+    while(pathIdx >= 0) {    //while(docIdx >= 0 && pathIdx >= 0) {
+        const NSInteger pathType = [[_tagTypeStack objectAtIndex:pathIdx] integerValue];
+        if (docIdx < 0) {   //no more doc tokens?
+            //fail unless first path token matches ZERO or more tokens
+            return pathIdx == 0 && pathType == OXAnyAnyPathType;
+        }
         const NSString *docTag = [docTagStack objectAtIndex:docIdx];
         NSString *pathTag = [_tagStack objectAtIndex:pathIdx];
-        switch ([[_tagTypeStack objectAtIndex:pathIdx] integerValue]) {
-            case OXRootPathType:    //
+        switch (pathType) {
+            case OXRootPathType:    //expecting root node
                 if (seekMatch) {
-                    return YES;
+                    return isDocRoot;
                 } else {
-                    return (docIdx == 0);
+                    return (docIdx == 0 && isDocRoot);
                 }
-            case OXElementPathType:
+            case OXElementPathType: //expecting specific element name match
                 if (seekMatch) {
                     if ( [docTag isEqualToString:pathTag] ) {
                         seekMatch = NO;
@@ -216,15 +224,17 @@ static NSArray *_OXPathTypeArray;
                     }
                 }
                 break;
-            case OXAnyPathType: //skip one element
+            case OXAnyPathType: //match any single element name - skip one element
                 if (seekMatch) {
                     NSAssert1(NO, @"ERROR: wildcard can't be adjacent to double wildcard: %@", [self description]);
                 } else {
+                    if (docIdx == 0 && isDocRoot)   //expecting element, not root
+                        return NO;
                     docIdx--;
                     pathIdx--;
                 }
                 break;
-            case OXAnyAnyPathType:  //seek subsequent match or fail
+            case OXAnyAnyPathType:  //match zero or more element name(s) - seek subsequent match or fail
                 if (seekMatch) {
                     NSAssert1(NO, @"ERROR: adjacent double wildcards don't make sense: %@", [self description]);
                 } else {
@@ -248,7 +258,7 @@ static NSArray *_OXPathTypeArray;
         if (seekMatch && docIdx < seekLimit)
             return NO;
     }
-    return YES;
+    return YES; //(docIdx < 0 && pathIdx < 0);
 }
 
 @end
