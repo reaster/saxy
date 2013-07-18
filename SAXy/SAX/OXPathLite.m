@@ -258,7 +258,7 @@ static NSArray *_OXPathTypeArray;
         if (seekMatch && docIdx < seekLimit)
             return NO;
     }
-    return YES; //(docIdx < 0 && pathIdx < 0);
+    return YES;
 }
 
 @end

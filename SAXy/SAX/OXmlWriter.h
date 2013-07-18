@@ -25,12 +25,11 @@
 @property(strong,nonatomic,readwrite)NSString *xmlHeader;
 @property(strong,nonatomic,readwrite)NSString *schemaLocation;
 @property(strong,nonatomic,readwrite)NSDictionary *rootNodeAttributes;
+@property(strong,nonatomic,readonly) NSArray *errors;
 
 #pragma mark - writer
 - (NSString *)writeXml:(id)object;
 - (NSString *)writeXml:(id)object prettyPrint:(BOOL)prettyPrint;
-- (NSString *)writeXml:(id)object elementMapper:(OXmlElementMapper *)elementMapper prettyPrint:(BOOL)prettyPrint;
-- (void)writeElement:(NSString *)elementName fromObject:(id)object elementMapper:(OXmlElementMapper *)elementMapper;
 
 #pragma mark - constructors
 + (id)writerWithMapper:(OXmlMapper *)mapper;

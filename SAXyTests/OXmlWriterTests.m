@@ -51,6 +51,13 @@
 @implementation ToonCharacter
 @end
 
+@interface AssignOnly : NSObject
+@property(nonatomic,assign)BOOL take;
+@end
+
+@implementation AssignOnly
+@end
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 #pragma mark - tests
@@ -95,4 +102,23 @@
     ToonCharacter *duck = tunes[0];
     STAssertEqualObjects(@"Daffy", duck.firstName,  @"mapped 'firstName' element to 'firstName' property");
 }
+
+
+- (void)testWriteBeforeRead
+{
+    AssignOnly *duck = [AssignOnly new];
+    duck.take = TRUE;
+    
+    OXmlMapper *mapper = [[OXmlMapper mapper] elements:@[
+                                [OXmlElementMapper rootXPath:@"/duck" type:[AssignOnly class]],
+                                [[OXmlElementMapper elementClass:[AssignOnly class]]
+                                                   tag:@"take" scalarType:OX_ENCODED_BOOL]
+                          ]];
+    OXmlWriter *writer = [OXmlWriter writerWithMapper:mapper];
+    writer.xmlHeader = nil;
+    
+    NSString *xml = [writer writeXml:duck prettyPrint:NO];
+    STAssertEqualObjects(@"<duck><take>true</take></duck>", xml,  @"write without first calling read");
+}
+
 @end

@@ -332,16 +332,26 @@
 - (NSString *)writeXml:(id)object prettyPrint:(BOOL)prettyPrint
 {
     [_context reset];
-    if (_mapper.rootMapper) {
-        OXmlXPathMapper *resultMapper = [_mapper.rootMapper elementMapperByProperty:@"result"];
-        NSAssert1(resultMapper != nil, @"ERROR: result property mapping not found in root mapper: %@", _mapper.rootMapper);
-        Class expectedRootType = resultMapper.toType.type;
-        NSAssert3( [object isKindOfClass:expectedRootType], @"ERROR: writeXml expecting type: %@, not: %@, in root mapper: %@", NSStringFromClass(expectedRootType), NSStringFromClass([object class]), _mapper.rootMapper);
-        _context.currentMapper = resultMapper;
-        resultMapper.setter(resultMapper.toPath, object, _context, _context);
-        return [self writeXml:_context elementMapper:_mapper.rootMapper prettyPrint:prettyPrint];
+    _errors = [self.mapper configure:_context]; //use reflections to create type-specific function blocks
+    if (_errors) {
+        if (_context.logReaderStack) {
+            for(NSError *error in _errors) {
+                NSLog(@"ERROR: %@", [error.userInfo objectForKey:NSLocalizedDescriptionKey]);
+            }
+        }
+        return nil;
     } else {
-        return [self writeXml:object elementMapper:nil prettyPrint:prettyPrint];
+        if (_mapper.rootMapper) {
+            OXmlXPathMapper *resultMapper = [_mapper.rootMapper elementMapperByProperty:@"result"];
+            NSAssert1(resultMapper != nil, @"ERROR: result property mapping not found in root mapper: %@", _mapper.rootMapper);
+            Class expectedRootType = resultMapper.toType.type;
+            NSAssert3( [object isKindOfClass:expectedRootType], @"ERROR: writeXml expecting type: %@, not: %@, in root mapper: %@", NSStringFromClass(expectedRootType), NSStringFromClass([object class]), _mapper.rootMapper);
+            _context.currentMapper = resultMapper;
+            resultMapper.setter(resultMapper.toPath, object, _context, _context);
+            return [self writeXml:_context elementMapper:_mapper.rootMapper prettyPrint:prettyPrint];
+        } else {
+            return [self writeXml:object elementMapper:nil prettyPrint:prettyPrint];
+        }
     }
 }
 
