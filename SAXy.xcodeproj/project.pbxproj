@@ -121,6 +121,7 @@
 		79E73977179767D800950673 /* OXTutorialTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXTutorialTests.m; sourceTree = "<group>"; };
 		79E73978179767D800950673 /* OXTwitterExampleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXTwitterExampleTests.m; sourceTree = "<group>"; };
 		79E73979179767D800950673 /* OXUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXUtilTests.m; sourceTree = "<group>"; };
+		79E739851797744900950673 /* SAXy.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SAXy.podspec; sourceTree = "<group>"; };
 		79F8A3B316C97F6500491143 /* libSAXy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSAXy.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		79F8A3B616C97F6500491143 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		79F8A3BA16C97F6500491143 /* SAXy-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SAXy-Prefix.pch"; sourceTree = "<group>"; };
@@ -212,6 +213,7 @@
 		79F8A3AA16C97F6500491143 = {
 			isa = PBXGroup;
 			children = (
+				79E739851797744900950673 /* SAXy.podspec */,
 				79A8C9FF16E17EB60082E8AE /* README.md */,
 				79F8A3B816C97F6500491143 /* SAXy */,
 				79F8A3CD16C97F6500491143 /* SAXyTests */,
