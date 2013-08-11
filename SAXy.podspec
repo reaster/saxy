@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name     = 'SAXy OX'
+  s.name     = 'SAXy'
   s.version  = '1.0.0'
   s.license  = 'Apache 2.0'
   s.summary  = 'XML and JSON Binding Library'
@@ -10,8 +10,8 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.ios.deployment_target = '6.0'
-  s.ios.frameworks =
+  # s.ios.frameworks =
 
   s.osx.deployment_target = '10.7'
-  s.osx.frameworks =
+  # s.osx.frameworks =
 end
