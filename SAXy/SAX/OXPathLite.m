@@ -168,7 +168,7 @@ static NSArray *_OXPathTypeArray;
 - (BOOL)hasRootTag
 {
     NSNumber *tagTypeWrapper = [_tagTypeStack objectAtIndex:0];
-    OXPathType pathType = tagTypeWrapper ? [tagTypeWrapper integerValue] : OXUnknownType;
+    OXPathType pathType = tagTypeWrapper ? (OXPathType)[tagTypeWrapper integerValue] : OXUnknownType;
     return pathType == OXRootPathType;
 }
 

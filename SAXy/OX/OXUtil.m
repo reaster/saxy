@@ -6,10 +6,8 @@
 //
 
 #import "OXUtil.h"
-#if (TARGET_OS_IPHONE)
 #import <objc/runtime.h>
 #import <objc/message.h>
-#endif
 
 @implementation OXUtil
 
@@ -32,8 +30,8 @@
     }
     if (!text)
         return NO;
-    int len = [text length];
-    for(int i=0;i<len;i++) {
+    NSUInteger len = [text length];
+    for(NSUInteger i=0;i<len;i++) {
         if (![_digitChars characterIsMember:[text characterAtIndex:i]])
             return NO;
     }
@@ -45,7 +43,7 @@
 {
     if (!string)
         return -1;
-    const int len = [string length];
+    const NSUInteger len = [string length];
     for(int i=0;i<len;i++) {
         if (ch == [string characterAtIndex:i])
             return i;
@@ -57,7 +55,7 @@
 {
     int result = -1;
     if (string) {
-        const int len = [string length];
+        const NSUInteger len = [string length];
         for(int i=0;i<len;i++) {
             if (ch == [string characterAtIndex:i])
                 result = i;
@@ -84,8 +82,8 @@
     const static NSCharacterSet *XPATH_CHAR_SET = nil;
     if (XPATH_CHAR_SET == nil)
         XPATH_CHAR_SET = [NSCharacterSet characterSetWithCharactersInString:@"/*"];
-    const int len = [string length];
-    for(int i=0;i<len;i++) {
+    const NSUInteger len = [string length];
+    for(NSUInteger i=0;i<len;i++) {
         unichar ch = [string characterAtIndex:i];
         if ([XPATH_CHAR_SET characterIsMember:ch]) {
             return YES;
@@ -102,8 +100,8 @@
     if (XML_ESCAPE_CHAR_SET == nil)
         XML_ESCAPE_CHAR_SET = [NSCharacterSet characterSetWithCharactersInString:@"&<>\"'"];
     NSMutableString *result = nil;
-    const int len = [text length];
-    for(int i=0;i<len;i++) {
+    const NSUInteger len = [text length];
+    for(NSUInteger i=0;i<len;i++) {
         unichar ch = [text characterAtIndex:i];
         if ([XML_ESCAPE_CHAR_SET characterIsMember:ch]) {
             if (!result) {   //only create if escaping needed

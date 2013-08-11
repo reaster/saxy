@@ -227,7 +227,7 @@
         if (lastIndex < 0) {
             return [NSString stringWithFormat:@"%@%@", OX_ATTRIBUTE_PREFIX, xpath];
         } else {
-            int len = [xpath length];
+            NSUInteger len = [xpath length];
             return [NSString stringWithFormat:@"%@%@%@", [xpath substringWithRange:NSMakeRange(0,lastIndex)], OX_ATTRIBUTE_PREFIX, [xpath substringWithRange:NSMakeRange(lastIndex,len)]];
         }
     } else {

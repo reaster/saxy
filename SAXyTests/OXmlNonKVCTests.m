@@ -158,7 +158,8 @@
                             xpathMapper:[[OXmlXPathMapper xpath:@"timestamp" type:[NSDate class] property:@"timestamp"]
                                           getter:^(NSString *key, id target, OXContext *ctx) {
                                               //fix date handling - return nil if time interval is zero
-                                              NSDate *date = [target timestamp];
+                                              CLLocation *loc = target;
+                                              NSDate *date = [loc timestamp];
                                               NSTimeInterval interval = date ? [date timeIntervalSinceReferenceDate] : 0.0;
                                               NSString *result = (interval == 0.0) ? nil : ctx.currentMapper.fromTransform(date, ctx);
                                               return result;

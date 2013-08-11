@@ -78,7 +78,7 @@ static NSArray *_mappingTypeWrappers;
 - (OXSAXActionEnum)peekMappingTypeAtIndex:(NSInteger)index
 {
     NSInteger reverseIndex = [_mappingTypeStack count] - (index + 1);
-    return reverseIndex < 0 ? OX_SAX_SKIP_ACTION: [[_mappingTypeStack objectAtIndex:reverseIndex] integerValue];
+    return reverseIndex < 0 ? OX_SAX_SKIP_ACTION : (OXSAXActionEnum)[[_mappingTypeStack objectAtIndex:reverseIndex] integerValue];
 }
 
 #pragma mark - element body text

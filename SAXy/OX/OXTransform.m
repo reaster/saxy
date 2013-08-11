@@ -66,7 +66,7 @@
     if (encodedProperty) {                                  //example: "T^c,N,V_isHtmlBody", just want "^c"
         encodedProperty++;                                  //iterate past 'T' char
         int endIndex = 0;                                   //now find the end of the type section
-        int len = strlen(encodedProperty);
+        NSUInteger len = strlen(encodedProperty);
         while (encodedProperty[++endIndex] != ',' && endIndex < len);
         char encodedTypeSubstring[endIndex+1];              //copy type encoding to new string
         strncpy(encodedTypeSubstring, encodedProperty, endIndex);

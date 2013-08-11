@@ -9,10 +9,8 @@
 #import "OXmlElementMapper.h"
 #import "NSMutableArray+OXStack.h"
 #import "OXUtil.h"
-#if (TARGET_OS_IPHONE)
 #import <objc/runtime.h>
 #import <objc/message.h>
-#endif
 
 @implementation OXmlReader
 {
@@ -342,12 +340,12 @@
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
 {
-    NSString *errMsg = [NSString stringWithFormat:@"XML Parsing Error on %@, Error %i, Description: %@, Line: %i, Column: %i",
+    NSString *errMsg = [NSString stringWithFormat:@"XML Parsing Error on %@, Error %li, Description: %@, Line: %li, Column: %li",
                         [self.url absoluteString],
-                        [parseError code],
+                        (long)[parseError code],
                         [[parser parserError] localizedDescription],
-                        [parser lineNumber],
-                        [parser columnNumber]];
+                        (long)[parser lineNumber],
+                        (long)[parser columnNumber]];
     [self addErrorMessage:errMsg];
 }
 

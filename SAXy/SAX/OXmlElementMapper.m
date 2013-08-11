@@ -236,7 +236,7 @@
     if (_elementMapByProperty == nil) {
         [self categorizePropertiesByTag];
     }
-    const int count = [_elementMapByProperty count];
+    const NSUInteger count = [_elementMapByProperty count];
     if (count > 0) {
         NSMutableArray *keys = [NSMutableArray arrayWithCapacity:count];
         for(OXmlXPathMapper *prop in self.pathMappers) {
@@ -256,7 +256,7 @@
     if (_attributeMapByProperty == nil) {
         [self categorizePropertiesByTag];
     }
-    const int count = [_attributeMapByProperty count];
+    const NSUInteger count = [_attributeMapByProperty count];
     if (count > 0) {
         NSMutableArray *keys = [NSMutableArray arrayWithCapacity:count];
         for(OXmlXPathMapper *prop in self.pathMappers) {
@@ -349,9 +349,9 @@
     self.factory = ^(NSString *path, OXContext *ctx){ return context; }; //just return existing context instance
     self.lock = YES;                                                        //don't map other context properties
     NSArray *propertyKeys = self.orderedElementPropertyKeys;
-    NSInteger keyCount = propertyKeys ? [propertyKeys count] : 0;
+    NSUInteger keyCount = propertyKeys ? [propertyKeys count] : 0;
     if (keyCount != 1)
-        NSAssert2(NO, @"ERROR: root element (%@) must have a single child element specified, not %d elements", self.fromPath, keyCount);
+        NSAssert2(NO, @"ERROR: root element (%@) must have a single child element specified, not %ld elements", self.fromPath, (unsigned long)keyCount);
     OXmlXPathMapper *rootProperty = [self elementMapperByProperty:[propertyKeys objectAtIndex:0]];
     rootProperty.toPath = @"result";                                        //fixed property in OXContext
     OXType *rootType = rootProperty.toType;                                 //verify or assign target type

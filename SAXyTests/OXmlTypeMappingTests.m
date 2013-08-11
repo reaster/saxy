@@ -184,7 +184,7 @@
     STAssertNotNil(resultsMapper, @"results mapping");
     STAssertEquals(OX_CONTAINER, resultsMapper.toType.typeEnum, @"resultsMapper.toType.typeEnum == OX_CONTAINER");
     STAssertTrue([resultsMapper.toType.type isSubclassOfClass:[NSArray class]], @"defualt container type");
-    int rCount = [_root.pathMappers count];
+    int rCount = (int)[_root.pathMappers count];
     STAssertEquals(1, rCount, @"locked mapping");
     STAssertEquals(OX_COMPLEX_MAPPER, _root.mapperEnum, @"mapperEnum == OX_COMPLEX_MAPPER");
     
@@ -315,11 +315,11 @@
     STAssertNil(errors, @"no errors");
     
     //test OXmlElementMapper
-    int count = [elementMapper.pathMappers count];
+    int count = (int)[elementMapper.pathMappers count];
     STAssertEquals(3, count, @"3 property mappings");
-    count = [elementMapper.orderedElementPropertyKeys count];
+    count =  (int)[elementMapper.orderedElementPropertyKeys count];
     STAssertEquals(1, count, @"1 element mappings");
-    count = [elementMapper.orderedAttributePropertyKeys count];
+    count =  (int)[elementMapper.orderedAttributePropertyKeys count];
     STAssertEquals(1, count, @"1 attribute mappings");
     STAssertNotNil(elementMapper.bodyMapper, @"text()/body mapping");
     
@@ -405,7 +405,7 @@
     STAssertTrue(root.lock, @"locked");
     STAssertEquals(OX_COMPLEX_MAPPER, root.mapperEnum, @"mapperEnum == OX_COMPLEX_MAPPER");
     STAssertNotNil(root.pathMappers, @"mappings");
-    int rCount = [root.pathMappers count];
+    int rCount = (int)[root.pathMappers count];
     STAssertEquals(1, rCount, @"locked mapping");
     STAssertEqualObjects([OXmlContext class], root.toType.type, @"use context to hold result");
     STAssertEqualObjects(ctx, root.factory(nil, ctx), @"instance factory just returns context instance");

@@ -101,9 +101,9 @@
     self.factory = ^(NSString *path, OXContext *ctx){ return context; }; //just return existing context instance
     self.lock = YES;                                                        //don't map other context properties
     NSArray *propertyKeys = self.orderedPropertyKeys;
-    NSInteger keyCount = propertyKeys ? [propertyKeys count] : 0;
+    NSUInteger keyCount = propertyKeys ? [propertyKeys count] : 0;
     if (keyCount != 1)
-        NSAssert2(NO, @"ERROR: root mapper (%@) must have a single path mapper child, not %d mappers", self.fromPath, keyCount);
+        NSAssert2(NO, @"ERROR: root mapper (%@) must have a single path mapper child, not %ld mappers", self.fromPath, (unsigned long)keyCount);
     OXJSONPathMapper *rootProperty = [self objectMapperByProperty:[propertyKeys objectAtIndex:0]];
     NSAssert1(rootProperty != nil, @"rootProperty can't be nil in %@", self);
     rootProperty.toPath = @"result";                                        //fixed property in OXContext

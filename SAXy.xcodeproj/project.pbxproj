@@ -32,7 +32,6 @@
 		79E73984179767D800950673 /* OXUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E73979179767D800950673 /* OXUtilTests.m */; };
 		79F8A3B716C97F6500491143 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A3B616C97F6500491143 /* Foundation.framework */; };
 		79F8A3C616C97F6500491143 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A3C516C97F6500491143 /* SenTestingKit.framework */; };
-		79F8A3C816C97F6500491143 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A3C716C97F6500491143 /* UIKit.framework */; };
 		79F8A3C916C97F6500491143 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A3B616C97F6500491143 /* Foundation.framework */; };
 		79F8A3CC16C97F6500491143 /* libSAXy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F8A3B316C97F6500491143 /* libSAXy.a */; };
 		79F8A3D216C97F6500491143 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 79F8A3D016C97F6500491143 /* InfoPlist.strings */; };
@@ -127,7 +126,6 @@
 		79F8A3BA16C97F6500491143 /* SAXy-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SAXy-Prefix.pch"; sourceTree = "<group>"; };
 		79F8A3C416C97F6500491143 /* SAXyTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAXyTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		79F8A3C516C97F6500491143 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		79F8A3C716C97F6500491143 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		79F8A3CF16C97F6500491143 /* SAXyTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SAXyTests-Info.plist"; sourceTree = "<group>"; };
 		79F8A3D116C97F6500491143 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		79F8A3EC16C9810A00491143 /* ContactsTestData.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ContactsTestData.xml; sourceTree = "<group>"; };
@@ -184,7 +182,6 @@
 			files = (
 				79F8A44616D0076600491143 /* CoreLocation.framework in Frameworks */,
 				79F8A3C616C97F6500491143 /* SenTestingKit.framework in Frameworks */,
-				79F8A3C816C97F6500491143 /* UIKit.framework in Frameworks */,
 				79F8A3C916C97F6500491143 /* Foundation.framework in Frameworks */,
 				79F8A3CC16C97F6500491143 /* libSAXy.a in Frameworks */,
 			);
@@ -237,7 +234,6 @@
 				79F8A44516D0076600491143 /* CoreLocation.framework */,
 				79F8A3B616C97F6500491143 /* Foundation.framework */,
 				79F8A3C516C97F6500491143 /* SenTestingKit.framework */,
-				79F8A3C716C97F6500491143 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
