@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/reaster/saxy'
   s.authors  = { 'Richard Easterling' => 'richard@OutsourceCafe.com' }
   s.source   = { :git => 'https://github.com/reaster/saxy.git', :tag => '1.0.0' }
-  s.source_files = 'SAXy'
+  s.source_files = 'SAXy/OX','SAXy/SAX','SAXy/JSON'
   s.requires_arc = true
 
   s.ios.deployment_target = '6.0'
