@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name     = 'SAXy'
-  s.version  = '1.0.2'
+  s.version  = '1.0.3'
   s.license  = 'Apache License, Version 2.0'
   s.summary  = 'XML and JSON Binding Library'
   s.homepage = 'https://github.com/reaster/saxy'
   s.authors  = { 'Richard Easterling' => 'richard@OutsourceCafe.com' }
-  s.source   = { :git => 'https://github.com/reaster/saxy.git', :tag => '{s.version}' }
+  s.source   = { :git => 'https://github.com/reaster/saxy.git', :tag => '#{s.version}' }
   s.source_files = 'SAXy/OX','SAXy/SAX','SAXy/JSON'
   s.requires_arc = true
 
