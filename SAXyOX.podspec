@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
-  s.name     = 'SAXy'
-  s.version  = '1.0.4'
+  s.name     = 'SAXyOX'
+  s.version  = '1.0.5'
   s.license  = 'Apache License, Version 2.0'
   s.summary  = 'XML and JSON Binding Library'
   s.homepage = 'https://github.com/reaster/saxy'
